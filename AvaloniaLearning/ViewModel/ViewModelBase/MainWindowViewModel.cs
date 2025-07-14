@@ -1,11 +1,11 @@
-﻿using AvaloniaLearning.Navigation;
-using CommunityToolkit.Mvvm.ComponentModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AvaloniaLearning.NavigationStore;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace AvaloniaLearning.ViewModel
 {
