@@ -1,7 +1,7 @@
 using Avalonia.Controls;
 using AvaloniaLearning.ViewModel;
 
-namespace AvaloniaLearning
+namespace AvaloniaLearning.View.Base
 {
     public partial class MainWindow : Window
     {

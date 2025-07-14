@@ -8,6 +8,7 @@ using AvaloniaLearning.NavService;
 using AvaloniaLearning.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 using Splat.Microsoft.Extensions.DependencyInjection;
+using AvaloniaLearning.View.Base;
 
 namespace AvaloniaLearning
 {
