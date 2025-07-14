@@ -1,4 +1,5 @@
 using System;
+using System.Xml.Serialization;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
@@ -14,6 +15,13 @@ namespace AvaloniaLearning
     {
         private IServiceProvider? _serviceProvider;
 
+        public IServiceProvider ServiceProvider
+        {
+            get =>
+                _serviceProvider ?? throw new InvalidOperationException("Services not initialized");
+            set => _serviceProvider = value;
+        }
+
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
@@ -21,35 +29,54 @@ namespace AvaloniaLearning
 
         public override void OnFrameworkInitializationCompleted()
         {
-            ServiceCollection services = new ServiceCollection();
-
-            services.AddSingleton<NavStore>();
-
-            services.AddSingleton<NavigationService>();
-
-            services.AddSingleton<MainWindowViewModel>();
-
-            services.AddTransient<MainPageViewModel>();
-
-            services.AddTransient<StartPageViewModel>();
-
-            services.UseMicrosoftDependencyResolver();
-
-            _serviceProvider = services.BuildServiceProvider();
+            InitializeServices();
 
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
                 desktop.MainWindow = new MainWindow();
                 desktop.MainWindow.DataContext =
-                    _serviceProvider.GetRequiredService<MainWindowViewModel>();
+                    ServiceProvider.GetRequiredService<MainWindowViewModel>();
             }
 
             NavigationService navigationService =
-                _serviceProvider.GetRequiredService<NavigationService>();
+                ServiceProvider.GetRequiredService<NavigationService>();
 
             navigationService.Navigate<StartPageViewModel>();
 
             base.OnFrameworkInitializationCompleted();
+        }
+
+        private void InitializeServices()
+        {
+            ServiceCollection services = new ServiceCollection();
+
+            ConfigureServices(services);
+
+            services.UseMicrosoftDependencyResolver();
+
+            ServiceProvider = services.BuildServiceProvider();
+        }
+
+        private void ConfigureServices(IServiceCollection services)
+        {
+            ConfigureViewModelServices(services);
+            ConfigureNavigationServices(services);
+        }
+
+        private void ConfigureViewModelServices(IServiceCollection services)
+        {
+            services.AddSingleton<MainWindowViewModel>();
+
+            services.AddTransient<MainPageViewModel>();
+
+            services.AddTransient<StartPageViewModel>();
+        }
+
+        private void ConfigureNavigationServices(IServiceCollection services)
+        {
+            services.AddSingleton<NavStore>();
+
+            services.AddSingleton<NavigationService>();
         }
     }
 }
