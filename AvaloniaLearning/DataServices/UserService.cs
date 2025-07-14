@@ -94,7 +94,7 @@ namespace AvaloniaLearning.DataServices
 
         private void WriteAll(List<User> users)
         {
-            var lines = new List<string> { "Id,Name,Email" };
+            var lines = new List<string> { $"Id{Separator}Name{Separator}Email" };
 
             lines.AddRange(users.Select(u => $"{u.Id}{Separator}{u.Name}{Separator}{u.Email}"));
 
