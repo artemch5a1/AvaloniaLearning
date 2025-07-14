@@ -5,10 +5,10 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using AvaloniaLearning.NavigationStore;
 using AvaloniaLearning.NavService;
+using AvaloniaLearning.View.Base;
 using AvaloniaLearning.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 using Splat.Microsoft.Extensions.DependencyInjection;
-using AvaloniaLearning.View.Base;
 
 namespace AvaloniaLearning
 {

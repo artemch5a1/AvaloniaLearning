@@ -1,12 +1,12 @@
-﻿using Avalonia.Controls.Shapes;
-using AvaloniaLearning.Models;
-using AvaloniaLearning.ServiceAbstractions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Avalonia.Controls.Shapes;
+using AvaloniaLearning.Models;
+using AvaloniaLearning.ServiceAbstractions;
 
 namespace AvaloniaLearning.DataServices
 {
@@ -21,17 +21,20 @@ namespace AvaloniaLearning.DataServices
 
             if (!File.Exists(_filePath))
             {
-                File.WriteAllText(_filePath, $"Id{Separator}Name{Separator}Surname{Separator}Email\n");
+                File.WriteAllText(
+                    _filePath,
+                    $"Id{Separator}Name{Separator}Surname{Separator}Email\n"
+                );
             }
         }
 
         public List<User> GetAllUsers()
         {
             return File.ReadAllLines(_filePath)
-                   .Skip(1)
-                   .Where(line => !string.IsNullOrWhiteSpace(line))
-                   .Select(ParseLine)
-                   .ToList();
+                .Skip(1)
+                .Where(line => !string.IsNullOrWhiteSpace(line))
+                .Select(ParseLine)
+                .ToList();
         }
 
         public User? GetUserById(int id)
@@ -56,7 +59,8 @@ namespace AvaloniaLearning.DataServices
 
             int index = users.FindIndex(u => u.Id == user.Id);
 
-            if (index == -1) return false;
+            if (index == -1)
+                return false;
 
             users[index] = user;
 
@@ -71,7 +75,8 @@ namespace AvaloniaLearning.DataServices
 
             User? userToRemove = users.FirstOrDefault(u => u.Id == id);
 
-            if (userToRemove == null) return false;
+            if (userToRemove == null)
+                return false;
 
             users.Remove(userToRemove);
 
@@ -88,7 +93,7 @@ namespace AvaloniaLearning.DataServices
                 Id = int.Parse(parts[0]),
                 Name = parts[1],
                 Surname = parts[2],
-                Email = parts[3]
+                Email = parts[3],
             };
         }
 
