@@ -10,9 +10,9 @@ namespace AvaloniaLearning.ViewModel
 {
     public class StartPageViewModel : ViewModelBase
     {
-        private readonly NavigationService _navService;
+        private readonly INavigationService _navService;
 
-        public StartPageViewModel(NavigationService navService)
+        public StartPageViewModel(INavigationService navService)
         {
             _navService = navService;
         }

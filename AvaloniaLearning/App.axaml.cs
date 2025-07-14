@@ -76,7 +76,7 @@ namespace AvaloniaLearning
         {
             services.AddSingleton<NavStore>();
 
-            services.AddSingleton<NavigationService>();
+            services.AddSingleton<INavigationService, NavigationService>();
         }
     }
 }

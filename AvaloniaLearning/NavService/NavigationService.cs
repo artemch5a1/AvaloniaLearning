@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace AvaloniaLearning.NavService
 {
-    public class NavigationService
+    public class NavigationService : INavigationService
     {
         private readonly NavStore _navStore;
         private readonly IServiceProvider _serviceProvider;
