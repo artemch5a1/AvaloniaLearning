@@ -37,15 +37,17 @@ namespace AvaloniaLearning
 
             _serviceProvider = services.BuildServiceProvider();
 
-            NavStore navStore = new NavStore();
-
-            navStore.Navigate<StartPageViewModel>();
-
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
                 desktop.MainWindow = new MainWindow();
-                desktop.MainWindow.DataContext = new MainWindowViewModel(navStore);
+                desktop.MainWindow.DataContext =
+                    _serviceProvider.GetRequiredService<MainWindowViewModel>();
             }
+
+            NavigationService navigationService =
+                _serviceProvider.GetRequiredService<NavigationService>();
+
+            navigationService.Navigate<StartPageViewModel>();
 
             base.OnFrameworkInitializationCompleted();
         }

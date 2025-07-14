@@ -4,18 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AvaloniaLearning.NavigationStore;
+using AvaloniaLearning.NavService;
 
 namespace AvaloniaLearning.ViewModel
 {
     public class StartPageViewModel : ViewModelBase
     {
-        private readonly NavStore _navStore;
+        private readonly NavigationService _navService;
 
-        public StartPageViewModel(NavStore navStore)
+        public StartPageViewModel(NavigationService navService)
         {
-            _navStore = navStore;
+            _navService = navService;
         }
 
-        public void NavToMain() => _navStore.Navigate<MainPageViewModel>();
+        public void NavToMain() => _navService.Navigate<MainPageViewModel>();
     }
 }

@@ -23,16 +23,5 @@ namespace AvaloniaLearning.NavigationStore
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
-
-        public void Navigate<TViewModel>()
-            where TViewModel : ViewModelBase
-        {
-            Type viewModelType = typeof(TViewModel);
-
-            ViewModelBase? viewModel = (ViewModelBase?)
-                Activator.CreateInstance(viewModelType, this);
-
-            CurrentViewModel = viewModel;
-        }
     }
 }
