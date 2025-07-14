@@ -1,7 +1,7 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using AvaloniaLearning.Navigation;
+using AvaloniaLearning.NavigationStore;
 using AvaloniaLearning.ViewModel;
 
 namespace AvaloniaLearning

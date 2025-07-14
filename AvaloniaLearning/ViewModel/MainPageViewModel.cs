@@ -1,9 +1,9 @@
-﻿using AvaloniaLearning.Navigation;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AvaloniaLearning.NavigationStore;
 
 namespace AvaloniaLearning.ViewModel
 {
