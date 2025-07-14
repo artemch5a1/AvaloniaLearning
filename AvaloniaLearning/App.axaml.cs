@@ -38,8 +38,8 @@ namespace AvaloniaLearning
                     ServiceProvider.GetRequiredService<MainWindowViewModel>();
             }
 
-            NavigationService navigationService =
-                ServiceProvider.GetRequiredService<NavigationService>();
+            INavigationService navigationService =
+                ServiceProvider.GetRequiredService<INavigationService>();
 
             navigationService.Navigate<StartPageViewModel>();
 

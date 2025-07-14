@@ -10,9 +10,9 @@ namespace AvaloniaLearning.ViewModel
 {
     internal partial class MainPageViewModel : ViewModelBase
     {
-        private readonly NavigationService _navService;
+        private readonly INavigationService _navService;
 
-        public MainPageViewModel(NavigationService navService)
+        public MainPageViewModel(INavigationService navService)
         {
             _navService = navService;
         }
