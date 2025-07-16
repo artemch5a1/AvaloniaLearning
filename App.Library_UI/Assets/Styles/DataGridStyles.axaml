@@ -1,0 +1,125 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Design.PreviewWith>
+    <Border Padding="20">
+		<DataGrid Classes="DataGridMain" Margin="0 0 20 100">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="#" Width="auto"/>
+				<DataGridTextColumn Header="Title" Width="auto"/>
+				<DataGridTextColumn Header="#" Width="auto"/>
+				<DataGridTextColumn Header="Title" Width="auto"/>
+			</DataGrid.Columns>
+		</DataGrid>
+    </Border>
+  </Design.PreviewWith>
+
+  <Style Selector="DataGrid.DataGridMain">
+        <Setter Property="AutoGenerateColumns" Value="False"/>
+        <Setter Property="CanUserReorderColumns" Value="False"/>
+        <Setter Property="CanUserResizeColumns" Value="False"/>
+        <Setter Property="CanUserSortColumns" Value="False"/>
+        <Setter Property="IsReadOnly" Value="True"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Background" Value="{StaticResource TransparentBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource LightGreyForegroundBrush}" />
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="GridLinesVisibility" Value="None"/>
+        <Setter Property="Margin" Value="5 0 5 0"/>
+        <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ColumnWidth" Value="Auto"/>
+        <Setter Property="HeadersVisibility" Value="Column"/>
+
+        <Style Selector="^ /template/ Rectangle#PART_ColumnHeadersAndRowsSeparator">
+            <Setter Property="Height" Value="0"/>
+        </Style>
+
+        <Style Selector="^ DataGridColumnHeader">
+            <Setter Property="Background" Value="{StaticResource TransparentBrush}"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0 0 0 10" />
+            <Setter Property="Padding" Value="0, 0, 0, 0" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontWeight" Value="400" />
+            
+            <Setter Property="BorderBrush" Value="{StaticResource GreyBrush}" />
+            <Setter Property="BorderThickness" Value="1,1,1,1" />
+
+            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            </Style>
+
+            <Style Selector="^ /template/ Path#SortIcon">
+                <Setter Property="Width" Value="0"/>
+                <Setter Property="Height" Value="0"/>
+            </Style>
+
+            <Style Selector="^:focus-visible /template/ Grid#FocusVisual">
+                <Setter Property="IsVisible" Value="False" />
+            </Style>
+            <Style Selector="^:pointerover /template/ Grid#PART_ColumnHeaderRoot">
+                <Setter Property="Background" Value="{StaticResource TransparentBrush}" />
+            </Style>
+        </Style>
+
+        <Style Selector="^ TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource LightGreyForegroundBrush}" />
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+
+        <Style Selector="^ DataGridCell">
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="{StaticResource GreyBrush}" />
+            <Setter Property="Padding" Value="0,0" />
+            <Setter Property="Background" Value="{StaticResource TransparentBrush}" />
+
+            <Style Selector="^:current /template/ Rectangle#CurrencyVisual">
+                <Setter Property="IsVisible" Value="False" />
+            </Style>
+            <Style Selector="^:focus /template/ Grid#FocusVisual">
+                <Setter Property="IsVisible" Value="False" />
+            </Style>
+            <Style Selector="^:invalid /template/ Rectangle#InvalidVisualElement">
+                <Setter Property="IsVisible" Value="False" />
+            </Style>
+        </Style>
+
+        <Style Selector="^ DataGridRow">
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Margin" Value="0 0" />
+            <Setter Property="Foreground" Value="{StaticResource LightGreyForegroundBrush}" />
+            <Setter Property="Background" Value="{StaticResource TransparentBrush}" />
+            <Setter Property="Cursor" Value="Hand" />
+
+            <Style Selector="^ /template/ Rectangle#BackgroundRectangle">
+                <Setter Property="RadiusX" Value="5" />
+                <Setter Property="RadiusY" Value="5" />
+                <Setter Property="StrokeThickness" Value="0" />
+                <Setter Property="Fill" Value="{StaticResource TransparentBrush}" />
+            </Style>
+
+            <Style Selector="^:selected /template/ Rectangle#BackgroundRectangle">
+                <Setter Property="Fill" Value="{StaticResource VioletBrush}" />
+                <Setter Property="Opacity" Value="0.3" />
+                <Setter Property="Stroke" Value="{StaticResource VioletBrush}" />
+                <Setter Property="StrokeThickness" Value="1" />
+            </Style>
+
+            <Style Selector="^:pointerover /template/ Rectangle#BackgroundRectangle">
+                <Setter Property="Fill" Value="{StaticResource VioletBrush}" />
+                <Setter Property="Opacity" Value="0.2" />
+                <Setter Property="Stroke" Value="{StaticResource VioletBrush}" />
+                <Setter Property="StrokeThickness" Value="1" />
+            </Style>
+        </Style>
+    </Style>
+</Styles>

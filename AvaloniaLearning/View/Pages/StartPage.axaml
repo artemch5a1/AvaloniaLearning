@@ -15,7 +15,9 @@
 				   HorizontalAlignment="Center"
 				   FontSize="22"
 				   FontFamily="Times"
-				   Margin="0 0 0 10">
+				   Margin="0 0 0 10"
+				   Foreground="Black"
+				   FontWeight="Bold">
 			Добро пожаловать!
 		</TextBlock>
 

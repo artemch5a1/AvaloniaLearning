@@ -8,57 +8,20 @@
              x:Class="AvaloniaLearning.View.Pages.MainPage"
 			 x:DataType="vm:MainPageViewModel"
 			 Background="{Binding Background, RelativeSource={RelativeSource AncestorType=Window}}">
-	<Grid RowDefinitions="*, *, *, *"
+	<Grid RowDefinitions="*, *"
 		  HorizontalAlignment="Center"
 		  VerticalAlignment="Center">
-		<TextBlock Grid.Row="0"
-				   HorizontalAlignment="Center"
-				   FontSize="22"
-				   FontFamily="Times"
-				   Margin="0 0 0 10">
-			Пшел отсюда!
-		</TextBlock>
-		
-		<GridSplitter Background="Gray" 
-					  Grid.Row="1"
-					  Width="300"
-					  CornerRadius="20"/>
-		
-		<Button Grid.Row="2" 
-				HorizontalAlignment="Center"
-				FontSize="22"
-				FontFamily="Times"
-				Width="200"
-				HorizontalContentAlignment="Center"
-				Background="Aqua"
-				CornerRadius="20"
-				Margin="0 10 0 10"
-			Command="{Binding NavToBack}">
-			Назад
-		</Button>
-
-		<ListBox Grid.Row="3"
-				 ItemsSource="{Binding Users}">
-			<ListBox.ItemTemplate>
-				<DataTemplate>
-					<StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal" Spacing="8">
-						<TextBlock Text="{Binding Name}"
-								   FontSize="16"
-								   FontWeight="SemiBold"
-								   Foreground="#212529"/>
-
-						<TextBlock Text="{Binding Surname}"
-								   FontSize="16"
-								   FontWeight="SemiBold"
-								   Foreground="#212529"/>
-						
-						<TextBlock Text="{Binding Email}"
-								   FontSize="16"
-								   FontWeight="SemiBold"
-								   Foreground="#212529"/>
-					</StackPanel>
-				</DataTemplate>
-			</ListBox.ItemTemplate>
-		</ListBox>
+		<DataGrid Classes="DataGridMain"
+				  ItemsSource="{Binding Users}"
+				  >
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Фамилия"
+									Binding="{Binding Surname}"/>
+				<DataGridTextColumn Header="Имя"
+									Binding="{Binding Name}"/>
+				<DataGridTextColumn Header="Имя"
+									Binding="{Binding Email}"/>
+			</DataGrid.Columns>
+		</DataGrid>
 	</Grid>
 </UserControl>
