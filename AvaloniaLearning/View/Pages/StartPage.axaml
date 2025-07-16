@@ -37,6 +37,21 @@
 				Margin="0 10 0 10"
 				Command="{Binding NavToMain}">
 			Войти
+			
+			<Button.Styles>
+			<!-- Базовый стиль (необязательно, если уже задан через свойства кнопки) -->
+			<Style Selector="Button">
+				<Setter Property="Background" Value="Aqua"/>
+				<Setter Property="Foreground" Value="Black"/>
+			</Style>
+
+			<!-- Стиль при наведении -->
+			<Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+				<Setter Property="Background" Value="{StaticResource BlackVioletBrush}"/>
+				<Setter Property="Foreground" Value="{StaticResource WhiteBrush}"/>
+			</Style>
+		</Button.Styles>
+			
 		</Button>
 	</Grid>
 </UserControl>

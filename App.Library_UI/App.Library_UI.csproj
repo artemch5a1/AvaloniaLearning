@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <AvaloniaXaml Remove="Assets\Styles\ButtonStyles.axaml" />
     <AvaloniaXaml Remove="Assets\Styles\ColorDictionary.axaml" />
     <AvaloniaXaml Remove="Assets\Styles\DataGridStyles.axaml" />
   </ItemGroup>
@@ -22,6 +23,7 @@
     <PackageReference Include="Avalonia.ReactiveUI" Version="11.3.2" />
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.3.2" />
+    <PackageReference Include="Material.Icons.Avalonia" Version="2.4.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,6 +32,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <AvaloniaResource Update="Assets\Styles\ButtonStyles.axaml">
+      <SubType>Designer</SubType>
+    </AvaloniaResource>
     <AvaloniaResource Update="Assets\Styles\ColorDictionary.axaml">
       <SubType>Designer</SubType>
     </AvaloniaResource>

@@ -8,10 +8,26 @@
              x:Class="AvaloniaLearning.View.Pages.MainPage"
 			 x:DataType="vm:MainPageViewModel"
 			 Background="{Binding Background, RelativeSource={RelativeSource AncestorType=Window}}">
-	<Grid RowDefinitions="*, *"
+	<Grid RowDefinitions="Auto, Auto, *"
 		  HorizontalAlignment="Center"
-		  VerticalAlignment="Center">
-		<DataGrid Classes="DataGridMain"
+		  Margin="0 100 0 0">
+
+		<TextBlock Text="Список пользователей"
+               FontSize="40"
+               FontWeight="Bold"
+               HorizontalAlignment="Left"
+               Margin="0,0,0,10"
+			   Grid.Row="0"
+			   Foreground="Black"
+			   />
+
+		<Button Classes="GoBack"
+        Command="{Binding NavToBack}"
+				Grid.Row="1"
+			Margin="0,0,0,10"/>
+		
+		<DataGrid Grid.Row="2"
+			      Classes="DataGridMain"
 				  ItemsSource="{Binding Users}"
 				  >
 			<DataGrid.Columns>
