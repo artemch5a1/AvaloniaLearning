@@ -15,22 +15,23 @@ namespace AvaloniaLearning.DataServices
         private readonly string _filePath;
         private const char Separator = ';';
 
-        public UserService(string filePath)
+        public UserService()
         {
-            _filePath = filePath;
+            _filePath = "Users.csv";
 
             if (!File.Exists(_filePath))
             {
                 File.WriteAllText(
                     _filePath,
-                    $"Id{Separator}Name{Separator}Surname{Separator}Email\n"
+                    $"Id{Separator}Name{Separator}Surname{Separator}Email\n",
+                    Encoding.UTF8
                 );
             }
         }
 
         public List<User> GetAllUsers()
         {
-            return File.ReadAllLines(_filePath)
+            return File.ReadAllLines(_filePath, Encoding.UTF8)
                 .Skip(1)
                 .Where(line => !string.IsNullOrWhiteSpace(line))
                 .Select(ParseLine)
@@ -50,7 +51,7 @@ namespace AvaloniaLearning.DataServices
 
             string line = $"{user.Id}{Separator}{user.Name}{Separator}{user.Email}";
 
-            File.AppendAllLines(_filePath, new[] { line });
+            File.AppendAllLines(_filePath, new[] { line }, Encoding.UTF8);
         }
 
         public bool UpdateUser(User user)
@@ -103,7 +104,7 @@ namespace AvaloniaLearning.DataServices
 
             lines.AddRange(users.Select(u => $"{u.Id}{Separator}{u.Name}{Separator}{u.Email}"));
 
-            File.WriteAllLines(_filePath, lines);
+            File.WriteAllLines(_filePath, lines, Encoding.UTF8);
         }
     }
 }

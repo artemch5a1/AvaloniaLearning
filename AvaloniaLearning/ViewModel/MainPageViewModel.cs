@@ -1,20 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AvaloniaLearning.DataServices;
+using AvaloniaLearning.Models;
 using AvaloniaLearning.NavigationStore;
 using AvaloniaLearning.NavService;
+using AvaloniaLearning.ServiceAbstractions;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace AvaloniaLearning.ViewModel
 {
     internal partial class MainPageViewModel : ViewModelBase
     {
         private readonly INavigationService _navService;
+        private readonly IUserService _userService;
 
-        public MainPageViewModel(INavigationService navService)
+        [ObservableProperty]
+        private List<User> _users = new();
+
+        private string _errorText = string.Empty;
+
+        public MainPageViewModel(INavigationService navService, IUserService userService)
         {
             _navService = navService;
+            _userService = userService;
+            LoadUsers();
+        }
+
+        private void LoadUsers()
+        {
+            try
+            {
+                Users = _userService.GetAllUsers();
+            }
+            catch (Exception ex)
+            {
+                _errorText = ex.Message;
+                Debug.WriteLine(_errorText);
+            }
         }
 
         public void NavToBack() => _navService.Navigate<StartPageViewModel>();

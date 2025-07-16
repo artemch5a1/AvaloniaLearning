@@ -3,8 +3,10 @@ using System.Xml.Serialization;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using AvaloniaLearning.DataServices;
 using AvaloniaLearning.NavigationStore;
 using AvaloniaLearning.NavService;
+using AvaloniaLearning.ServiceAbstractions;
 using AvaloniaLearning.View.Base;
 using AvaloniaLearning.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
@@ -62,6 +64,7 @@ namespace AvaloniaLearning
         {
             ConfigureViewModelServices(services);
             ConfigureNavigationServices(services);
+            ConfigureOtherSevice(services);
         }
 
         private void ConfigureViewModelServices(IServiceCollection services)
@@ -78,6 +81,11 @@ namespace AvaloniaLearning
             services.AddSingleton<NavStore>();
 
             services.AddSingleton<INavigationService, NavigationService>();
+        }
+
+        private void ConfigureOtherSevice(IServiceCollection services)
+        {
+            services.AddTransient<IUserService, UserService>();
         }
     }
 }

@@ -36,5 +36,29 @@
 			Command="{Binding NavToBack}">
 			Назад
 		</Button>
+
+		<ListBox Grid.Row="3"
+				 ItemsSource="{Binding Users}">
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal" Spacing="8">
+						<TextBlock Text="{Binding Name}"
+								   FontSize="16"
+								   FontWeight="SemiBold"
+								   Foreground="#212529"/>
+
+						<TextBlock Text="{Binding Surname}"
+								   FontSize="16"
+								   FontWeight="SemiBold"
+								   Foreground="#212529"/>
+						
+						<TextBlock Text="{Binding Email}"
+								   FontSize="16"
+								   FontWeight="SemiBold"
+								   Foreground="#212529"/>
+					</StackPanel>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
 	</Grid>
 </UserControl>
