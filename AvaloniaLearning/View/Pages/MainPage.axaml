@@ -35,7 +35,7 @@
 									Binding="{Binding Surname}"/>
 				<DataGridTextColumn Header="Имя"
 									Binding="{Binding Name}"/>
-				<DataGridTextColumn Header="Имя"
+				<DataGridTextColumn Header="Почта"
 									Binding="{Binding Email}"/>
 			</DataGrid.Columns>
 		</DataGrid>
