@@ -26,5 +26,13 @@ namespace AvaloniaLearning.NavService
             ViewModelBase? viewModel = _serviceProvider.GetRequiredService<TViewModel>();
             _navStore.CurrentViewModel = viewModel;
         }
+
+        public void Navigate<TViewModel, TParams>(TParams @params)
+            where TViewModel : ViewModelBase
+        {
+            ViewModelBase? viewModel = _serviceProvider.GetRequiredService<TViewModel>();
+            viewModel.Initialize(@params);
+            _navStore.CurrentViewModel = viewModel;
+        }
     }
 }
