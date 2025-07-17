@@ -27,10 +27,13 @@ namespace AvaloniaLearning.ViewModel
         [ObservableProperty]
         public string _userEmail = string.Empty;
 
+        public RelayCommand NavToBackCommand { get; }
+
         public EditPageViewModel(INavigationService navigationService, IUserService userService)
         {
             _navigationService = navigationService;
             _userService = userService;
+            NavToBackCommand = new RelayCommand(NavigateBack);
         }
 
         protected override void InitializeParams<T>(T @params)
