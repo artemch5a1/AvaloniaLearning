@@ -10,6 +10,7 @@ using AvaloniaLearning.NavigationStore;
 using AvaloniaLearning.NavService;
 using AvaloniaLearning.ServiceAbstractions;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace AvaloniaLearning.ViewModel
 {
@@ -43,6 +44,13 @@ namespace AvaloniaLearning.ViewModel
             }
         }
 
-        public void NavToBack() => _navService.Navigate<StartPageViewModel>();
+        [RelayCommand]
+        private void NavToBack() => _navService.Navigate<StartPageViewModel>();
+
+        [RelayCommand]
+        private void NavToAddUser()
+        {
+
+        }
     }
 }

@@ -3,7 +3,13 @@
 		xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia">
   <Design.PreviewWith>
     <Border Padding="20">
-      <Button Classes="GoBack"/>
+		<StackPanel>
+			<Button Classes="GoBack"/>
+			<Button Content="Main" 
+					Classes="Main"
+					Margin="0 20 0 0"/>
+		</StackPanel>
+      
     </Border>
   </Design.PreviewWith>
 
@@ -31,4 +37,18 @@
 			</ControlTemplate>
 		</Setter>
 	</Style>
+
+	<Style Selector="Button.Main">
+		<Setter Property="Background" Value="Aqua"/>
+		<Setter Property="FontSize" Value="22"/>
+		<Setter Property="FontFamily" Value="Times"/>
+		<Setter Property="CornerRadius" Value="20"/>
+		<Setter Property="Padding" Value="25 5 25 5"/>
+		<Setter Property="HorizontalContentAlignment" Value="Center"/>
+		<Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Background" Value="{StaticResource BlackVioletBrush}"/>
+			<Setter Property="Foreground" Value="{StaticResource WhiteBrush}"/>
+		</Style>
+	</Style>
+	
 </Styles>
