@@ -37,6 +37,7 @@
 		<DataGrid Grid.Row="2"
 			      Classes="DataGridMain"
 				  ItemsSource="{Binding Users}"
+				  x:Name="DataGridUsers"
 				  >
 			<DataGrid.Columns>
 				<DataGridTextColumn Header="Фамилия"
@@ -52,7 +53,10 @@
 								<Button Classes="InfoItem"
 										Margin="20 0 10 0"/>
 								<Button Classes="EditButton"
-										Margin="0 0 10 0"/>
+										Margin="0 0 10 0"
+										Command="{Binding #DataGridUsers.DataContext.NavToEditUserCommand}"
+										CommandParameter="{Binding Id}"
+										/>
 								<Button Classes="DeleteButton"
 										Margin="0 0 10 0"/>
 							</StackPanel>

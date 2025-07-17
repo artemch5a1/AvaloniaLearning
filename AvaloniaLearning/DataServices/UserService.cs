@@ -49,7 +49,8 @@ namespace AvaloniaLearning.DataServices
 
             user.Id = users.Any() ? users.Max(u => u.Id) + 1 : 1;
 
-            string line = $"{user.Id}{Separator}{user.Name}{Separator}{user.Email}";
+            string line =
+                $"{user.Id}{Separator}{user.Name}{Separator}{user.Surname}{Separator}{user.Email}";
 
             File.AppendAllLines(_filePath, new[] { line }, Encoding.UTF8);
         }
@@ -100,9 +101,13 @@ namespace AvaloniaLearning.DataServices
 
         private void WriteAll(List<User> users)
         {
-            var lines = new List<string> { $"Id{Separator}Name{Separator}Email" };
+            var lines = new List<string> { $"Id{Separator}Name{Separator}Surname{Separator}Email" };
 
-            lines.AddRange(users.Select(u => $"{u.Id}{Separator}{u.Name}{Separator}{u.Email}"));
+            lines.AddRange(
+                users.Select(u =>
+                    $"{u.Id}{Separator}{u.Name}{Separator}{u.Surname}{Separator}{u.Email}"
+                )
+            );
 
             File.WriteAllLines(_filePath, lines, Encoding.UTF8);
         }

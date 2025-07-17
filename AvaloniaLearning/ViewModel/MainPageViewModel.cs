@@ -48,6 +48,12 @@ namespace AvaloniaLearning.ViewModel
         private void NavToBack() => _navService.Navigate<StartPageViewModel>();
 
         [RelayCommand]
+        private void NavToEditUser(int id)
+        {
+            _navService.Navigate<EditPageViewModel, int>(id);
+        }
+
+        [RelayCommand]
         private void NavToAddUser()
         {
 
