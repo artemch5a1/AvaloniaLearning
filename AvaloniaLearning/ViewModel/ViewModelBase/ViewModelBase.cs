@@ -16,12 +16,12 @@ namespace AvaloniaLearning.ViewModel
 
         protected virtual void InitializeParams<T>(T @params) { }
 
-        protected T GetType<T>(object? sender)
+        protected T GetType<T>(object? @params)
         {
-            if (sender is T reqierd)
-                return reqierd;
+            if (@params is T required)
+                return required;
             else
-                throw new ArgumentException("Переданный тип не соответсвует ожидаемому");
+                throw new ArgumentException("The passed type does not match the expected one");
         }
     }
 }
