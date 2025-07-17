@@ -50,7 +50,11 @@
 						<DataTemplate>
 							<StackPanel Orientation="Horizontal">
 								<Button Classes="InfoItem"
-										Margin="20 0 0 0"/>
+										Margin="20 0 10 0"/>
+								<Button Classes="EditButton"
+										Margin="0 0 10 0"/>
+								<Button Classes="DeleteButton"
+										Margin="0 0 10 0"/>
 							</StackPanel>
 						</DataTemplate>
 					</DataGridTemplateColumn.CellTemplate>

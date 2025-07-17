@@ -9,6 +9,8 @@
 					Classes="Main"
 					Margin="0 20 0 20"/>
 			<Button Classes="InfoItem"/>
+			<Button Classes="EditButton"/>
+			<Button Classes="DeleteButton"/>
 		</StackPanel>
       
     </Border>
@@ -72,4 +74,44 @@
 		</Setter>
 	</Style>
 
+	<Style Selector="Button.EditButton">
+		<Setter Property="Background" Value="Transparent"/>
+		<Setter Property="BorderThickness" Value="0"/>
+		<Setter Property="Padding" Value="0"/>
+		<Setter Property="Width" Value="20"/>
+		<Setter Property="Height" Value="20"/>
+		<Setter Property="Cursor" Value="Hand"/>
+		<Setter Property="Template">
+			<ControlTemplate>
+				<materialIcons:MaterialIcon
+                    Kind="Edit"
+                    Width="24"
+                    Height="24"
+                    Foreground="Gray"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"/>
+			</ControlTemplate>
+		</Setter>
+	</Style>
+
+	<Style Selector="Button.DeleteButton">
+		<Setter Property="Background" Value="Transparent"/>
+		<Setter Property="BorderThickness" Value="0"/>
+		<Setter Property="Padding" Value="0"/>
+		<Setter Property="Width" Value="20"/>
+		<Setter Property="Height" Value="20"/>
+		<Setter Property="Cursor" Value="Hand"/>
+		<Setter Property="Template">
+			<ControlTemplate>
+				<materialIcons:MaterialIcon
+                    Kind="Delete"
+                    Width="24"
+                    Height="24"
+                    Foreground="Red"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"/>
+			</ControlTemplate>
+		</Setter>
+	</Style>
+	
 </Styles>
