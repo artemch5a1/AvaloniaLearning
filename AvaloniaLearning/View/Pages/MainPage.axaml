@@ -45,6 +45,16 @@
 									Binding="{Binding Name}"/>
 				<DataGridTextColumn Header="Почта"
 									Binding="{Binding Email}"/>
+				<DataGridTemplateColumn Header="Действия">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<StackPanel Orientation="Horizontal">
+								<Button Classes="InfoItem"
+										Margin="20 0 0 0"/>
+							</StackPanel>
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
 			</DataGrid.Columns>
 		</DataGrid>
 	</Grid>

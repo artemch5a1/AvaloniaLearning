@@ -7,7 +7,8 @@
 			<Button Classes="GoBack"/>
 			<Button Content="Main" 
 					Classes="Main"
-					Margin="0 20 0 0"/>
+					Margin="0 20 0 20"/>
+			<Button Classes="InfoItem"/>
 		</StackPanel>
       
     </Border>
@@ -50,5 +51,25 @@
 			<Setter Property="Foreground" Value="{StaticResource WhiteBrush}"/>
 		</Style>
 	</Style>
-	
+
+	<Style Selector="Button.InfoItem">
+		<Setter Property="Background" Value="Transparent"/>
+		<Setter Property="BorderThickness" Value="0"/>
+		<Setter Property="Padding" Value="0"/>
+		<Setter Property="Width" Value="20"/>
+		<Setter Property="Height" Value="20"/>
+		<Setter Property="Cursor" Value="Hand"/>
+		<Setter Property="Template">
+			<ControlTemplate>
+				<materialIcons:MaterialIcon
+                    Kind="ListBox"
+                    Width="24"
+                    Height="24"
+                    Foreground="{StaticResource VioletBrush}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"/>
+			</ControlTemplate>
+		</Setter>
+	</Style>
+
 </Styles>
