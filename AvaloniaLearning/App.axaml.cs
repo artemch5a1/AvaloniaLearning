@@ -74,6 +74,8 @@ namespace AvaloniaLearning
             services.AddTransient<MainPageViewModel>();
 
             services.AddTransient<StartPageViewModel>();
+
+            services.AddTransient<EditPageViewModel>();
         }
 
         private void ConfigureNavigationServices(IServiceCollection services)

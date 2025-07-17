@@ -2,8 +2,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="clr-namespace:AvaloniaLearning.ViewModel"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="AvaloniaLearning.View.Pages.EditPage">
+             x:Class="AvaloniaLearning.View.Pages.EditPage"
+			 x:DataType="vm:EditPageViewModel">
 	<StackPanel HorizontalAlignment="Center"
 				VerticalAlignment="Center">
 		<TextBox Watermark="Новое имя"
@@ -13,7 +15,7 @@
 				 BorderBrush="Aqua"
 				 CornerRadius="10"
 				 BorderThickness="2"
-				 Text=""
+				 Text="{Binding UserName}"
 				 Margin="0 0 0 20"
 				 TextWrapping="Wrap"
 				 MaxLength="30"/>
@@ -24,7 +26,7 @@
 				 BorderBrush="Aqua"
 				 CornerRadius="10"
 				 BorderThickness="2"
-				 Text=""
+				 Text="{Binding UserSurname}"
 				 Margin="0 0 0 20"
 				 TextWrapping="Wrap"
 				 MaxLength="30"/>
@@ -35,7 +37,7 @@
 				 BorderBrush="Aqua"
 				 CornerRadius="10"
 				 BorderThickness="2"
-				 Text=""
+				 Text="{Binding UserEmail}"
 				 Margin="0 0 0 20"
 				 TextWrapping="Wrap"
 				 MaxLength="30"/>
@@ -43,6 +45,7 @@
 				Classes="Main"
 				HorizontalAlignment="Center"
 				FontWeight="Bold"
-				FontSize="20"/>
+				FontSize="20"
+				Command="{Binding UpdateUserCommand}"/>
 	</StackPanel>
 </UserControl>

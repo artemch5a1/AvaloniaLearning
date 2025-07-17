@@ -16,6 +16,9 @@
 		<DataTemplate DataType="vm:MainPageViewModel">
 			<view:MainPage/>
 		</DataTemplate>
+		<DataTemplate DataType="vm:EditPageViewModel">
+			<view:EditPage/>
+		</DataTemplate>
 	</Window.DataTemplates>
 	
 	<ContentControl Content="{Binding CurrentViewModel}"/>
