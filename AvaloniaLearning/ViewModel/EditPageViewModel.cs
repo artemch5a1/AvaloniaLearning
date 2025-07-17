@@ -38,15 +38,8 @@ namespace AvaloniaLearning.ViewModel
 
         protected override void InitializeParams<T>(T @params)
         {
-            if(@params is int id)
-            {
-                _idUser = id;
-                LoadUser();
-            }
-            else
-            {
-                throw new ArgumentException("Несоответсвие типов");
-            }
+            _idUser = GetType<int>(@params);
+            LoadUser();
         }
 
         private void LoadUser()
