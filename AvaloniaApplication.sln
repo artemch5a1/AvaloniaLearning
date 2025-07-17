@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvaloniaApp", "AvaloniaLear
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.Library_UI", "App.Library_UI\App.Library_UI.csproj", "{B53EDBBD-1C69-6971-C2CF-6CD2B5ECCE95}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvaloniaApp.Tests", "AvaloniaApp.Tests\AvaloniaApp.Tests.csproj", "{160F3E6C-2A11-4CA1-95D1-08703125C15B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{B53EDBBD-1C69-6971-C2CF-6CD2B5ECCE95}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B53EDBBD-1C69-6971-C2CF-6CD2B5ECCE95}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B53EDBBD-1C69-6971-C2CF-6CD2B5ECCE95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{160F3E6C-2A11-4CA1-95D1-08703125C15B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{160F3E6C-2A11-4CA1-95D1-08703125C15B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{160F3E6C-2A11-4CA1-95D1-08703125C15B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{160F3E6C-2A11-4CA1-95D1-08703125C15B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

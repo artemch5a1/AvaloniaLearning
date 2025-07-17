@@ -4,15 +4,15 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AvaloniaLearning.DataServices;
-using AvaloniaLearning.Models;
-using AvaloniaLearning.NavigationStore;
-using AvaloniaLearning.NavService;
-using AvaloniaLearning.ServiceAbstractions;
+using AvaloniaApp.DataServices;
+using AvaloniaApp.Models;
+using AvaloniaApp.NavigationStore;
+using AvaloniaApp.NavService;
+using AvaloniaApp.ServiceAbstractions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
-namespace AvaloniaLearning.ViewModel
+namespace AvaloniaApp.ViewModel
 {
     internal partial class MainPageViewModel : ViewModelBase
     {

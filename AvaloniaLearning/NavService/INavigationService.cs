@@ -1,6 +1,6 @@
-﻿using AvaloniaLearning.ViewModel;
+﻿using AvaloniaApp.ViewModel;
 
-namespace AvaloniaLearning.NavService
+namespace AvaloniaApp.NavService
 {
     public interface INavigationService
     {

@@ -3,16 +3,16 @@ using System.Xml.Serialization;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using AvaloniaLearning.DataServices;
-using AvaloniaLearning.NavigationStore;
-using AvaloniaLearning.NavService;
-using AvaloniaLearning.ServiceAbstractions;
-using AvaloniaLearning.View.Base;
-using AvaloniaLearning.ViewModel;
+using AvaloniaApp.DataServices;
+using AvaloniaApp.NavigationStore;
+using AvaloniaApp.NavService;
+using AvaloniaApp.ServiceAbstractions;
+using AvaloniaApp.View.Base;
+using AvaloniaApp.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 using Splat.Microsoft.Extensions.DependencyInjection;
 
-namespace AvaloniaLearning
+namespace AvaloniaApp
 {
     public partial class App : Application
     {

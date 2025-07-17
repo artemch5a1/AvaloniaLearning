@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AvaloniaLearning.Models;
-using AvaloniaLearning.NavService;
-using AvaloniaLearning.ServiceAbstractions;
+using AvaloniaApp.Models;
+using AvaloniaApp.NavService;
+using AvaloniaApp.ServiceAbstractions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
-namespace AvaloniaLearning.ViewModel
+namespace AvaloniaApp.ViewModel
 {
     public partial class EditPageViewModel : ViewModelBase
     {

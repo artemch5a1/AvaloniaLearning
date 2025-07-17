@@ -1,4 +1,4 @@
-﻿namespace AvaloniaLearning.Models
+﻿namespace AvaloniaApp.Models
 {
     public class User
     {

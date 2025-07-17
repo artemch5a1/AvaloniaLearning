@@ -2,7 +2,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace AvaloniaLearning.View.Pages;
+namespace AvaloniaApp.View.Pages;
 
 public partial class EditPage : UserControl
 {

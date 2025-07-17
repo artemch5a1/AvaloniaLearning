@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AvaloniaLearning.NavigationStore;
-using AvaloniaLearning.ViewModel;
+using AvaloniaApp.NavigationStore;
+using AvaloniaApp.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace AvaloniaLearning.NavService
+namespace AvaloniaApp.NavService
 {
     public class NavigationService : INavigationService
     {

@@ -2,9 +2,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 xmlns:vm="clr-namespace:AvaloniaLearning.ViewModel"
+			 xmlns:vm="clr-namespace:AvaloniaApp.ViewModel"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="AvaloniaLearning.View.Pages.EditPage"
+             x:Class="AvaloniaApp.View.Pages.EditPage"
 			 x:DataType="vm:EditPageViewModel">
 	<StackPanel HorizontalAlignment="Center"
 				VerticalAlignment="Center">

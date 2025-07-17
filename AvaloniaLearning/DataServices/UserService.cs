@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Avalonia.Controls.Shapes;
-using AvaloniaLearning.Models;
-using AvaloniaLearning.ServiceAbstractions;
+using AvaloniaApp.Models;
+using AvaloniaApp.ServiceAbstractions;
 
-namespace AvaloniaLearning.DataServices
+namespace AvaloniaApp.DataServices
 {
     public class UserService : IUserService
     {

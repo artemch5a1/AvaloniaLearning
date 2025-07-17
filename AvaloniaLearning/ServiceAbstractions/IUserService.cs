@@ -1,7 +1,7 @@
-﻿using AvaloniaLearning.Models;
+﻿using AvaloniaApp.Models;
 using System.Collections.Generic;
 
-namespace AvaloniaLearning.ServiceAbstractions
+namespace AvaloniaApp.ServiceAbstractions
 {
     public interface IUserService
     {

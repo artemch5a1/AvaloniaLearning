@@ -1,7 +1,7 @@
 ﻿using System;
 using Avalonia;
 
-namespace AvaloniaLearning
+namespace AvaloniaApp
 {
     internal class Program
     {
