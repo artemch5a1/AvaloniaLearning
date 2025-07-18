@@ -1,5 +1,6 @@
 ﻿using AvaloniaApp.NavigationStore;
 using AvaloniaApp.NavService;
+using AvaloniaApp.Tests.TestHelper;
 using AvaloniaApp.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
@@ -14,11 +15,13 @@ namespace AvaloniaApp.Tests
         {
             ServiceCollection serviceDescriptors = new ServiceCollection();
 
-            serviceDescriptors.AddTransient<ViewModelBase>();
+            serviceDescriptors.AddScoped<FakeViewModel>();
 
-            serviceDescriptors.AddSingleton<NavigationService>();
+            serviceDescriptors.AddScoped<ViewModelBase>();
 
-            serviceDescriptors.AddSingleton<NavStore>();
+            serviceDescriptors.AddScoped<NavigationService>();
+
+            serviceDescriptors.AddScoped<NavStore>();
 
             _serviceProvider = serviceDescriptors.BuildServiceProvider();
         }
@@ -29,13 +32,26 @@ namespace AvaloniaApp.Tests
             NavigationService navigationService =
                 _serviceProvider.GetRequiredService<NavigationService>();
 
-            Assert.NotNull(navigationService);
-
             navigationService.Navigate<ViewModelBase>();
 
             NavStore navStore = _serviceProvider.GetRequiredService<NavStore>();
 
             Assert.True(navStore.CurrentViewModel!.GetType() == typeof(ViewModelBase));
+        }
+
+        [Fact]
+        public void Navigate_NavigateWithParams_ShouldCallInitializeWithRightParams()
+        {
+            NavigationService navigationService =
+                _serviceProvider.GetRequiredService<NavigationService>();
+
+            (int, string) @param = (12, "string");
+
+            navigationService.Navigate<FakeViewModel, (int, string)>(@param);
+
+            FakeViewModel fakeView = _serviceProvider.GetRequiredService<FakeViewModel>();
+
+            Assert.True(fakeView.itemParam == @param);
         }
     }
 }
