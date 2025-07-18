@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AvaloniaApp.ServiceAbstractions;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace AvaloniaApp.ViewModel
 {
-    public class ViewModelBase : ObservableObject
+    public class ViewModelBase : ObservableObject, IViewModelBase
     {
         public void Initialize<T>(T @params)
         {
