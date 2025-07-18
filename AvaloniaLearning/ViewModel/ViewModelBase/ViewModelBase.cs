@@ -17,12 +17,17 @@ namespace AvaloniaApp.ViewModel
 
         protected virtual void InitializeParams<T>(T @params) { }
 
-        protected T GetType<T>(object? @params)
+        protected T GetAs<T>(object? @params)
         {
-            if (@params is T required)
-                return required;
-            else
-                throw new ArgumentException("The passed type does not match the expected one");
+            if (@params is null && default(T) is null)
+                return default!;
+
+            if (@params is T t)
+                return t;
+
+            throw new ArgumentException(
+                $"Expected type {typeof(T).Name}, but got {@params?.GetType().Name ?? "null"}"
+            );
         }
     }
 }

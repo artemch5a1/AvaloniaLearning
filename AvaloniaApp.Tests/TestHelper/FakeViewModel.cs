@@ -13,7 +13,7 @@ namespace AvaloniaApp.Tests.TestHelper
 
         protected override void InitializeParams<T>(T @params)
         {
-            itemParam = GetType<(int, string)>(@params);
+            itemParam = GetAs<(int, string)>(@params);
         }
     }
 }

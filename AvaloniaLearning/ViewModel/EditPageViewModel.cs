@@ -38,7 +38,7 @@ namespace AvaloniaApp.ViewModel
 
         protected override void InitializeParams<T>(T @params)
         {
-            _idUser = GetType<int>(@params);
+            _idUser = GetAs<int>(@params);
             LoadUser();
         }
 
