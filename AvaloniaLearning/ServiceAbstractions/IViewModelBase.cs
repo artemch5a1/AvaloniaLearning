@@ -1,4 +1,4 @@
-﻿namespace AvaloniaApp.ViewModel
+﻿namespace AvaloniaApp.ServiceAbstractions
 {
     public interface IViewModelBase
     {
