@@ -2,6 +2,13 @@
 {
     public class NavigationServiceTests
     {
+        
+
+        NavigationServiceTests() 
+        {
+
+        }
+
         [Fact]
         public void Test1()
         {
