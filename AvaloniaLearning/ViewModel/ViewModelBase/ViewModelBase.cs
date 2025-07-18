@@ -8,7 +8,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace AvaloniaApp.ViewModel
 {
-    public class ViewModelBase : ObservableObject, IViewModelBase
+    public class ViewModelBase : ObservableObject
     {
         public void Initialize<T>(T @params)
         {
