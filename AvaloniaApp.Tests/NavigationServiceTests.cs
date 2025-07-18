@@ -51,7 +51,23 @@ namespace AvaloniaApp.Tests
 
             FakeViewModel fakeView = _serviceProvider.GetRequiredService<FakeViewModel>();
 
+            NavStore navStore = _serviceProvider.GetRequiredService<NavStore>();
+
             Assert.True(fakeView.itemParam == @param);
+            Assert.True(navStore.CurrentViewModel!.GetType() == typeof(FakeViewModel));
+        }
+
+        [Fact]
+        public void Navigate_NavigateWithWrongTypeParams_ShouldThrowArgumentException()
+        {
+            NavigationService navigationService =
+                _serviceProvider.GetRequiredService<NavigationService>();
+
+            int @param = 12;
+
+            Assert.Throws<ArgumentException>(() =>
+                navigationService.Navigate<FakeViewModel, int>(@param)
+            );
         }
     }
 }
