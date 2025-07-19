@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using AvaloniaApp.NavigationStore;
 using AvaloniaApp.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +17,10 @@ namespace AvaloniaApp.NavService
     {
         private readonly NavStore _navStore;
         private readonly IServiceProvider _serviceProvider;
+
+        private Stack<ViewModelBase> _historyNavigation = new Stack<ViewModelBase>();
+
+        private bool _historyIsNotEmpty => _historyNavigation.Count > 0;
 
         /// <summary>
         /// Инициализирует новый экземпляр сервиса навигации.
@@ -39,7 +44,7 @@ namespace AvaloniaApp.NavService
             where TViewModel : ViewModelBase
         {
             ViewModelBase? viewModel = _serviceProvider.GetRequiredService<TViewModel>();
-            _navStore.CurrentViewModel = viewModel;
+            PushToHistoryAndSetViewModel(viewModel);
         }
 
         /// <summary>
@@ -59,6 +64,25 @@ namespace AvaloniaApp.NavService
         {
             ViewModelBase? viewModel = _serviceProvider.GetRequiredService<TViewModel>();
             viewModel.Initialize(@params);
+            PushToHistoryAndSetViewModel(viewModel);
+        }
+
+        public void NavigateBack()
+        {
+            if(!_historyIsNotEmpty)
+            {
+                return;
+            }
+
+            ViewModelBase viewModel = _historyNavigation.Pop();
+
+            _navStore.CurrentViewModel = viewModel;
+        }
+
+        private void PushToHistoryAndSetViewModel(ViewModelBase viewModel)
+        {
+            if (_navStore.CurrentViewModel != null)
+                _historyNavigation.Push(_navStore.CurrentViewModel);
             _navStore.CurrentViewModel = viewModel;
         }
     }
