@@ -1,0 +1,117 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia">
+  <Design.PreviewWith>
+    <Border Padding="20">
+		<StackPanel>
+			<Button Classes="GoBack"/>
+			<Button Content="Main" 
+					Classes="Main"
+					Margin="0 20 0 20"/>
+			<Button Classes="InfoItem"/>
+			<Button Classes="EditButton"/>
+			<Button Classes="DeleteButton"/>
+		</StackPanel>
+      
+    </Border>
+  </Design.PreviewWith>
+
+	<Style Selector="Button.GoBack">
+		<Setter Property="Background" Value="Transparent"/>
+		<Setter Property="BorderThickness" Value="2"/>
+		<Setter Property="BorderBrush" Value="Violet"/>
+		<Setter Property="Padding" Value="0"/>
+		<Setter Property="Width" Value="100"/>
+		<Setter Property="Height" Value="55"/>
+		<Setter Property="Cursor" Value="Hand"/>
+		<Setter Property="Template">
+			<ControlTemplate>
+				<Border BorderThickness="{TemplateBinding BorderThickness}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    Background="White"
+                    Padding="0 0 0 0"
+                    CornerRadius="10">
+					<TextBlock Text="Назад"
+							   HorizontalAlignment="Center"
+							   VerticalAlignment="Center"
+							   FontSize="20"
+							   Foreground="{StaticResource VioletBrush}"/>
+				</Border>
+			</ControlTemplate>
+		</Setter>
+	</Style>
+
+	<Style Selector="Button.Main">
+		<Setter Property="Background" Value="Aqua"/>
+		<Setter Property="FontSize" Value="22"/>
+		<Setter Property="FontFamily" Value="Times"/>
+		<Setter Property="CornerRadius" Value="20"/>
+		<Setter Property="Padding" Value="25 5 25 5"/>
+		<Setter Property="HorizontalContentAlignment" Value="Center"/>
+		<Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Background" Value="{StaticResource BlackVioletBrush}"/>
+			<Setter Property="Foreground" Value="{StaticResource WhiteBrush}"/>
+		</Style>
+	</Style>
+
+	<Style Selector="Button.InfoItem">
+		<Setter Property="Background" Value="Transparent"/>
+		<Setter Property="BorderThickness" Value="0"/>
+		<Setter Property="Padding" Value="0"/>
+		<Setter Property="Width" Value="20"/>
+		<Setter Property="Height" Value="20"/>
+		<Setter Property="Cursor" Value="Hand"/>
+		<Setter Property="Template">
+			<ControlTemplate>
+				<materialIcons:MaterialIcon
+                    Kind="ListBox"
+                    Width="24"
+                    Height="24"
+                    Foreground="{StaticResource VioletBrush}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"/>
+			</ControlTemplate>
+		</Setter>
+	</Style>
+
+	<Style Selector="Button.EditButton">
+		<Setter Property="Background" Value="Transparent"/>
+		<Setter Property="BorderThickness" Value="0"/>
+		<Setter Property="Padding" Value="0"/>
+		<Setter Property="Width" Value="20"/>
+		<Setter Property="Height" Value="20"/>
+		<Setter Property="Cursor" Value="Hand"/>
+		<Setter Property="Template">
+			<ControlTemplate>
+				<materialIcons:MaterialIcon
+                    Kind="Edit"
+                    Width="24"
+                    Height="24"
+                    Foreground="Gray"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"/>
+			</ControlTemplate>
+		</Setter>
+	</Style>
+
+	<Style Selector="Button.DeleteButton">
+		<Setter Property="Background" Value="Transparent"/>
+		<Setter Property="BorderThickness" Value="0"/>
+		<Setter Property="Padding" Value="0"/>
+		<Setter Property="Width" Value="20"/>
+		<Setter Property="Height" Value="20"/>
+		<Setter Property="Cursor" Value="Hand"/>
+		<Setter Property="Template">
+			<ControlTemplate>
+				<materialIcons:MaterialIcon
+                    Kind="Delete"
+                    Width="24"
+                    Height="24"
+                    Foreground="Red"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"/>
+			</ControlTemplate>
+		</Setter>
+	</Style>
+	
+</Styles>

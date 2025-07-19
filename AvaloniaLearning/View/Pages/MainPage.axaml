@@ -2,39 +2,68 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 xmlns:vm="clr-namespace:AvaloniaLearning.ViewModel"
-		     xmlns:view="clr-namespace:AvaloniaLearning.View.Pages"
+			 xmlns:vm="clr-namespace:AvaloniaApp.ViewModel"
+		     xmlns:view="clr-namespace:AvaloniaApp.View.Pages"
              mc:Ignorable="d" d:DesignWidth="1920" d:DesignHeight="1080"
-             x:Class="AvaloniaLearning.View.Pages.MainPage"
+             x:Class="AvaloniaApp.View.Pages.MainPage"
 			 x:DataType="vm:MainPageViewModel"
 			 Background="{Binding Background, RelativeSource={RelativeSource AncestorType=Window}}">
-	<Grid RowDefinitions="*, *, *, *"
+	<Grid RowDefinitions="Auto, Auto, *"
 		  HorizontalAlignment="Center"
-		  VerticalAlignment="Center">
-		<TextBlock Grid.Row="0"
-				   HorizontalAlignment="Center"
-				   FontSize="22"
-				   FontFamily="Times"
-				   Margin="0 0 0 10">
-			Пшел отсюда!
-		</TextBlock>
+		  Margin="0 100 0 0">
+
+		<TextBlock Text="Список пользователей"
+               FontSize="40"
+               FontWeight="Bold"
+               HorizontalAlignment="Left"
+               Margin="0,0,0,10"
+			   Grid.Row="0"
+			   Foreground="Black"
+			   />
+
+		<StackPanel Orientation="Horizontal"
+					Grid.Row="1">
+			<Button Classes="GoBack"
+					Command="{Binding NavToBackCommand}"
+					Margin="0,0,20,10"/>
+
+			<Button Classes="Main"
+					Content="Добавить пользователя"
+					Command="{Binding NavToAddUserCommand}"
+					Margin="0,0,0,10"/>
+		</StackPanel>
 		
-		<GridSplitter Background="Gray" 
-					  Grid.Row="1"
-					  Width="300"
-					  CornerRadius="20"/>
 		
-		<Button Grid.Row="2" 
-				HorizontalAlignment="Center"
-				FontSize="22"
-				FontFamily="Times"
-				Width="200"
-				HorizontalContentAlignment="Center"
-				Background="Aqua"
-				CornerRadius="20"
-				Margin="0 10 0 10"
-			Command="{Binding NavToBack}">
-			Назад
-		</Button>
+		<DataGrid Grid.Row="2"
+			      Classes="DataGridMain"
+				  ItemsSource="{Binding Users}"
+				  x:Name="DataGridUsers"
+				  >
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Фамилия"
+									Binding="{Binding Surname}"/>
+				<DataGridTextColumn Header="Имя"
+									Binding="{Binding Name}"/>
+				<DataGridTextColumn Header="Почта"
+									Binding="{Binding Email}"/>
+				<DataGridTemplateColumn Header="Действия">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<StackPanel Orientation="Horizontal">
+								<Button Classes="InfoItem"
+										Margin="20 0 10 0"/>
+								<Button Classes="EditButton"
+										Margin="0 0 10 0"
+										Command="{Binding #DataGridUsers.DataContext.NavToEditUserCommand}"
+										CommandParameter="{Binding Id}"
+										/>
+								<Button Classes="DeleteButton"
+										Margin="0 0 10 0"/>
+							</StackPanel>
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+			</DataGrid.Columns>
+		</DataGrid>
 	</Grid>
 </UserControl>

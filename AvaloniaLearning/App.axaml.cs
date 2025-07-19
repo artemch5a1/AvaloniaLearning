@@ -3,14 +3,16 @@ using System.Xml.Serialization;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using AvaloniaLearning.NavigationStore;
-using AvaloniaLearning.NavService;
-using AvaloniaLearning.ViewModel;
+using AvaloniaApp.DataServices;
+using AvaloniaApp.NavigationStore;
+using AvaloniaApp.NavService;
+using AvaloniaApp.ServiceAbstractions;
+using AvaloniaApp.View.Base;
+using AvaloniaApp.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 using Splat.Microsoft.Extensions.DependencyInjection;
-using AvaloniaLearning.View.Base;
 
-namespace AvaloniaLearning
+namespace AvaloniaApp
 {
     public partial class App : Application
     {
@@ -62,6 +64,7 @@ namespace AvaloniaLearning
         {
             ConfigureViewModelServices(services);
             ConfigureNavigationServices(services);
+            ConfigureOtherSevice(services);
         }
 
         private void ConfigureViewModelServices(IServiceCollection services)
@@ -71,6 +74,8 @@ namespace AvaloniaLearning
             services.AddTransient<MainPageViewModel>();
 
             services.AddTransient<StartPageViewModel>();
+
+            services.AddTransient<EditPageViewModel>();
         }
 
         private void ConfigureNavigationServices(IServiceCollection services)
@@ -78,6 +83,11 @@ namespace AvaloniaLearning
             services.AddSingleton<NavStore>();
 
             services.AddSingleton<INavigationService, NavigationService>();
+        }
+
+        private void ConfigureOtherSevice(IServiceCollection services)
+        {
+            services.AddTransient<IUserService, UserService>();
         }
     }
 }

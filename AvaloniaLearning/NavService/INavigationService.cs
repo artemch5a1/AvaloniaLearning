@@ -1,9 +1,13 @@
-﻿using AvaloniaLearning.ViewModel;
+﻿using AvaloniaApp.ViewModel;
 
-namespace AvaloniaLearning.NavService
+namespace AvaloniaApp.NavService
 {
     public interface INavigationService
     {
-        void Navigate<TViewModel>() where TViewModel : ViewModelBase;
+        void Navigate<TViewModel>()
+            where TViewModel : ViewModelBase;
+
+        void Navigate<TViewModel, TParams>(TParams @params)
+            where TViewModel : ViewModelBase;
     }
 }

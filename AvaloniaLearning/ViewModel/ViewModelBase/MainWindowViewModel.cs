@@ -4,10 +4,10 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AvaloniaLearning.NavigationStore;
+using AvaloniaApp.NavigationStore;
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace AvaloniaLearning.ViewModel
+namespace AvaloniaApp.ViewModel
 {
     public partial class MainWindowViewModel : ViewModelBase
     {

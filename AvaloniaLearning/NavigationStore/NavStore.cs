@@ -4,9 +4,9 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AvaloniaLearning.ViewModel;
+using AvaloniaApp.ViewModel;
 
-namespace AvaloniaLearning.NavigationStore
+namespace AvaloniaApp.NavigationStore
 {
     public class NavStore : INotifyPropertyChanged
     {
