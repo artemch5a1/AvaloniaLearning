@@ -40,7 +40,7 @@ namespace AvaloniaApp.ViewModel
         }
 
         [RelayCommand]
-        private void NavToBack() => _navService.Navigate<StartPageViewModel>();
+        private void NavToBack() => _navService.NavigateBack();
 
         [RelayCommand]
         private void NavToEditUser(int id)

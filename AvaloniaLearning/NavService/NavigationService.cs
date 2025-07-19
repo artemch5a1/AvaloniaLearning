@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using AvaloniaApp.NavigationStore;
 using AvaloniaApp.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,7 +20,11 @@ namespace AvaloniaApp.NavService
         private readonly IServiceProvider _serviceProvider;
 
         private Stack<ViewModelBase> _historyNavigation = new Stack<ViewModelBase>();
+        private readonly int _maxSizeHistory;
 
+        /// <summary>
+        /// Возврашает true если история не пустая
+        /// </summary>
         private bool _historyIsNotEmpty => _historyNavigation.Count > 0;
 
         /// <summary>
@@ -27,10 +32,16 @@ namespace AvaloniaApp.NavService
         /// </summary>
         /// <param name="navStore">Хранилище состояния навигации</param>
         /// <param name="serviceProvider">Провайдер сервисов (DI-контейнер)</param>
-        public NavigationService(NavStore navStore, IServiceProvider serviceProvider)
+        /// <param name="maxSizeHistory">Максимальный размер истории</param>>
+        public NavigationService(
+            NavStore navStore,
+            IServiceProvider serviceProvider,
+            int maxSizeHistory = 20
+        )
         {
             _navStore = navStore;
             _serviceProvider = serviceProvider;
+            _maxSizeHistory = maxSizeHistory;
         }
 
         /// <summary>
@@ -67,9 +78,22 @@ namespace AvaloniaApp.NavService
             PushToHistoryAndSetViewModel(viewModel);
         }
 
+        /// <summary>
+        /// Выполняет переход к предыдущей ViewModel в истории навигации.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// Если история пуста, метод завершается без действий.
+        /// </para>
+        /// <para>
+        /// Текущая ViewModel не добавляется в историю при возврате назад.
+        /// </para>
+        /// Если будет превышен лимит истории, самое раннее использование <see cref="NavigateBack"/>
+        /// перестанет работать из-за очистки последнего элемента истории навигации
+        /// </remarks>
         public void NavigateBack()
         {
-            if(!_historyIsNotEmpty)
+            if (!_historyIsNotEmpty)
             {
                 return;
             }
@@ -79,10 +103,31 @@ namespace AvaloniaApp.NavService
             _navStore.CurrentViewModel = viewModel;
         }
 
+        /// <summary>
+        /// Добавляет текущую ViewModel в историю и устанавливает новую ViewModel.
+        /// </summary>
+        /// <param name="viewModel">Новая ViewModel для перехода</param>
+        /// <remarks>
+        /// <para>
+        /// Если текущая ViewModel в <see cref="_navStore"/> равна null, она не добавляется в историю.
+        /// </para>
+        /// <para>
+        /// При достижении максимального размера истории (<see cref="_maxSizeHistory"/>),
+        /// самая старая запись удаляется.
+        /// </para>
+        /// </remarks>
         private void PushToHistoryAndSetViewModel(ViewModelBase viewModel)
         {
             if (_navStore.CurrentViewModel != null)
+            {
+                if (_maxSizeHistory <= _historyNavigation.Count)
+                {
+                    Queue<ViewModelBase> oldest = new Queue<ViewModelBase>(_historyNavigation);
+                    oldest.Dequeue();
+                    _historyNavigation = new Stack<ViewModelBase>(oldest.Reverse());
+                }
                 _historyNavigation.Push(_navStore.CurrentViewModel);
+            }
             _navStore.CurrentViewModel = viewModel;
         }
     }
