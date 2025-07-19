@@ -1,10 +1,10 @@
-﻿using AvaloniaApp.NavigationStore;
-using AvaloniaApp.ViewModel;
-using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using AvaloniaApp.NavigationStore;
+using AvaloniaApp.ViewModel;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AvaloniaApp.NavService
 {
@@ -123,11 +123,9 @@ namespace AvaloniaApp.NavService
             {
                 if (_maxSizeHistory <= _historyNavigation.Count)
                 {
-                    Queue<ViewModelBase> oldest = new Queue<ViewModelBase>(_historyNavigation);
-                    oldest = new Queue<ViewModelBase>(oldest.Reverse());
-                    oldest.Dequeue();
-                    oldest = new Queue<ViewModelBase>(oldest.Reverse());
-                    _historyNavigation = new Stack<ViewModelBase>(oldest.Reverse());
+                    _historyNavigation = new Stack<ViewModelBase>(_historyNavigation);
+                    _historyNavigation.Pop();
+                    _historyNavigation = new Stack<ViewModelBase>(_historyNavigation);
                 }
                 _historyNavigation.Push(_navStore.CurrentViewModel);
             }
