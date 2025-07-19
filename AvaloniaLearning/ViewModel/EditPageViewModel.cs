@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AvaloniaApp.Models;
+﻿using AvaloniaApp.Models;
 using AvaloniaApp.NavService;
 using AvaloniaApp.ServiceAbstractions;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -45,7 +40,7 @@ namespace AvaloniaApp.ViewModel
         private void LoadUser()
         {
             User? user = _userService.GetUserById(_idUser);
-            if (user != null) 
+            if (user != null)
             {
                 UserName = user.Name;
                 UserSurname = user.Surname;
@@ -56,7 +51,7 @@ namespace AvaloniaApp.ViewModel
         [RelayCommand]
         private void UpdateUser()
         {
-            User user = new User() 
+            User user = new User()
             {
                 Id = _idUser,
                 Name = UserName,
@@ -66,7 +61,7 @@ namespace AvaloniaApp.ViewModel
 
             bool success = _userService.UpdateUser(user);
 
-            if (success) 
+            if (success)
             {
                 NavigateBack();
             }

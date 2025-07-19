@@ -1,5 +1,4 @@
 using System;
-using System.Xml.Serialization;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;

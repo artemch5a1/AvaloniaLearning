@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AvaloniaApp.DataServices;
 using AvaloniaApp.Models;
-using AvaloniaApp.NavigationStore;
 using AvaloniaApp.NavService;
 using AvaloniaApp.ServiceAbstractions;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -54,9 +49,6 @@ namespace AvaloniaApp.ViewModel
         }
 
         [RelayCommand]
-        private void NavToAddUser()
-        {
-
-        }
+        private void NavToAddUser() { }
     }
 }
