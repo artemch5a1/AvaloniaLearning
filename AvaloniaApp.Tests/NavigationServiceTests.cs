@@ -17,6 +17,8 @@ namespace AvaloniaApp.Tests
 
             serviceDescriptors.AddScoped<FakeViewModel>();
 
+            serviceDescriptors.AddScoped<FakeViewModel2>();
+
             serviceDescriptors.AddScoped<ViewModelBase>();
 
             serviceDescriptors.AddScoped<NavigationService>();
@@ -29,11 +31,14 @@ namespace AvaloniaApp.Tests
         [Fact]
         public void Navigate_NavigateToVM_ShouldChangeCurrentVM()
         {
+            //Arrange
             NavigationService navigationService =
                 _serviceProvider.GetRequiredService<NavigationService>();
 
+            //Act
             navigationService.Navigate<ViewModelBase>();
 
+            //Assert
             NavStore navStore = _serviceProvider.GetRequiredService<NavStore>();
 
             Assert.True(navStore.CurrentViewModel!.GetType() == typeof(ViewModelBase));
@@ -42,15 +47,17 @@ namespace AvaloniaApp.Tests
         [Fact]
         public void Navigate_NavigateWithParams_ShouldCallInitializeWithRightParams()
         {
+            //Arrange
             NavigationService navigationService =
                 _serviceProvider.GetRequiredService<NavigationService>();
 
             (int, string) @param = (12, "string");
 
+            //Act
             navigationService.Navigate<FakeViewModel, (int, string)>(@param);
 
+            //Assert
             FakeViewModel fakeView = _serviceProvider.GetRequiredService<FakeViewModel>();
-
             NavStore navStore = _serviceProvider.GetRequiredService<NavStore>();
 
             Assert.True(fakeView.itemParam == @param);
@@ -60,14 +67,38 @@ namespace AvaloniaApp.Tests
         [Fact]
         public void Navigate_NavigateWithWrongTypeParams_ShouldThrowArgumentException()
         {
+            //Arrange
             NavigationService navigationService =
                 _serviceProvider.GetRequiredService<NavigationService>();
 
             int @param = 12;
 
+            //Act & Assert
             Assert.Throws<ArgumentException>(() =>
                 navigationService.Navigate<FakeViewModel, int>(@param)
             );
+        }
+
+        [Fact]
+        public void Navigate_NavigateWithReferenceTypeParam_ShouldInitialize()
+        {
+            //Arrange
+            NavigationService navigationService =
+                _serviceProvider.GetRequiredService<NavigationService>();
+
+            Animal animal = new Animal() 
+            {
+                Name = "Foo",
+                Age = 10
+            };
+
+            //Act
+            navigationService.Navigate<FakeViewModel2, Animal>(animal);
+
+            //Assert
+            FakeViewModel2 fakeView = _serviceProvider.GetRequiredService<FakeViewModel2>();
+
+            Assert.True(animal.Equals(fakeView.animal));
         }
     }
 }
