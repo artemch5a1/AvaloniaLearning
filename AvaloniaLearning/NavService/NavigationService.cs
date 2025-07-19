@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using AvaloniaApp.NavigationStore;
 using AvaloniaApp.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,30 +12,46 @@ namespace AvaloniaApp.NavService
     /// </summary>
     /// <remarks>
     /// Для работы требует предварительной регистрации ViewModel в DI-контейнере.
+    /// <para>
+    /// История навигации реализована на основе стека, в котором хранятся ранее открытые ViewModel.
+    /// По умолчанию размер истории неограничен, но может быть задан вручную через параметр конструктора.
+    /// </para>
+    /// <para>
+    /// Если количество сохранённых переходов превысит заданный лимит, самая ранняя запись будет удалена.
+    /// Это поведение может использоваться для ограничения потребления памяти в приложениях с большим количеством навигаций.
+    /// </para>
+    /// <para>
+    /// Важно: чтобы избежать неожиданной потери навигационной истории, рекомендуется использовать <see cref="NavigateBack"/>
+    /// только если история не пуста. Проверить это можно с помощью <see cref="HistoryIsNotEmpty"/>
+    /// </para>
     /// </remarks>
     public class NavigationService : INavigationService
     {
         private readonly NavStore _navStore;
         private readonly IServiceProvider _serviceProvider;
 
-        public Stack<ViewModelBase> _historyNavigation = new Stack<ViewModelBase>();
+        private Stack<ViewModelBase> _historyNavigation = new Stack<ViewModelBase>();
         private readonly int _maxSizeHistory;
 
         /// <summary>
         /// Возврашает true если история не пустая
         /// </summary>
-        private bool _historyIsNotEmpty => _historyNavigation.Count > 0;
+        public bool HistoryIsNotEmpty => _historyNavigation.Count > 0;
 
         /// <summary>
         /// Инициализирует новый экземпляр сервиса навигации.
         /// </summary>
         /// <param name="navStore">Хранилище состояния навигации</param>
         /// <param name="serviceProvider">Провайдер сервисов (DI-контейнер)</param>
-        /// <param name="maxSizeHistory">Максимальный размер истории</param>>
+        /// <param name="maxSizeHistory">
+        /// Максимальный размер истории навигации.
+        /// При превышении этого значения самая ранняя ViewModel будет удалена из истории.
+        /// Значение по умолчанию — <c>int.MaxValue</c>, что означает отсутствие ограничений.
+        /// </param>
         public NavigationService(
             NavStore navStore,
             IServiceProvider serviceProvider,
-            int maxSizeHistory = 20
+            int maxSizeHistory = int.MaxValue
         )
         {
             _navStore = navStore;
@@ -94,7 +108,7 @@ namespace AvaloniaApp.NavService
         /// </remarks>
         public void NavigateBack()
         {
-            if (!_historyIsNotEmpty)
+            if (!HistoryIsNotEmpty)
             {
                 return;
             }
