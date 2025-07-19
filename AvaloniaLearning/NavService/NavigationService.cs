@@ -30,7 +30,7 @@ namespace AvaloniaApp.NavService
         private readonly NavStore _navStore;
         private readonly IServiceProvider _serviceProvider;
 
-        private Stack<ViewModelBase> _historyNavigation = new Stack<ViewModelBase>();
+        private Stack<ViewModelBase> _historyNavigation = new();
         private readonly int _maxSizeHistory;
 
         /// <summary>
