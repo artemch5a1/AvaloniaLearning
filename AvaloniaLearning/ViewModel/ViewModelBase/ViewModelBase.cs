@@ -77,6 +77,12 @@ namespace AvaloniaApp.ViewModel
             );
         }
 
+        /// <summary>
+        /// Переопределяемый метод для освобождения ресурсов
+        /// </summary>
+        /// <remarks>
+        /// Базовая реализация отменяет финализацию
+        /// </remarks>
         public virtual void Dispose()
         {
             GC.SuppressFinalize(this);
