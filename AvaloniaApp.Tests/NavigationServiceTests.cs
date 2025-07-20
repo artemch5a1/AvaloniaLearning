@@ -86,11 +86,7 @@ namespace AvaloniaApp.Tests
             NavigationService navigationService =
                 _serviceProvider.GetRequiredService<NavigationService>();
 
-            Animal animal = new Animal() 
-            {
-                Name = "Foo",
-                Age = 10
-            };
+            Animal animal = new Animal() { Name = "Foo", Age = 10 };
 
             //Act
             navigationService.Navigate<FakeViewModel2, Animal>(animal);
@@ -99,6 +95,69 @@ namespace AvaloniaApp.Tests
             FakeViewModel2 fakeView = _serviceProvider.GetRequiredService<FakeViewModel2>();
 
             Assert.True(animal.Equals(fakeView.animal));
+        }
+
+        [Fact]
+        public void NavigateBack_NavigateWithNotEmptyHistory_NavigateToRightVM()
+        {
+            //Arrange
+            NavigationService navigationService =
+                _serviceProvider.GetRequiredService<NavigationService>();
+
+            NavStore navStore = _serviceProvider.GetRequiredService<NavStore>();
+
+            //Act
+            navigationService.Navigate<FakeViewModel>();
+
+            navigationService.Navigate<FakeViewModel2>();
+
+            navigationService.Navigate<ViewModelBase>();
+
+            //Act & Assert
+            Assert.True(navStore.CurrentViewModel!.GetType() == typeof(ViewModelBase));
+
+            navigationService.NavigateBack();
+
+            Assert.True(navStore.CurrentViewModel!.GetType() == typeof(FakeViewModel2));
+
+            navigationService.NavigateBack();
+
+            Assert.True(navStore.CurrentViewModel!.GetType() == typeof(FakeViewModel));
+        }
+
+        [Fact]
+        public void NavigateBack_NavigateStackOverflow_NotNavigateToFirstVM()
+        {
+            //Arrange
+            NavigationService navigationService =
+                _serviceProvider.GetRequiredService<NavigationService>();
+
+            NavStore navStore = _serviceProvider.GetRequiredService<NavStore>();
+
+            //Act
+            navigationService.Navigate<FakeViewModel>();
+
+            navigationService.Navigate<FakeViewModel2>();
+
+            for (int i = 0; i < 20; i++)
+            {
+                navigationService.Navigate<ViewModelBase>();
+            }
+
+            //Act & Assert
+            for (int i = 0; i < 19; i++)
+            {
+                navigationService.NavigateBack();
+                Assert.True(navStore.CurrentViewModel!.GetType() == typeof(ViewModelBase));
+            }
+
+            navigationService.NavigateBack();
+
+            Assert.True(navStore.CurrentViewModel!.GetType() == typeof(FakeViewModel2));
+
+            navigationService.NavigateBack();
+
+            Assert.True(navStore.CurrentViewModel!.GetType() == typeof(FakeViewModel2));
         }
     }
 }
