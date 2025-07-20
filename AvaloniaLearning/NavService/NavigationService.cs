@@ -70,7 +70,7 @@ namespace AvaloniaApp.NavService
         public void Navigate<TViewModel>()
             where TViewModel : ViewModelBase
         {
-            ViewModelBase? viewModel = _serviceProvider.GetRequiredService<TViewModel>();
+            ViewModelBase viewModel = _serviceProvider.GetRequiredService<TViewModel>();
             PushToHistoryAndSetViewModel(viewModel);
         }
 
@@ -89,7 +89,7 @@ namespace AvaloniaApp.NavService
         public void Navigate<TViewModel, TParams>(TParams @params)
             where TViewModel : ViewModelBase
         {
-            ViewModelBase? viewModel = _serviceProvider.GetRequiredService<TViewModel>();
+            ViewModelBase viewModel = _serviceProvider.GetRequiredService<TViewModel>();
             viewModel.Initialize(@params);
             PushToHistoryAndSetViewModel(viewModel);
         }
@@ -119,10 +119,16 @@ namespace AvaloniaApp.NavService
             {
                 return;
             }
-
+            _navStore.CurrentViewModel?.Dispose();
             ViewModelBase viewModel = _historyNavigation.Pop();
             viewModel.RefreshPage();
             _navStore.CurrentViewModel = viewModel;
+        }
+
+        public void DestroyAndNavigate<TViewModel>() where TViewModel : ViewModelBase
+        {
+            ViewModelBase viewModel = _serviceProvider.GetRequiredService<TViewModel>();
+            DisposeAndSetViewModel(viewModel);
         }
 
         /// <summary>
@@ -151,13 +157,23 @@ namespace AvaloniaApp.NavService
             _navStore.CurrentViewModel = viewModel;
         }
 
+        private void DisposeAndSetViewModel(ViewModelBase viewModel)
+        {
+            if (_navStore.CurrentViewModel != null)
+            {
+                _navStore.CurrentViewModel.Dispose();
+            }
+            _navStore.CurrentViewModel = viewModel;
+        }
+
         /// <summary>
         /// Функция для удаления первой записи истории
         /// </summary>
         private void RemoveLastVM()
         {
             _historyNavigation = new Stack<ViewModelBase>(_historyNavigation);
-            _historyNavigation.Pop();
+            ViewModelBase vm = _historyNavigation.Pop();
+            vm.Dispose();
             _historyNavigation = new Stack<ViewModelBase>(_historyNavigation);
         }
     }

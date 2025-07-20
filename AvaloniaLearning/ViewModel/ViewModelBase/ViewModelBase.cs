@@ -12,7 +12,7 @@ namespace AvaloniaApp.ViewModel
     /// - Инициализации ViewModel с параметрами
     /// - Безопасного приведения типов параметров
     /// </remarks>
-    public class ViewModelBase : ObservableObject
+    public class ViewModelBase : ObservableObject, IDisposable
     {
         /// <summary>
         /// Инициализирует ViewModel с указанными параметрами.
@@ -75,6 +75,11 @@ namespace AvaloniaApp.ViewModel
             throw new ArgumentException(
                 $"Expected type {typeof(T).Name}, but got {@params?.GetType().Name ?? "null"}"
             );
+        }
+
+        public virtual void Dispose()
+        {
+            GC.SuppressFinalize(this);
         }
     }
 }
