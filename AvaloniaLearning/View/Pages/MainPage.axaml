@@ -14,71 +14,80 @@
 			<view:CreateUserView/>
 		</DataTemplate>
 	</UserControl.DataTemplates>
-	
-	<Grid RowDefinitions="Auto, Auto, *"
-		  HorizontalAlignment="Center"
-		  Margin="0 100 0 0"
-		  x:DataType="vm:MainPageViewModel">
 
-		<TextBlock Text="Список пользователей"
-               FontSize="40"
-               FontWeight="Bold"
-               HorizontalAlignment="Left"
-               Margin="0,0,0,10"
-			   Grid.Row="0"
-			   Foreground="Black"
+	<Grid>
+
+		<!-- Полупрозрачная фиолетовая подложка -->
+		<Border ZIndex="1"
+                IsVisible="{Binding SetOvetlay}">
+			<Border.Background>
+				<SolidColorBrush Color="{StaticResource VioletBrush}" Opacity="0.15"/>
+			</Border.Background>
+		</Border>
+
+		<Grid RowDefinitions="Auto, Auto, *"
+		  HorizontalAlignment="Center"
+		  Margin="0 180 0 0"
+		  x:DataType="vm:MainPageViewModel">
+			<TextBlock Text="Список пользователей"
+				   FontSize="40"
+				   FontWeight="Bold"
+				   HorizontalAlignment="Left"
+				   Margin="0,0,0,10"
+				   Grid.Row="0"
+				   Foreground="Black"
 			   />
 
-		<StackPanel Orientation="Horizontal"
-					Grid.Row="1">
-			<Button Classes="GoBack"
-					Command="{Binding NavToBackCommand}"
-					Margin="0,0,20,10"/>
+			<StackPanel Orientation="Horizontal"
+						Grid.Row="1">
+				<Button Classes="GoBack"
+						Command="{Binding NavToBackCommand}"
+						Margin="0,0,20,10"/>
 
-			<Button Classes="Main"
-					Content="Добавить пользователя"
-					Command="{Binding NavToAddUserCommand}"
-					Margin="0,0,0,10"/>
-		</StackPanel>
-		
-		
-		<DataGrid Grid.Row="2"
-			      Classes="DataGridMain"
-				  ItemsSource="{Binding Users}"
-				  x:Name="DataGridUsers"
+				<Button Classes="Main"
+						Content="Добавить пользователя"
+						Command="{Binding NavToAddUserCommand}"
+						Margin="0,0,0,10"/>
+			</StackPanel>
+
+
+			<DataGrid Grid.Row="2"
+					  Classes="DataGridMain"
+					  ItemsSource="{Binding Users}"
+					  x:Name="DataGridUsers"
 				  >
-			<DataGrid.Columns>
-				<DataGridTextColumn Header="Фамилия"
-									Binding="{Binding Surname}"/>
-				<DataGridTextColumn Header="Имя"
-									Binding="{Binding Name}"/>
-				<DataGridTextColumn Header="Почта"
-									Binding="{Binding Email}"/>
-				<DataGridTemplateColumn Header="Действия">
-					<DataGridTemplateColumn.CellTemplate>
-						<DataTemplate>
-							<StackPanel Orientation="Horizontal">
-								<Button Classes="InfoItem"
-										Margin="20 0 10 0"/>
-								<Button Classes="EditButton"
-										Margin="0 0 10 0"
-										Command="{Binding #DataGridUsers.DataContext.NavToEditUserCommand}"
-										CommandParameter="{Binding Id}"
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Фамилия"
+										Binding="{Binding Surname}"/>
+					<DataGridTextColumn Header="Имя"
+										Binding="{Binding Name}"/>
+					<DataGridTextColumn Header="Почта"
+										Binding="{Binding Email}"/>
+					<DataGridTemplateColumn Header="Действия">
+						<DataGridTemplateColumn.CellTemplate>
+							<DataTemplate>
+								<StackPanel Orientation="Horizontal">
+									<Button Classes="InfoItem"
+											Margin="20 0 10 0"/>
+									<Button Classes="EditButton"
+											Margin="0 0 10 0"
+											Command="{Binding #DataGridUsers.DataContext.NavToEditUserCommand}"
+											CommandParameter="{Binding Id}"
 										/>
-								<Button Classes="DeleteButton"
-										Margin="0 0 10 0"/>
-							</StackPanel>
-						</DataTemplate>
-					</DataGridTemplateColumn.CellTemplate>
-				</DataGridTemplateColumn>
-			</DataGrid.Columns>
-		</DataGrid>
-
-		<Grid Grid.Column="1"  Grid.Row="1"
-                  ZIndex="10">
-            <ContentControl Margin="0 15 0 0"
-			                Content="{Binding CurrentOverlayViewModel}" />
-        </Grid>
-		
+									<Button Classes="DeleteButton"
+											Margin="0 0 10 0"/>
+								</StackPanel>
+							</DataTemplate>
+						</DataGridTemplateColumn.CellTemplate>
+					</DataGridTemplateColumn>
+				</DataGrid.Columns>
+			</DataGrid>
+		</Grid>
+		<Grid ZIndex="10"
+			  MaxWidth="400"
+			  MaxHeight="400">
+			<ContentControl Margin="0 15 0 0"
+							Content="{Binding CurrentOverlayViewModel}" />
+		</Grid>
 	</Grid>
 </UserControl>

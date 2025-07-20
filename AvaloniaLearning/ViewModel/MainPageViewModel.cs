@@ -18,6 +18,9 @@ namespace AvaloniaApp.ViewModel
         private ViewModelBase? _currentOverlayViewModel;
 
         [ObservableProperty]
+        private bool _setOvetlay = false;
+
+        [ObservableProperty]
         private List<User> _users = new();
 
         private string _errorText = string.Empty;
@@ -58,6 +61,17 @@ namespace AvaloniaApp.ViewModel
         }
 
         [RelayCommand]
-        private void NavToAddUser() { }
+        private void NavToAddUser() 
+        {
+            SetOvetlay = true;
+            _navService.NavigateOverlay<CreateUserViewModel>(overlayAction: vm =>
+            {
+                CurrentOverlayViewModel = vm;
+            },
+            onClose:() => {
+                _ = LoadUsers();
+                SetOvetlay = false;
+            });
+        }
     }
 }

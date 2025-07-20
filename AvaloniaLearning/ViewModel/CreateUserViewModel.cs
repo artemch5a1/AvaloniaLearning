@@ -33,6 +33,7 @@ namespace AvaloniaApp.ViewModel
             if (ValidateUser())
             {
                 TryCreateUser();
+                NavToBack();
             }
             else
             {
