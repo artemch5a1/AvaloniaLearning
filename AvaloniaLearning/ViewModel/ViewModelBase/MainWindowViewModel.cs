@@ -26,10 +26,10 @@ namespace AvaloniaApp.ViewModel
 
         public override void Dispose()
         {
+            if(IsDisposed) return;
             _navStore.PropertyChanged -= OnViewModelChanged;
             CurrentViewModel?.Dispose();
             base.Dispose();
-            GC.SuppressFinalize(this);
         }
     }
 }

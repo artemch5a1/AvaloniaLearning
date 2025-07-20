@@ -14,6 +14,8 @@ namespace AvaloniaApp.ViewModel
     /// </remarks>
     public class ViewModelBase : ObservableObject, IDisposable
     {
+        protected bool IsDisposed { get; set; } = false;
+
         /// <summary>
         /// Инициализирует ViewModel с указанными параметрами.
         /// </summary>
@@ -82,10 +84,13 @@ namespace AvaloniaApp.ViewModel
         /// </summary>
         /// <remarks>
         /// Базовая реализация отменяет финализацию
+        /// и устанавливает <see cref="IsDisposed"/> = true
         /// </remarks>
         public virtual void Dispose()
         {
+            if(IsDisposed) return;
             GC.SuppressFinalize(this);
+            IsDisposed = true;
         }
     }
 }
