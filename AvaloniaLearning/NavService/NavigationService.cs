@@ -137,13 +137,21 @@ namespace AvaloniaApp.NavService
             {
                 if (_maxSizeHistory <= _historyNavigation.Count)
                 {
-                    _historyNavigation = new Stack<ViewModelBase>(_historyNavigation);
-                    _historyNavigation.Pop();
-                    _historyNavigation = new Stack<ViewModelBase>(_historyNavigation);
+                    RemoveLastVM();
                 }
                 _historyNavigation.Push(_navStore.CurrentViewModel);
             }
             _navStore.CurrentViewModel = viewModel;
+        }
+
+        /// <summary>
+        /// Функция для удаления первой записи истории
+        /// </summary>
+        private void RemoveLastVM()
+        {
+            _historyNavigation = new Stack<ViewModelBase>(_historyNavigation);
+            _historyNavigation.Pop();
+            _historyNavigation = new Stack<ViewModelBase>(_historyNavigation);
         }
     }
 }
