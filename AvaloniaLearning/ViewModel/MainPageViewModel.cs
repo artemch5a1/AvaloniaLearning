@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using AvaloniaApp.Models;
 using AvaloniaApp.NavService;
 using AvaloniaApp.ServiceAbstractions;
@@ -23,10 +24,15 @@ namespace AvaloniaApp.ViewModel
         {
             _navService = navService;
             _userService = userService;
-            LoadUsers();
+            _ = LoadUsers();
         }
 
-        private void LoadUsers()
+        public override void RefreshPage()
+        {
+            _ = LoadUsers();
+        }
+
+        private async Task LoadUsers()
         {
             try
             {
@@ -37,6 +43,7 @@ namespace AvaloniaApp.ViewModel
                 _errorText = ex.Message;
                 Debug.WriteLine(_errorText);
             }
+            await Task.CompletedTask;
         }
 
         [RelayCommand]

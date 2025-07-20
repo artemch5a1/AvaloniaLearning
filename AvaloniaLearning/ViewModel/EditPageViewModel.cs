@@ -3,6 +3,7 @@ using AvaloniaApp.NavService;
 using AvaloniaApp.ServiceAbstractions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Threading.Tasks;
 
 namespace AvaloniaApp.ViewModel
 {
@@ -34,10 +35,15 @@ namespace AvaloniaApp.ViewModel
         protected override void InitializeParams<T>(T @params)
         {
             _idUser = GetAs<int>(@params);
-            LoadUser();
+            _ = LoadUser();
         }
 
-        private void LoadUser()
+        public override void RefreshPage()
+        {
+            _ = LoadUser();
+        }
+
+        private async Task LoadUser()
         {
             User? user = _userService.GetUserById(_idUser);
             if (user != null)
@@ -46,6 +52,7 @@ namespace AvaloniaApp.ViewModel
                 UserSurname = user.Surname;
                 UserEmail = user.Email;
             }
+            await Task.CompletedTask;
         }
 
         [RelayCommand]
