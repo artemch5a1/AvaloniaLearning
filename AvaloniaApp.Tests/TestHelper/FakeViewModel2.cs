@@ -15,5 +15,10 @@ namespace AvaloniaApp.Tests.TestHelper
         {
             animal = GetAs<Animal>(@params);
         }
+
+        public override void RefreshPage()
+        {
+            animal.Breed = "тест";
+        }
     }
 }
