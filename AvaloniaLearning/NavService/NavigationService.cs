@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using AvaloniaApp.NavStore;
+using AvaloniaApp.ServiceAbstractions;
 using AvaloniaApp.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
