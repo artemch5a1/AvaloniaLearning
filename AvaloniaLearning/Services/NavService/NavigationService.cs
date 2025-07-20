@@ -180,6 +180,13 @@ namespace AvaloniaApp.Services.NavService
             DisposeAndSetViewModel(viewModel);
         }
 
+        /// <summary>
+        /// Выполняет навигацию во вложенное оверлейное окно без смены основного контента.
+        /// ViewModel будет записана в историю и может быть закрыта через GoBackOneStep.
+        /// </summary>
+        /// <typeparam name="TViewModel">Тип ViewModel оверлея.</typeparam>
+        /// <param name="setOverlayCallback">Действие, которое устанавливает или сбрасывает overlay ViewModel в хосте.</param>
+        /// <param name="onClose">Дополнительное действие, выполняемое при закрытии оверлея.</param>
         public void NavigateOverlay<TViewModel>(
             Action<ViewModelBase?>? overlayAction = null,
             Action? onClose = null
@@ -199,6 +206,16 @@ namespace AvaloniaApp.Services.NavService
             _historyNavigation.Push(viewModel);
         }
 
+        /// <summary>
+        /// Выполняет навигацию во вложенное оверлейное окно без смены основного контента
+        /// с параметрами.
+        /// ViewModel будет записана в историю и может быть закрыта через GoBackOneStep.
+        /// </summary>
+        /// <typeparam name="TParam">Тип передаваемых параметров.</typeparam>
+        /// <typeparam name="TViewModel">Тип ViewModel оверлея.</typeparam>
+        /// <param name="params"> Параметры инициализации</param>
+        /// <param name="overlayAction">Действие, которое устанавливает или сбрасывает overlay ViewModel в хосте.</param>
+        /// <param name="onClose">Дополнительное действие, выполняемое при закрытии оверлея.</param>
         public void NavigateOverlay<TViewModel, TParam>(
             TParam @params,
             Action<ViewModelBase?>? overlayAction = null,
@@ -221,6 +238,10 @@ namespace AvaloniaApp.Services.NavService
             _historyNavigation.Push(viewModel);
         }
 
+        /// <summary>
+        /// Выполняет действие по закрытию оверлейного окна
+        /// и очищает ViewModel 
+        /// </summary>
         public void CloseOverlay()
         {
             if (!HistoryIsNotEmpty)
