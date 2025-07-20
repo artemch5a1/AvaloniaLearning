@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using AvaloniaApp.NavigationStore;
 using AvaloniaApp.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace AvaloniaApp.NavService
 {
@@ -51,12 +52,12 @@ namespace AvaloniaApp.NavService
         public NavigationService(
             NavStore navStore,
             IServiceProvider serviceProvider,
-            int maxSizeHistory = int.MaxValue
+            IOptions<NavigationOptions> options
         )
         {
             _navStore = navStore;
             _serviceProvider = serviceProvider;
-            _maxSizeHistory = maxSizeHistory;
+            _maxSizeHistory = options.Value.MaxSizeHistory;
         }
 
         /// <summary>

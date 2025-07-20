@@ -21,6 +21,8 @@ namespace AvaloniaApp.Tests
 
             serviceDescriptors.AddScoped<ViewModelBase>();
 
+            serviceDescriptors.Configure<NavigationOptions>(op => op.MaxSizeHistory = 20);
+
             serviceDescriptors.AddScoped<NavigationService>();
 
             serviceDescriptors.AddScoped<NavStore>();
