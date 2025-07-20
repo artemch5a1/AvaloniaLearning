@@ -29,6 +29,15 @@ namespace AvaloniaApp.ViewModel
         }
 
         /// <summary>
+        /// Переопределяемая функция для перезагрузки данных страницы
+        /// </summary>
+        /// <remarks>
+        /// Вызывается каждый раз после использования 
+        /// <see cref="NavService.NavigationService.NavigateBack"/>
+        /// </remarks>
+        public virtual void RefreshPage() { }
+
+        /// <summary>
         /// Виртуальный метод для обработки параметров инициализации.
         /// </summary>
         /// <typeparam name="T">Тип параметров инициализации</typeparam>
