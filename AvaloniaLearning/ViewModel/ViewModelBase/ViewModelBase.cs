@@ -1,4 +1,5 @@
 ﻿using System;
+using AvaloniaApp.Services.NavService;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace AvaloniaApp.ViewModel
@@ -35,7 +36,7 @@ namespace AvaloniaApp.ViewModel
         /// </summary>
         /// <remarks>
         /// Вызывается каждый раз после использования 
-        /// <see cref="NavService.NavigationService.NavigateBack"/>
+        /// <see cref="NavigationService.NavigateBack"/>
         /// </remarks>
         public virtual void RefreshPage() { }
 

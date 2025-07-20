@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AvaloniaApp.NavService
+namespace AvaloniaApp.Services.NavService
 {
     public class NavigationOptions
     {

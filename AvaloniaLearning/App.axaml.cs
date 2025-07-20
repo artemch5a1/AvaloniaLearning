@@ -2,8 +2,6 @@ using System;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using AvaloniaApp.NavStore;
-using AvaloniaApp.NavService;
 using AvaloniaApp.ServiceAbstractions;
 using AvaloniaApp.View.Base;
 using AvaloniaApp.ViewModel;
@@ -11,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Splat.Microsoft.Extensions.DependencyInjection;
 using AvaloniaApp.Services.DataServices;
+using AvaloniaApp.Services.NavService;
+using AvaloniaApp.Stores.NavStore;
 
 namespace AvaloniaApp
 {

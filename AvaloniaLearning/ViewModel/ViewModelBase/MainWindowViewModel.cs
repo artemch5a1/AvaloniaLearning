@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
-using AvaloniaApp.NavStore;
+using AvaloniaApp.Stores.NavStore;
 
 namespace AvaloniaApp.ViewModel
 {
@@ -8,9 +8,9 @@ namespace AvaloniaApp.ViewModel
     {
         public ViewModelBase? CurrentViewModel => _navStore.CurrentViewModel;
 
-        private readonly NavStore.NavigationStore _navStore;
+        private readonly NavigationStore _navStore;
 
-        public MainWindowViewModel(NavStore.NavigationStore navStore)
+        public MainWindowViewModel(NavigationStore navStore)
         {
             _navStore = navStore;
             _navStore.PropertyChanged += OnViewModelChanged;

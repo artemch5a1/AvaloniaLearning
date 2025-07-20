@@ -1,9 +1,9 @@
-﻿using AvaloniaApp.NavStore;
-using AvaloniaApp.NavService;
-using AvaloniaApp.Tests.TestHelper;
+﻿using AvaloniaApp.Tests.TestHelper;
 using AvaloniaApp.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
+using AvaloniaApp.Services.NavService;
+using AvaloniaApp.Stores.NavStore;
 
 namespace AvaloniaApp.Tests
 {
