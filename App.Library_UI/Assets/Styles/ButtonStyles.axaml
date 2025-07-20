@@ -11,11 +11,29 @@
 			<Button Classes="InfoItem"/>
 			<Button Classes="EditButton"/>
 			<Button Classes="DeleteButton"/>
+			<Button Classes="CloseButton"/>
 		</StackPanel>
       
     </Border>
   </Design.PreviewWith>
 
+	<Style Selector="Button.CloseButton">
+		<Setter Property="Content" Value="✕" />
+		<Setter Property="FontSize" Value="20" />
+		<Setter Property="FontWeight" Value="Bold" />
+		<Setter Property="Background" Value="Transparent" />
+		<Setter Property="Width" Value="35" />
+		<Setter Property="Height" Value="35" />
+		<Setter Property="Padding" Value="0 0 0 10" />
+		<Setter Property="VerticalAlignment" Value="Center" />
+		<Setter Property="HorizontalAlignment" Value="Center" />
+
+		<Style Selector="^:pointerover ContentPresenter">
+			<Setter Property="Background" Value="{StaticResource TransparentBrush}" />
+			<Setter Property="Opacity" Value="0.5" />
+		</Style>
+	</Style>
+	
 	<Style Selector="Button.GoBack">
 		<Setter Property="Background" Value="Transparent"/>
 		<Setter Property="BorderThickness" Value="2"/>
