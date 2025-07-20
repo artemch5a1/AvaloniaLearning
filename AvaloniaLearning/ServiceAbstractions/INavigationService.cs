@@ -1,6 +1,6 @@
 ﻿using AvaloniaApp.ViewModel;
 
-namespace AvaloniaApp.NavService
+namespace AvaloniaApp.ServiceAbstractions
 {
     public interface INavigationService
     {

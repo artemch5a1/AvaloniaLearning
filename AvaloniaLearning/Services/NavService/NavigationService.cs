@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using AvaloniaApp.NavigationStore;
+using AvaloniaApp.ServiceAbstractions;
+using AvaloniaApp.Stores.NavStore;
 using AvaloniaApp.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
-namespace AvaloniaApp.NavService
+namespace AvaloniaApp.Services.NavService
 {
     /// <summary>
     /// Сервис навигации между ViewModel в приложении.
@@ -33,7 +34,7 @@ namespace AvaloniaApp.NavService
     /// </remarks>
     public class NavigationService : INavigationService
     {
-        private readonly NavStore _navStore;
+        private readonly NavigationStore _navStore;
         private readonly IServiceProvider _serviceProvider;
 
         private Stack<ViewModelBase> _historyNavigation = new();
@@ -55,7 +56,7 @@ namespace AvaloniaApp.NavService
         /// Значение по умолчанию — <c>int.MaxValue</c>, что означает отсутствие ограничений.
         /// </param>
         public NavigationService(
-            NavStore navStore,
+            NavigationStore navStore,
             IServiceProvider serviceProvider,
             IOptions<NavigationOptions> options
         )

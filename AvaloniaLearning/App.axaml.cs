@@ -2,15 +2,15 @@ using System;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using AvaloniaApp.DataServices;
-using AvaloniaApp.NavigationStore;
-using AvaloniaApp.NavService;
 using AvaloniaApp.ServiceAbstractions;
 using AvaloniaApp.View.Base;
 using AvaloniaApp.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Splat.Microsoft.Extensions.DependencyInjection;
+using AvaloniaApp.Services.DataServices;
+using AvaloniaApp.Services.NavService;
+using AvaloniaApp.Stores.NavStore;
 
 namespace AvaloniaApp
 {
@@ -80,7 +80,7 @@ namespace AvaloniaApp
 
         private void ConfigureNavigationServices(IServiceCollection services)
         {
-            services.AddSingleton<NavStore>();
+            services.AddSingleton<NavigationStore>();
 
             services.Configure<NavigationOptions>(options => { });
 

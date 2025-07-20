@@ -1,4 +1,5 @@
 ﻿using System;
+using AvaloniaApp.Services.NavService;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace AvaloniaApp.ViewModel
@@ -14,6 +15,8 @@ namespace AvaloniaApp.ViewModel
     /// </remarks>
     public class ViewModelBase : ObservableObject, IDisposable
     {
+        protected bool IsDisposed { get; set; } = false;
+
         /// <summary>
         /// Инициализирует ViewModel с указанными параметрами.
         /// </summary>
@@ -33,7 +36,7 @@ namespace AvaloniaApp.ViewModel
         /// </summary>
         /// <remarks>
         /// Вызывается каждый раз после использования 
-        /// <see cref="NavService.NavigationService.NavigateBack"/>
+        /// <see cref="NavigationService.NavigateBack"/>
         /// </remarks>
         public virtual void RefreshPage() { }
 
@@ -82,10 +85,13 @@ namespace AvaloniaApp.ViewModel
         /// </summary>
         /// <remarks>
         /// Базовая реализация отменяет финализацию
+        /// и устанавливает <see cref="IsDisposed"/> = true
         /// </remarks>
         public virtual void Dispose()
         {
+            if(IsDisposed) return;
             GC.SuppressFinalize(this);
+            IsDisposed = true;
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using AvaloniaApp.Models;
-using AvaloniaApp.NavService;
 using AvaloniaApp.ServiceAbstractions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;

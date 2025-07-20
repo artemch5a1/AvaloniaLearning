@@ -1,5 +1,6 @@
-﻿using System.ComponentModel;
-using AvaloniaApp.NavigationStore;
+﻿using System;
+using System.ComponentModel;
+using AvaloniaApp.Stores.NavStore;
 
 namespace AvaloniaApp.ViewModel
 {
@@ -7,9 +8,9 @@ namespace AvaloniaApp.ViewModel
     {
         public ViewModelBase? CurrentViewModel => _navStore.CurrentViewModel;
 
-        private readonly NavStore _navStore;
+        private readonly NavigationStore _navStore;
 
-        public MainWindowViewModel(NavStore navStore)
+        public MainWindowViewModel(NavigationStore navStore)
         {
             _navStore = navStore;
             _navStore.PropertyChanged += OnViewModelChanged;
@@ -17,7 +18,18 @@ namespace AvaloniaApp.ViewModel
 
         private void OnViewModelChanged(object? sender, PropertyChangedEventArgs e)
         {
-            OnPropertyChanged(nameof(CurrentViewModel));
+            if(e.PropertyName == nameof(_navStore.CurrentViewModel))
+            {
+                OnPropertyChanged(nameof(CurrentViewModel));
+            }
+        }
+
+        public override void Dispose()
+        {
+            if(IsDisposed) return;
+            _navStore.PropertyChanged -= OnViewModelChanged;
+            CurrentViewModel?.Dispose();
+            base.Dispose();
         }
     }
 }

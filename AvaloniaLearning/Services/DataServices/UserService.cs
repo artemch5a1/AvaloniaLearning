@@ -5,7 +5,7 @@ using System.Text;
 using AvaloniaApp.Models;
 using AvaloniaApp.ServiceAbstractions;
 
-namespace AvaloniaApp.DataServices
+namespace AvaloniaApp.Services.DataServices
 {
     public class UserService : IUserService
     {

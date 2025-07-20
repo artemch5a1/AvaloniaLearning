@@ -1,4 +1,4 @@
-﻿using AvaloniaApp.NavService;
+﻿using AvaloniaApp.ServiceAbstractions;
 
 namespace AvaloniaApp.ViewModel
 {
