@@ -17,7 +17,10 @@ namespace AvaloniaApp.ViewModel
 
         private void OnViewModelChanged(object? sender, PropertyChangedEventArgs e)
         {
-            OnPropertyChanged(nameof(CurrentViewModel));
+            if(e.PropertyName == nameof(_navStore.CurrentViewModel))
+            {
+                OnPropertyChanged(nameof(CurrentViewModel));
+            }
         }
     }
 }
