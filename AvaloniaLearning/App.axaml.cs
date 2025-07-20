@@ -9,6 +9,7 @@ using AvaloniaApp.ServiceAbstractions;
 using AvaloniaApp.View.Base;
 using AvaloniaApp.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Splat.Microsoft.Extensions.DependencyInjection;
 
 namespace AvaloniaApp
@@ -80,6 +81,8 @@ namespace AvaloniaApp
         private void ConfigureNavigationServices(IServiceCollection services)
         {
             services.AddSingleton<NavStore>();
+
+            services.Configure<NavigationOptions>(options => { });
 
             services.AddSingleton<INavigationService, NavigationService>();
         }
