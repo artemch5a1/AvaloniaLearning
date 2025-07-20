@@ -45,6 +45,8 @@ namespace AvaloniaApp.Services.NavService
         /// </summary>
         public bool HistoryIsNotEmpty => _historyNavigation.Count > 0;
 
+        private Action<ViewModelBase?>? OverlayAction { get; set; }
+
         /// <summary>
         /// Инициализирует новый экземпляр сервиса навигации.
         /// </summary>
@@ -176,6 +178,57 @@ namespace AvaloniaApp.Services.NavService
             ViewModelBase viewModel = _serviceProvider.GetRequiredService<TViewModel>();
             viewModel.Initialize(@params);
             DisposeAndSetViewModel(viewModel);
+        }
+
+        public void NavigateOverlay<TViewModel>(
+            Action<ViewModelBase?>? overlayAction = null,
+            Action? onClose = null
+        )
+            where TViewModel : ViewModelBase
+        {
+            ViewModelBase? viewModel = _serviceProvider.GetRequiredService<TViewModel>();
+
+            overlayAction?.Invoke(viewModel);
+
+            OverlayAction = vm =>
+            {
+                overlayAction?.Invoke(null);
+                onClose?.Invoke();
+            };
+        }
+
+        public void NavigateOverlay<TViewModel, TParam>(
+            TParam @params,
+            Action<ViewModelBase?>? overlayAction = null,
+            Action? onClose = null
+        )
+            where TViewModel : ViewModelBase
+        {
+            ViewModelBase viewModel = _serviceProvider.GetRequiredService<TViewModel>();
+
+            viewModel.Initialize(@params);
+
+            overlayAction?.Invoke(viewModel);
+
+            OverlayAction = vm =>
+            {
+                overlayAction?.Invoke(null);
+                onClose?.Invoke();
+            };
+
+            _historyNavigation.Push(viewModel);
+        }
+
+        public void CloseOverlay()
+        {
+            if (!HistoryIsNotEmpty)
+                return;
+
+            ViewModelBase viewModel = _historyNavigation.Pop();
+
+            viewModel.Dispose();
+
+            OverlayAction?.Invoke(null);
         }
 
         /// <summary>
