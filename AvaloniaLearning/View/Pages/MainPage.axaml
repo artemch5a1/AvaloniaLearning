@@ -2,15 +2,23 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 xmlns:vm="clr-namespace:AvaloniaApp.ViewModel"
-		     xmlns:view="clr-namespace:AvaloniaApp.View.Pages"
+			 xmlns:vm="using:AvaloniaApp.ViewModel"
+		     xmlns:view="using:AvaloniaApp.View.Pages"
              mc:Ignorable="d" d:DesignWidth="1920" d:DesignHeight="1080"
              x:Class="AvaloniaApp.View.Pages.MainPage"
 			 x:DataType="vm:MainPageViewModel"
 			 Background="{Binding Background, RelativeSource={RelativeSource AncestorType=Window}}">
+
+	<UserControl.DataTemplates>
+		<DataTemplate DataType="{x:Type vm:CreateUserViewModel}">
+			<view:CreateUserView/>
+		</DataTemplate>
+	</UserControl.DataTemplates>
+	
 	<Grid RowDefinitions="Auto, Auto, *"
 		  HorizontalAlignment="Center"
-		  Margin="0 100 0 0">
+		  Margin="0 100 0 0"
+		  x:DataType="vm:MainPageViewModel">
 
 		<TextBlock Text="Список пользователей"
                FontSize="40"
@@ -65,5 +73,12 @@
 				</DataGridTemplateColumn>
 			</DataGrid.Columns>
 		</DataGrid>
+
+		<Grid Grid.Column="1"  Grid.Row="1"
+                  ZIndex="10">
+            <ContentControl Margin="0 15 0 0"
+			                Content="{Binding CurrentOverlayViewModel}" />
+        </Grid>
+		
 	</Grid>
 </UserControl>

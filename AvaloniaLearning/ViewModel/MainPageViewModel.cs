@@ -15,6 +15,9 @@ namespace AvaloniaApp.ViewModel
         private readonly IUserService _userService;
 
         [ObservableProperty]
+        private ViewModelBase? _currentOverlayViewModel;
+
+        [ObservableProperty]
         private List<User> _users = new();
 
         private string _errorText = string.Empty;
