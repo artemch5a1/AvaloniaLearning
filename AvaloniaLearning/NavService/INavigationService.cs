@@ -10,6 +10,12 @@ namespace AvaloniaApp.NavService
         void Navigate<TViewModel, TParams>(TParams @params)
             where TViewModel : ViewModelBase;
 
+        public void DestroyAndNavigate<TViewModel>()
+            where TViewModel : ViewModelBase;
+
+        public void DestroyAndNavigate<TViewModel, TParams>(TParams @params)
+            where TViewModel : ViewModelBase;
+
         void NavigateBack();
     }
 }

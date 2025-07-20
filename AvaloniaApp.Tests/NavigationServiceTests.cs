@@ -128,6 +128,33 @@ namespace AvaloniaApp.Tests
         }
 
         [Fact]
+        public void NavigateBack_NavigateWithNotEmptyHistory_NavigateAndRefreshAndCleanHistory()
+        {
+            //Arrange
+            NavigationService navigationService =
+                _serviceProvider.GetRequiredService<NavigationService>();
+
+            NavStore navStore = _serviceProvider.GetRequiredService<NavStore>();
+
+            Animal animal = new Animal()
+            {
+                Name = "A",
+                Age = 1,
+            };
+
+            //Act
+            navigationService.Navigate<FakeViewModel2, Animal>(animal);
+            navigationService.Navigate<FakeViewModel>();
+            navigationService.NavigateBack();
+
+            //Assert
+            FakeViewModel2 fakeViewModel2 = _serviceProvider.GetRequiredService<FakeViewModel2>();
+
+            Assert.Equal("тест", fakeViewModel2.animal.Breed);
+            Assert.True(!navigationService.HistoryIsNotEmpty);
+        }
+
+        [Fact]
         public void NavigateBack_NavigateStackOverflow_NotNavigateToFirstVM()
         {
             //Arrange
@@ -160,6 +187,46 @@ namespace AvaloniaApp.Tests
             navigationService.NavigateBack();
 
             Assert.True(navStore.CurrentViewModel!.GetType() == typeof(FakeViewModel2));
+        }
+
+        [Fact]
+        public void DestroyAndNavigate_NavigateWithoutParams_ShouldChangeViewModelAndNotSaveInHistory() 
+        {
+            //Arrange
+            NavigationService navigationService =
+                _serviceProvider.GetRequiredService<NavigationService>();
+
+            //Act
+            navigationService.Navigate<ViewModelBase>();
+            navigationService.DestroyAndNavigate<FakeViewModel>();
+
+            //Assert
+            NavStore navStore = _serviceProvider.GetRequiredService<NavStore>();
+
+            Assert.True(navStore.CurrentViewModel!.GetType() == typeof(FakeViewModel));
+            Assert.True(!navigationService.HistoryIsNotEmpty);
+        }
+
+        [Fact]
+        public void DestroyAndNavigate_NavigateWithParams_ShouldInitializeAndNotSaveInHistoryAndChangeVM()
+        {
+            //Arrange
+            NavigationService navigationService =
+                _serviceProvider.GetRequiredService<NavigationService>();
+
+            (int, string) @param = (12, "string");
+
+            //Act
+            navigationService.Navigate<ViewModelBase>();
+            navigationService.DestroyAndNavigate<FakeViewModel, (int, string)>(@param);
+
+            //Assert
+            FakeViewModel fakeView = _serviceProvider.GetRequiredService<FakeViewModel>();
+            NavStore navStore = _serviceProvider.GetRequiredService<NavStore>();
+
+            Assert.True(fakeView.itemParam == @param);
+            Assert.True(navStore.CurrentViewModel!.GetType() == typeof(FakeViewModel));
+            Assert.True(!navigationService.HistoryIsNotEmpty);
         }
     }
 }

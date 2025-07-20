@@ -11,6 +11,6 @@ namespace AvaloniaApp.ViewModel
             _navService = navService;
         }
 
-        public void NavToMain() => _navService.Navigate<MainPageViewModel>();
+        public void NavToMain() => _navService.DestroyAndNavigate<MainPageViewModel>();
     }
 }
