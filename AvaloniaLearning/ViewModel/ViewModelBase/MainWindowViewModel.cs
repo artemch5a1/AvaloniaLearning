@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using AvaloniaApp.NavigationStore;
 
 namespace AvaloniaApp.ViewModel
@@ -21,6 +22,14 @@ namespace AvaloniaApp.ViewModel
             {
                 OnPropertyChanged(nameof(CurrentViewModel));
             }
+        }
+
+        public override void Dispose()
+        {
+            _navStore.PropertyChanged -= OnViewModelChanged;
+            CurrentViewModel?.Dispose();
+            base.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }
