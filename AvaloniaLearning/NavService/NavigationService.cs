@@ -15,7 +15,8 @@ namespace AvaloniaApp.NavService
     /// Для работы требует предварительной регистрации ViewModel в DI-контейнере.
     /// <para>
     /// История навигации реализована на основе стека, в котором хранятся ранее открытые ViewModel.
-    /// По умолчанию размер истории неограничен, но может быть задан вручную через параметр конструктора.
+    /// По умолчанию размер истории неограничен, но может быть задан вручную через
+    /// <see cref="NavigationOptions.MaxSizeHistory"/>.
     /// </para>
     /// <para>
     /// Если количество сохранённых переходов превысит заданный лимит, самая ранняя запись будет удалена.
@@ -24,6 +25,10 @@ namespace AvaloniaApp.NavService
     /// <para>
     /// Важно: чтобы избежать неожиданной потери навигационной истории, рекомендуется использовать <see cref="NavigateBack"/>
     /// только если история не пуста. Проверить это можно с помощью <see cref="HistoryIsNotEmpty"/>
+    /// </para>
+    /// <para>
+    /// Чтобы не сохранять ViewModel в историю используйте <see cref="DestroyAndNavigate{TViewModel}()"/>
+    /// или <see cref="DestroyAndNavigate{TViewModel, TParams}(TParams)"/> с передачей параметров
     /// </para>
     /// </remarks>
     public class NavigationService : INavigationService
@@ -125,9 +130,50 @@ namespace AvaloniaApp.NavService
             _navStore.CurrentViewModel = viewModel;
         }
 
-        public void DestroyAndNavigate<TViewModel>() where TViewModel : ViewModelBase
+        /// <summary>
+        /// Выполняет переход на указанную ViewModel с очищением текущей
+        /// </summary>
+        /// <typeparam name="TViewModel"> Тип ViewModel, на которую выполняется переход</typeparam>
+        /// <remarks>
+        /// <para>
+        /// Не сохраняет текущую ViewModel в историю
+        /// </para>
+        /// <para>
+        /// Вызывает <see cref="ViewModelBase.Dispose"/> у текущей ViewModel
+        /// </para>
+        /// </remarks>
+        /// <exception cref="InvalidOperationException">
+        /// Выбрасывается, если не удалось разрешить TViewModel через DI-контейнер
+        /// </exception>
+        public void DestroyAndNavigate<TViewModel>()
+            where TViewModel : ViewModelBase
         {
             ViewModelBase viewModel = _serviceProvider.GetRequiredService<TViewModel>();
+            DisposeAndSetViewModel(viewModel);
+        }
+
+        /// <summary>
+        /// Выполняет переход на указанную ViewModel с передачей параметров с очищением текущей ViewModel
+        /// </summary>
+        /// <typeparam name="TViewModel"> Тип ViewModel, на которую выполняется переход</typeparam>
+        /// <typeparam name="TParams">Тип параметров инициализации</typeparam>
+        /// <param name="params">Параметры для инициализации ViewModel</param>
+        /// <remarks>
+        /// <para>
+        /// Не сохраняет текущую ViewModel в историю
+        /// </para>
+        /// <para>
+        /// Вызывает <see cref="ViewModelBase.Dispose"/> у текущей ViewModel
+        /// </para>
+        /// </remarks>
+        /// <exception cref="InvalidOperationException">
+        /// Выбрасывается, если не удалось разрешить TViewModel через DI-контейнер
+        /// </exception>
+        public void DestroyAndNavigate<TViewModel, TParams>(TParams @params)
+            where TViewModel : ViewModelBase
+        {
+            ViewModelBase viewModel = _serviceProvider.GetRequiredService<TViewModel>();
+            viewModel.Initialize(@params);
             DisposeAndSetViewModel(viewModel);
         }
 
@@ -157,6 +203,13 @@ namespace AvaloniaApp.NavService
             _navStore.CurrentViewModel = viewModel;
         }
 
+        /// <summary>
+        /// Функция для очищения текущей ViewModel и переходу на следующую
+        /// </summary>
+        /// <remarks>
+        /// Вызывается базовый переопределяемый метод у текущей ViewModel
+        /// <see cref="ViewModelBase.Dispose"/>
+        /// </remarks>
         private void DisposeAndSetViewModel(ViewModelBase viewModel)
         {
             if (_navStore.CurrentViewModel != null)
