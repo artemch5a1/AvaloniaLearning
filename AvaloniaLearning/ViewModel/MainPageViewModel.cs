@@ -73,5 +73,12 @@ namespace AvaloniaApp.ViewModel
                 SetOvetlay = false;
             });
         }
+
+        [RelayCommand]
+        private void DeleteUser(int id)
+        {
+            _userService.DeleteUser(id);
+            RefreshPage();
+        }
     }
 }
