@@ -3,7 +3,7 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using AvaloniaApp.DataServices;
-using AvaloniaApp.NavigationStore;
+using AvaloniaApp.NavStore;
 using AvaloniaApp.NavService;
 using AvaloniaApp.ServiceAbstractions;
 using AvaloniaApp.View.Base;
@@ -80,7 +80,7 @@ namespace AvaloniaApp
 
         private void ConfigureNavigationServices(IServiceCollection services)
         {
-            services.AddSingleton<NavStore>();
+            services.AddSingleton<NavigationStore>();
 
             services.Configure<NavigationOptions>(options => { });
 

@@ -2,9 +2,9 @@
 using System.Runtime.CompilerServices;
 using AvaloniaApp.ViewModel;
 
-namespace AvaloniaApp.NavigationStore
+namespace AvaloniaApp.NavStore
 {
-    public class NavStore : INotifyPropertyChanged
+    public class NavigationStore : INotifyPropertyChanged
     {
         private ViewModelBase? _currentViewModel;
 

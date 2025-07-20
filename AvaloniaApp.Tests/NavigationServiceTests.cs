@@ -1,4 +1,4 @@
-﻿using AvaloniaApp.NavigationStore;
+﻿using AvaloniaApp.NavStore;
 using AvaloniaApp.NavService;
 using AvaloniaApp.Tests.TestHelper;
 using AvaloniaApp.ViewModel;
@@ -41,7 +41,7 @@ namespace AvaloniaApp.Tests
             navigationService.Navigate<ViewModelBase>();
 
             //Assert
-            NavStore navStore = _serviceProvider.GetRequiredService<NavStore>();
+            NavigationStore navStore = _serviceProvider.GetRequiredService<NavStore>();
 
             Assert.True(navStore.CurrentViewModel!.GetType() == typeof(ViewModelBase));
         }
@@ -60,7 +60,7 @@ namespace AvaloniaApp.Tests
 
             //Assert
             FakeViewModel fakeView = _serviceProvider.GetRequiredService<FakeViewModel>();
-            NavStore navStore = _serviceProvider.GetRequiredService<NavStore>();
+            NavigationStore navStore = _serviceProvider.GetRequiredService<NavStore>();
 
             Assert.True(fakeView.itemParam == @param);
             Assert.True(navStore.CurrentViewModel!.GetType() == typeof(FakeViewModel));
@@ -106,7 +106,7 @@ namespace AvaloniaApp.Tests
             NavigationService navigationService =
                 _serviceProvider.GetRequiredService<NavigationService>();
 
-            NavStore navStore = _serviceProvider.GetRequiredService<NavStore>();
+            NavigationStore navStore = _serviceProvider.GetRequiredService<NavStore>();
 
             //Act
             navigationService.Navigate<FakeViewModel>();
@@ -134,7 +134,7 @@ namespace AvaloniaApp.Tests
             NavigationService navigationService =
                 _serviceProvider.GetRequiredService<NavigationService>();
 
-            NavStore navStore = _serviceProvider.GetRequiredService<NavStore>();
+            NavigationStore navStore = _serviceProvider.GetRequiredService<NavStore>();
 
             Animal animal = new Animal()
             {
@@ -161,7 +161,7 @@ namespace AvaloniaApp.Tests
             NavigationService navigationService =
                 _serviceProvider.GetRequiredService<NavigationService>();
 
-            NavStore navStore = _serviceProvider.GetRequiredService<NavStore>();
+            NavigationStore navStore = _serviceProvider.GetRequiredService<NavStore>();
 
             //Act
             navigationService.Navigate<FakeViewModel>();
@@ -201,7 +201,7 @@ namespace AvaloniaApp.Tests
             navigationService.DestroyAndNavigate<FakeViewModel>();
 
             //Assert
-            NavStore navStore = _serviceProvider.GetRequiredService<NavStore>();
+            NavigationStore navStore = _serviceProvider.GetRequiredService<NavStore>();
 
             Assert.True(navStore.CurrentViewModel!.GetType() == typeof(FakeViewModel));
             Assert.True(!navigationService.HistoryIsNotEmpty);
@@ -222,7 +222,7 @@ namespace AvaloniaApp.Tests
 
             //Assert
             FakeViewModel fakeView = _serviceProvider.GetRequiredService<FakeViewModel>();
-            NavStore navStore = _serviceProvider.GetRequiredService<NavStore>();
+            NavigationStore navStore = _serviceProvider.GetRequiredService<NavStore>();
 
             Assert.True(fakeView.itemParam == @param);
             Assert.True(navStore.CurrentViewModel!.GetType() == typeof(FakeViewModel));
