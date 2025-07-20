@@ -195,6 +195,8 @@ namespace AvaloniaApp.Services.NavService
                 overlayAction?.Invoke(null);
                 onClose?.Invoke();
             };
+
+            _historyNavigation.Push(viewModel);
         }
 
         public void NavigateOverlay<TViewModel, TParam>(

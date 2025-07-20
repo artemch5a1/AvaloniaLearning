@@ -1,9 +1,9 @@
-﻿using AvaloniaApp.Tests.TestHelper;
+﻿using AvaloniaApp.Services.NavService;
+using AvaloniaApp.Stores.NavStore;
+using AvaloniaApp.Tests.TestHelper;
 using AvaloniaApp.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
-using AvaloniaApp.Services.NavService;
-using AvaloniaApp.Stores.NavStore;
 
 namespace AvaloniaApp.Tests
 {
@@ -136,11 +136,7 @@ namespace AvaloniaApp.Tests
 
             NavigationStore navStore = _serviceProvider.GetRequiredService<NavigationStore>();
 
-            Animal animal = new Animal()
-            {
-                Name = "A",
-                Age = 1,
-            };
+            Animal animal = new Animal() { Name = "A", Age = 1 };
 
             //Act
             navigationService.Navigate<FakeViewModel2, Animal>(animal);
@@ -190,7 +186,7 @@ namespace AvaloniaApp.Tests
         }
 
         [Fact]
-        public void DestroyAndNavigate_NavigateWithoutParams_ShouldChangeViewModelAndNotSaveInHistory() 
+        public void DestroyAndNavigate_NavigateWithoutParams_ShouldChangeViewModelAndNotSaveInHistory()
         {
             //Arrange
             NavigationService navigationService =
@@ -227,6 +223,85 @@ namespace AvaloniaApp.Tests
             Assert.True(fakeView.itemParam == @param);
             Assert.True(navStore.CurrentViewModel!.GetType() == typeof(FakeViewModel));
             Assert.True(!navigationService.HistoryIsNotEmpty);
+        }
+
+        [Fact]
+        public void NavigateOverlay_NavigateOverlayWithoutParams_RightAction()
+        {
+            //Arrange
+            NavigationService navigationService =
+                _serviceProvider.GetRequiredService<NavigationService>();
+
+            NavigationStore navigationStore =
+                _serviceProvider.GetRequiredService<NavigationStore>();
+
+            ViewModelBase? viewModel = null;
+
+            FakeViewModel2 fakeView = _serviceProvider.GetRequiredService<FakeViewModel2>();
+
+            //Act
+            navigationService.Navigate<FakeViewModel2>();
+
+            navigationService.NavigateOverlay<FakeViewModel>(
+                overlayAction: vm =>
+                {
+                    viewModel = vm;
+                },
+                onClose: () =>
+                {
+                    fakeView.RefreshPage();
+                }
+            );
+
+            //Assert
+            Assert.Equal(typeof(FakeViewModel), viewModel?.GetType());
+
+            navigationService.CloseOverlay();
+
+            Assert.Equal("тест", fakeView.animal.Breed);
+        }
+
+        [Fact]
+        public void NavigateOverlay_NavigateOverlayWithParams_RightActionAndInitialize()
+        {
+            //Arrange
+            NavigationService navigationService =
+                _serviceProvider.GetRequiredService<NavigationService>();
+
+            NavigationStore navigationStore =
+                _serviceProvider.GetRequiredService<NavigationStore>();
+
+            ViewModelBase? viewModel = null;
+
+            FakeViewModel2 fakeView = _serviceProvider.GetRequiredService<FakeViewModel2>();
+
+            FakeViewModel fakeView1 = _serviceProvider.GetRequiredService<FakeViewModel>();
+
+            (int, string) @params = (15, "тест");
+
+            //Act
+            navigationService.Navigate<FakeViewModel2>();
+
+            navigationService.NavigateOverlay<FakeViewModel, (int, string)>(
+                @params,
+                overlayAction: vm =>
+                {
+                    viewModel = vm;
+                },
+                onClose: () =>
+                {
+                    fakeView.RefreshPage();
+                }
+            );
+
+            //Assert
+            Assert.Equal(typeof(FakeViewModel), viewModel?.GetType());
+
+            Assert.Equal(@params, fakeView1.itemParam);
+
+            navigationService.CloseOverlay();
+
+            Assert.Equal("тест", fakeView.animal.Breed);
         }
     }
 }
