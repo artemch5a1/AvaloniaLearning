@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using AvaloniaApp.ViewModel;
 
 namespace AvaloniaApp.NavigationStore
@@ -13,10 +14,15 @@ namespace AvaloniaApp.NavigationStore
             set
             {
                 _currentViewModel = value;
-                PropertyChanged?.Invoke(null, new PropertyChangedEventArgs("PropertyName"));
+                OnPropertyChanged();
             }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
+
+        private void OnPropertyChanged([CallerMemberName] string? propertyName = null) 
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }
