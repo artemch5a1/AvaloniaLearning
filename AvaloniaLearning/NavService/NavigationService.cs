@@ -114,8 +114,8 @@ namespace AvaloniaApp.NavService
             }
 
             ViewModelBase viewModel = _historyNavigation.Pop();
-            _navStore.CurrentViewModel = viewModel;
             viewModel.RefreshPage();
+            _navStore.CurrentViewModel = viewModel;
         }
 
         /// <summary>
