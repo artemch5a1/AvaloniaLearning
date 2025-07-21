@@ -4,6 +4,7 @@ using AvaloniaApp.ServiceAbstractions;
 using AvaloniaApp.Stores.NavStore;
 using AvaloniaApp.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace AvaloniaApp.Services.NavService
@@ -36,6 +37,7 @@ namespace AvaloniaApp.Services.NavService
     {
         private readonly NavigationStore _navStore;
         private readonly IServiceProvider _serviceProvider;
+        private readonly ILogger _logger;
 
         private Stack<ViewModelBase> _historyNavigation = new();
         private readonly int _maxSizeHistory;
@@ -52,7 +54,7 @@ namespace AvaloniaApp.Services.NavService
         /// </summary>
         /// <param name="navStore">Хранилище состояния навигации</param>
         /// <param name="serviceProvider">Провайдер сервисов (DI-контейнер)</param>
-        /// <param name="maxSizeHistory">
+        /// <param name="options.maxSizeHistory">
         /// Максимальный размер истории навигации.
         /// При превышении этого значения самая ранняя ViewModel будет удалена из истории.
         /// Значение по умолчанию — <c>int.MaxValue</c>, что означает отсутствие ограничений.
@@ -60,12 +62,14 @@ namespace AvaloniaApp.Services.NavService
         public NavigationService(
             NavigationStore navStore,
             IServiceProvider serviceProvider,
+            ILogger<NavigationService> logger,
             IOptions<NavigationOptions> options
         )
         {
             _navStore = navStore;
             _serviceProvider = serviceProvider;
             _maxSizeHistory = options.Value.MaxSizeHistory;
+            _logger = logger;
         }
 
         /// <summary>
@@ -80,6 +84,7 @@ namespace AvaloniaApp.Services.NavService
         {
             ViewModelBase viewModel = _serviceProvider.GetRequiredService<TViewModel>();
             PushToHistoryAndSetViewModel(viewModel);
+            _logger.LogInformation($"Переход к {viewModel.GetType().Name}");
         }
 
         /// <summary>
@@ -100,6 +105,9 @@ namespace AvaloniaApp.Services.NavService
             ViewModelBase viewModel = _serviceProvider.GetRequiredService<TViewModel>();
             viewModel.Initialize(@params);
             PushToHistoryAndSetViewModel(viewModel);
+            _logger.LogInformation(
+                $"Переход к {viewModel.GetType().Name} с передачей параметров: {@params}"
+            );
         }
 
         /// <summary>
@@ -125,12 +133,14 @@ namespace AvaloniaApp.Services.NavService
         {
             if (!HistoryIsNotEmpty)
             {
+                _logger.LogError($"Попытка перехода назад при пустой истории");
                 return;
             }
             _navStore.CurrentViewModel?.Dispose();
             ViewModelBase viewModel = _historyNavigation.Pop();
             viewModel.RefreshPage();
             _navStore.CurrentViewModel = viewModel;
+            _logger.LogInformation($"Поэтапный возврат к {viewModel.GetType().Name}");
         }
 
         /// <summary>
@@ -153,6 +163,7 @@ namespace AvaloniaApp.Services.NavService
         {
             ViewModelBase viewModel = _serviceProvider.GetRequiredService<TViewModel>();
             DisposeAndSetViewModel(viewModel);
+            _logger.LogInformation($"Переход к {viewModel.GetType().Name} без сохранения истории");
         }
 
         /// <summary>
@@ -178,6 +189,9 @@ namespace AvaloniaApp.Services.NavService
             ViewModelBase viewModel = _serviceProvider.GetRequiredService<TViewModel>();
             viewModel.Initialize(@params);
             DisposeAndSetViewModel(viewModel);
+            _logger.LogInformation(
+                $"Переход к {viewModel.GetType().Name} без сохранения истории c передачей параметров: {@params}"
+            );
         }
 
         /// <summary>
@@ -185,7 +199,7 @@ namespace AvaloniaApp.Services.NavService
         /// ViewModel будет записана в историю и может быть закрыта через GoBackOneStep.
         /// </summary>
         /// <typeparam name="TViewModel">Тип ViewModel оверлея.</typeparam>
-        /// <param name="setOverlayCallback">Действие, которое устанавливает или сбрасывает overlay ViewModel в хосте.</param>
+        /// <param name="overlayAction">Действие, которое устанавливает или сбрасывает overlay ViewModel в хосте.</param>
         /// <param name="onClose">Дополнительное действие, выполняемое при закрытии оверлея.</param>
         public void NavigateOverlay<TViewModel>(
             Action<ViewModelBase?>? overlayAction = null,
@@ -204,6 +218,8 @@ namespace AvaloniaApp.Services.NavService
             };
 
             _historyNavigation.Push(viewModel);
+
+            _logger.LogInformation($"Оверлейная навигация на {viewModel.GetType().Name}");
         }
 
         /// <summary>
@@ -236,22 +252,31 @@ namespace AvaloniaApp.Services.NavService
             };
 
             _historyNavigation.Push(viewModel);
+
+            _logger.LogInformation(
+                $"Оверлейная навигация на {viewModel.GetType().Name} с передачей параметров: {@params}"
+            );
         }
 
         /// <summary>
         /// Выполняет действие по закрытию оверлейного окна
-        /// и очищает ViewModel 
+        /// и очищает ViewModel
         /// </summary>
         public void CloseOverlay()
         {
             if (!HistoryIsNotEmpty)
+            {
+                _logger.LogError("Попытка закрытия оверлейного окна при пустой истории");
                 return;
+            }
 
             ViewModelBase viewModel = _historyNavigation.Pop();
 
             viewModel.Dispose();
 
             OverlayAction?.Invoke(null);
+
+            _logger.LogInformation("Закрытие оверлейного окна");
         }
 
         /// <summary>
@@ -273,7 +298,10 @@ namespace AvaloniaApp.Services.NavService
             {
                 if (_maxSizeHistory <= _historyNavigation.Count)
                 {
-                    RemoveLastVM();
+                    string type = RemoveLastVM();
+                    _logger.LogWarning(
+                        $"Превышен лимит истории, удалена самая старая запись ({type})"
+                    );
                 }
                 _historyNavigation.Push(_navStore.CurrentViewModel);
             }
@@ -299,12 +327,13 @@ namespace AvaloniaApp.Services.NavService
         /// <summary>
         /// Функция для удаления первой записи истории
         /// </summary>
-        private void RemoveLastVM()
+        private string RemoveLastVM()
         {
-            _historyNavigation = new Stack<ViewModelBase>(_historyNavigation);
+            _historyNavigation = new(_historyNavigation);
             ViewModelBase vm = _historyNavigation.Pop();
             vm.Dispose();
-            _historyNavigation = new Stack<ViewModelBase>(_historyNavigation);
+            _historyNavigation = new(_historyNavigation);
+            return vm.GetType().Name;
         }
     }
 }
