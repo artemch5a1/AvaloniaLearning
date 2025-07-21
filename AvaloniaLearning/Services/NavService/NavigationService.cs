@@ -52,7 +52,7 @@ namespace AvaloniaApp.Services.NavService
         /// </summary>
         /// <param name="navStore">Хранилище состояния навигации</param>
         /// <param name="serviceProvider">Провайдер сервисов (DI-контейнер)</param>
-        /// <param name="maxSizeHistory">
+        /// <param name="options.maxSizeHistory">
         /// Максимальный размер истории навигации.
         /// При превышении этого значения самая ранняя ViewModel будет удалена из истории.
         /// Значение по умолчанию — <c>int.MaxValue</c>, что означает отсутствие ограничений.
@@ -185,7 +185,7 @@ namespace AvaloniaApp.Services.NavService
         /// ViewModel будет записана в историю и может быть закрыта через GoBackOneStep.
         /// </summary>
         /// <typeparam name="TViewModel">Тип ViewModel оверлея.</typeparam>
-        /// <param name="setOverlayCallback">Действие, которое устанавливает или сбрасывает overlay ViewModel в хосте.</param>
+        /// <param name="overlayAction">Действие, которое устанавливает или сбрасывает overlay ViewModel в хосте.</param>
         /// <param name="onClose">Дополнительное действие, выполняемое при закрытии оверлея.</param>
         public void NavigateOverlay<TViewModel>(
             Action<ViewModelBase?>? overlayAction = null,
@@ -240,7 +240,7 @@ namespace AvaloniaApp.Services.NavService
 
         /// <summary>
         /// Выполняет действие по закрытию оверлейного окна
-        /// и очищает ViewModel 
+        /// и очищает ViewModel
         /// </summary>
         public void CloseOverlay()
         {
