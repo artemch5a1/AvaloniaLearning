@@ -276,6 +276,8 @@ namespace AvaloniaApp.Services.NavService
 
             OverlayAction?.Invoke(null);
 
+            OverlayAction = null;
+
             _logger.LogInformation("Закрытие оверлейного окна");
         }
 
