@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
+using AvaloniaApp.ServiceAbstractions;
 using AvaloniaApp.Services.NavService.Absract;
-using AvaloniaApp.Stores.NavStore;
 
 namespace AvaloniaApp.ViewModel
 {
@@ -9,9 +9,9 @@ namespace AvaloniaApp.ViewModel
     {
         public ViewModelTemplate? CurrentViewModel => _navStore.CurrentViewModel;
 
-        private readonly NavigationStore _navStore;
+        private readonly INavigationStore _navStore;
 
-        public MainWindowViewModel(NavigationStore navStore)
+        public MainWindowViewModel(INavigationStore navStore)
         {
             _navStore = navStore;
             _navStore.PropertyChanged += OnViewModelChanged;

@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using AvaloniaApp.ServiceAbstractions;
 using AvaloniaApp.Services.NavService.Absract;
-using AvaloniaApp.Stores.NavStore;
-using AvaloniaApp.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -36,7 +34,7 @@ namespace AvaloniaApp.Services.NavService
     /// </remarks>
     public class NavigationService : INavigationService
     {
-        private readonly NavigationStore _navStore;
+        private readonly INavigationStore _navStore;
         private readonly IServiceProvider _serviceProvider;
         private readonly ILogger _logger;
 
@@ -61,7 +59,7 @@ namespace AvaloniaApp.Services.NavService
         /// Значение по умолчанию — <c>int.MaxValue</c>, что означает отсутствие ограничений.
         /// </param>
         public NavigationService(
-            NavigationStore navStore,
+            INavigationStore navStore,
             IServiceProvider serviceProvider,
             ILogger<NavigationService> logger,
             IOptions<NavigationOptions> options

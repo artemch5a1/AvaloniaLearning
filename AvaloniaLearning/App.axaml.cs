@@ -98,7 +98,7 @@ namespace AvaloniaApp
 
         private void ConfigureNavigationServices(IServiceCollection services)
         {
-            services.AddSingleton<NavigationStore>();
+            services.AddSingleton<INavigationStore, NavigationStore>();
 
             services.Configure<NavigationOptions>(options => { });
 
