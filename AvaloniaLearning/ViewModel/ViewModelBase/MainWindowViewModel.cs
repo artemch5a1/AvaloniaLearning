@@ -1,12 +1,13 @@
 ﻿using System;
 using System.ComponentModel;
+using AvaloniaApp.Services.NavService.Absract;
 using AvaloniaApp.Stores.NavStore;
 
 namespace AvaloniaApp.ViewModel
 {
     public partial class MainWindowViewModel : ViewModelBase
     {
-        public ViewModelBase? CurrentViewModel => _navStore.CurrentViewModel;
+        public ViewModelTemplate? CurrentViewModel => _navStore.CurrentViewModel;
 
         private readonly NavigationStore _navStore;
 
@@ -18,7 +19,7 @@ namespace AvaloniaApp.ViewModel
 
         private void OnViewModelChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if(e.PropertyName == nameof(_navStore.CurrentViewModel))
+            if (e.PropertyName == nameof(_navStore.CurrentViewModel))
             {
                 OnPropertyChanged(nameof(CurrentViewModel));
             }
@@ -26,7 +27,8 @@ namespace AvaloniaApp.ViewModel
 
         public override void Dispose()
         {
-            if(IsDisposed) return;
+            if (IsDisposed)
+                return;
             _navStore.PropertyChanged -= OnViewModelChanged;
             CurrentViewModel?.Dispose();
             base.Dispose();

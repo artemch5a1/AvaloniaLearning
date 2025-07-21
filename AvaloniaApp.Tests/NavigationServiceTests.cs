@@ -1,4 +1,5 @@
 ﻿using AvaloniaApp.Services.NavService;
+using AvaloniaApp.Services.NavService.Absract;
 using AvaloniaApp.Stores.NavStore;
 using AvaloniaApp.Tests.TestHelper;
 using AvaloniaApp.ViewModel;
@@ -14,6 +15,8 @@ namespace AvaloniaApp.Tests
         public NavigationServiceTests()
         {
             ServiceCollection serviceDescriptors = new ServiceCollection();
+
+            serviceDescriptors.AddSingleton<ViewModelTemplate, ViewModelBase>();
 
             serviceDescriptors.AddScoped<FakeViewModel>();
 
@@ -237,7 +240,7 @@ namespace AvaloniaApp.Tests
             NavigationStore navigationStore =
                 _serviceProvider.GetRequiredService<NavigationStore>();
 
-            ViewModelBase? viewModel = null;
+            ViewModelTemplate? viewModel = null;
 
             FakeViewModel2 fakeView = _serviceProvider.GetRequiredService<FakeViewModel2>();
 
@@ -273,7 +276,7 @@ namespace AvaloniaApp.Tests
             NavigationStore navigationStore =
                 _serviceProvider.GetRequiredService<NavigationStore>();
 
-            ViewModelBase? viewModel = null;
+            ViewModelTemplate? viewModel = null;
 
             FakeViewModel2 fakeView = _serviceProvider.GetRequiredService<FakeViewModel2>();
 
