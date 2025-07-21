@@ -61,7 +61,7 @@ namespace AvaloniaApp.Services.NavService
         /// Значение по умолчанию — <c>int.MaxValue</c>, что означает отсутствие ограничений.
         /// </param>
         public NavigationService(
-            NavigationStore navStore,
+            INavigationStore navStore,
             IServiceProvider serviceProvider,
             ILogger<NavigationService> logger,
             IOptions<NavigationOptions> options
