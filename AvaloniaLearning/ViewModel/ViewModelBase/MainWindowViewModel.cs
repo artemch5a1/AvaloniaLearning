@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
+using AvaloniaApp.ServiceAbstractions;
 using AvaloniaApp.Services.NavService.Absract;
-using AvaloniaApp.Stores.NavStore;
 
 namespace AvaloniaApp.ViewModel
 {

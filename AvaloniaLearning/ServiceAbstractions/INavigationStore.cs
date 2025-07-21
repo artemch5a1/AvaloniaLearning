@@ -1,7 +1,7 @@
 ﻿using AvaloniaApp.Services.NavService.Absract;
 using System.ComponentModel;
 
-namespace AvaloniaApp.Stores.NavStore
+namespace AvaloniaApp.ServiceAbstractions
 {
     public interface INavigationStore : INotifyPropertyChanged
     {

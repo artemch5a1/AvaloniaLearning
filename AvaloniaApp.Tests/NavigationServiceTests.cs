@@ -1,4 +1,5 @@
-﻿using AvaloniaApp.Services.NavService;
+﻿using AvaloniaApp.ServiceAbstractions;
+using AvaloniaApp.Services.NavService;
 using AvaloniaApp.Services.NavService.Absract;
 using AvaloniaApp.Stores.NavStore;
 using AvaloniaApp.Tests.TestHelper;
