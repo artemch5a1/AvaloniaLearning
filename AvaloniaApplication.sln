@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvaloniaApp", "AvaloniaLear
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.Library_UI", "App.Library_UI\App.Library_UI.csproj", "{B53EDBBD-1C69-6971-C2CF-6CD2B5ECCE95}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvaloniaApp.Tests", "AvaloniaApp.Tests\AvaloniaApp.Tests.csproj", "{6E351324-EF2D-4DEB-BA25-B563A57617C0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVMNavigationKit.Tests", "AvaloniaApp.Tests\MVVMNavigationKit.Tests.csproj", "{6E351324-EF2D-4DEB-BA25-B563A57617C0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVMNavigationKit", "MVVMNavigationKit\MVVMNavigationKit.csproj", "{9C878C66-182C-4AD7-A2A2-9BD6EB3861AB}"
 EndProject
