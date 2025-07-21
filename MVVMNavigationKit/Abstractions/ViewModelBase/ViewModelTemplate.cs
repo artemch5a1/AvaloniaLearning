@@ -1,11 +1,12 @@
-﻿
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+
 namespace MvvmNavigationKit.Abstractions.ViewModelBase
 {
     /// <summary>
     /// Базовый шаблон ViewModel для использования в MVVM.
     /// Поддерживает инициализацию параметрами, обновление страницы и освобождение ресурсов.
     /// </summary>
-    public abstract class ViewModelTemplate : IDisposable
+    public abstract class ViewModelTemplate : ObservableObject, IDisposable
     {
         /// <summary>
         /// Инициализирует ViewModel с заданными параметрами.

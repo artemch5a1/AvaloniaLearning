@@ -2,6 +2,7 @@
 using AvaloniaApp.ServiceAbstractions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MvvmNavigationKit.Abstractions;
 using System.Threading.Tasks;
 
 namespace AvaloniaApp.ViewModel

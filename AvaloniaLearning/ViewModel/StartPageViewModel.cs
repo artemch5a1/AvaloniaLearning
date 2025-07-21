@@ -1,4 +1,4 @@
-﻿using AvaloniaApp.ServiceAbstractions;
+﻿using MvvmNavigationKit.Abstractions;
 
 namespace AvaloniaApp.ViewModel
 {

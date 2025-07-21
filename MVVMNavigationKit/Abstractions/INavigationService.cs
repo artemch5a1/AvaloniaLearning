@@ -1,6 +1,6 @@
 ﻿using MvvmNavigationKit.Abstractions.ViewModelBase;
 
-namespace AvaloniaApp.ServiceAbstractions
+namespace MvvmNavigationKit.Abstractions
 {
     public interface INavigationService
     {
