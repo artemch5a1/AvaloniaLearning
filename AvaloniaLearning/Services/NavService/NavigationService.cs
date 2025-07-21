@@ -36,7 +36,7 @@ namespace AvaloniaApp.Services.NavService
     /// </remarks>
     public class NavigationService : INavigationService
     {
-        private readonly NavigationStore _navStore;
+        private readonly INavigationStore _navStore;
         private readonly IServiceProvider _serviceProvider;
         private readonly ILogger _logger;
 
