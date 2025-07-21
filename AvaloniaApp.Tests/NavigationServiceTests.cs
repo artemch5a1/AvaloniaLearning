@@ -1,11 +1,11 @@
-﻿using AvaloniaApp.ServiceAbstractions;
-using AvaloniaApp.Services.NavService;
-using AvaloniaApp.Services.NavService.Absract;
-using AvaloniaApp.Stores.NavStore;
-using AvaloniaApp.Tests.TestHelper;
-using AvaloniaApp.ViewModel;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Moq;
+using MvvmNavigationKit.Abstractions;
+using MvvmNavigationKit.Abstractions.ViewModelBase;
+using MvvmNavigationKit.NavigationServices;
+using MvvmNavigationKit.NavigationStores;
+using MvvmNavigationKit.Options;
+using MvvmNavigationKit.Tests.TestHelper;
 
 namespace AvaloniaApp.Tests
 {
