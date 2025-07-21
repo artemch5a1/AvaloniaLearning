@@ -4,9 +4,10 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using AvaloniaApp.Models;
 using AvaloniaApp.ServiceAbstractions;
-using AvaloniaApp.Services.NavService.Absract;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MvvmNavigationKit.Abstractions;
+using MvvmNavigationKit.Abstractions.ViewModelBase;
 
 namespace AvaloniaApp.ViewModel
 {

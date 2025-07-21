@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AvaloniaApp.ViewModel;
+﻿using MvvmNavigationKit.Abstractions.ViewModelBase;
 
-namespace AvaloniaApp.Tests.TestHelper
+namespace MvvmNavigationKit.Tests.TestHelper
 {
-    public class FakeViewModel : ViewModelBase
+    public class FakeViewModel : ViewModelTemplate
     {
         public (int, string) itemParam;
+
+        public override void Dispose() { }
+
+        public override void RefreshPage() { }
 
         protected override void InitializeParams<T>(T @params)
         {

@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AvaloniaLearning\AvaloniaApp.csproj" />
+    <ProjectReference Include="..\MVVMNavigationKit\MVVMNavigationKit.csproj" />
   </ItemGroup>
 
   <ItemGroup>

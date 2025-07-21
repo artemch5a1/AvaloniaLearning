@@ -1,10 +1,9 @@
-﻿using System.ComponentModel;
+﻿using MvvmNavigationKit.Abstractions;
+using MvvmNavigationKit.Abstractions.ViewModelBase;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using AvaloniaApp.ServiceAbstractions;
-using AvaloniaApp.Services.NavService.Absract;
-using AvaloniaApp.ViewModel;
 
-namespace AvaloniaApp.Stores.NavStore
+namespace MvvmNavigationKit.NavigationStores
 {
     public class NavigationStore : INavigationStore
     {

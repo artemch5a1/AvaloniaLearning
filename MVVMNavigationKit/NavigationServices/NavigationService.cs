@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using AvaloniaApp.ServiceAbstractions;
-using AvaloniaApp.Services.NavService.Absract;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using MvvmNavigationKit.Abstractions;
+using MvvmNavigationKit.Abstractions.ViewModelBase;
+using MvvmNavigationKit.Options;
 
-namespace AvaloniaApp.Services.NavService
+namespace MvvmNavigationKit.NavigationServices
 {
     /// <summary>
     /// Сервис навигации между ViewModel в приложении.

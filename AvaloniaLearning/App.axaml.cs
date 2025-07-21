@@ -4,13 +4,15 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using AvaloniaApp.ServiceAbstractions;
 using AvaloniaApp.Services.DataServices;
-using AvaloniaApp.Services.NavService;
-using AvaloniaApp.Services.NavService.Absract;
-using AvaloniaApp.Stores.NavStore;
 using AvaloniaApp.View.Base;
 using AvaloniaApp.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using MvvmNavigationKit.Abstractions;
+using MvvmNavigationKit.Abstractions.ViewModelBase;
+using MvvmNavigationKit.NavigationServices;
+using MvvmNavigationKit.NavigationStores;
+using MvvmNavigationKit.Options;
 using Splat.Microsoft.Extensions.DependencyInjection;
 
 namespace AvaloniaApp

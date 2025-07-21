@@ -1,7 +1,5 @@
 ﻿using System;
-using AvaloniaApp.Services.NavService;
-using AvaloniaApp.Services.NavService.Absract;
-using CommunityToolkit.Mvvm.ComponentModel;
+using MvvmNavigationKit.Abstractions.ViewModelBase;
 
 namespace AvaloniaApp.ViewModel
 {

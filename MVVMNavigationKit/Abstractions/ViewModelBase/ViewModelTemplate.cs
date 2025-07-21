@@ -1,7 +1,6 @@
-﻿using System;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace AvaloniaApp.Services.NavService.Absract
+namespace MvvmNavigationKit.Abstractions.ViewModelBase
 {
     /// <summary>
     /// Базовый шаблон ViewModel для использования в MVVM.

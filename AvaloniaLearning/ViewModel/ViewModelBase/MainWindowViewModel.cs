@@ -1,7 +1,6 @@
-﻿using System;
+﻿using MvvmNavigationKit.Abstractions;
+using MvvmNavigationKit.Abstractions.ViewModelBase;
 using System.ComponentModel;
-using AvaloniaApp.ServiceAbstractions;
-using AvaloniaApp.Services.NavService.Absract;
 
 namespace AvaloniaApp.ViewModel
 {
