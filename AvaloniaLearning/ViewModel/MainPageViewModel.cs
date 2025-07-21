@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using AvaloniaApp.Models;
 using AvaloniaApp.ServiceAbstractions;
+using AvaloniaApp.Services.NavService.Absract;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -15,7 +16,7 @@ namespace AvaloniaApp.ViewModel
         private readonly IUserService _userService;
 
         [ObservableProperty]
-        private ViewModelBase? _currentOverlayViewModel;
+        private ViewModelTemplate? _currentOverlayViewModel;
 
         [ObservableProperty]
         private bool _setOvetlay = false;
@@ -61,17 +62,20 @@ namespace AvaloniaApp.ViewModel
         }
 
         [RelayCommand]
-        private void NavToAddUser() 
+        private void NavToAddUser()
         {
             SetOvetlay = true;
-            _navService.NavigateOverlay<CreateUserViewModel>(overlayAction: vm =>
-            {
-                CurrentOverlayViewModel = vm;
-            },
-            onClose:() => {
-                _ = LoadUsers();
-                SetOvetlay = false;
-            });
+            _navService.NavigateOverlay<CreateUserViewModel>(
+                overlayAction: vm =>
+                {
+                    CurrentOverlayViewModel = vm;
+                },
+                onClose: () =>
+                {
+                    _ = LoadUsers();
+                    SetOvetlay = false;
+                }
+            );
         }
 
         [RelayCommand]

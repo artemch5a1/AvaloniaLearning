@@ -1,14 +1,15 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using AvaloniaApp.Services.NavService.Absract;
 using AvaloniaApp.ViewModel;
 
 namespace AvaloniaApp.Stores.NavStore
 {
     public class NavigationStore : INotifyPropertyChanged
     {
-        private ViewModelBase? _currentViewModel;
+        private ViewModelTemplate? _currentViewModel;
 
-        public ViewModelBase? CurrentViewModel
+        public ViewModelTemplate? CurrentViewModel
         {
             get => _currentViewModel;
             set
@@ -21,7 +22,7 @@ namespace AvaloniaApp.Stores.NavStore
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        private void OnPropertyChanged([CallerMemberName] string? propertyName = null) 
+        private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

@@ -5,6 +5,7 @@ using Avalonia.Markup.Xaml;
 using AvaloniaApp.ServiceAbstractions;
 using AvaloniaApp.Services.DataServices;
 using AvaloniaApp.Services.NavService;
+using AvaloniaApp.Services.NavService.Absract;
 using AvaloniaApp.Stores.NavStore;
 using AvaloniaApp.View.Base;
 using AvaloniaApp.ViewModel;
@@ -82,6 +83,8 @@ namespace AvaloniaApp
 
         private void ConfigureViewModelServices(IServiceCollection services)
         {
+            services.AddSingleton<ViewModelTemplate, ViewModelBase>();
+
             services.AddSingleton<MainWindowViewModel>();
 
             services.AddTransient<MainPageViewModel>();
