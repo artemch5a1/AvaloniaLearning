@@ -5,7 +5,7 @@ using AvaloniaApp.ViewModel;
 
 namespace AvaloniaApp.Stores.NavStore
 {
-    public class NavigationStore : INotifyPropertyChanged
+    public class NavigationStore : INavigationStore
     {
         private ViewModelTemplate? _currentViewModel;
 
