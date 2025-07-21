@@ -35,7 +35,7 @@ namespace AvaloniaApp.ViewModel
         /// Переопределяемая функция для перезагрузки данных страницы
         /// </summary>
         /// <remarks>
-        /// Вызывается каждый раз после использования 
+        /// Вызывается каждый раз после использования
         /// <see cref="NavigationService.NavigateBack"/>
         /// </remarks>
         public virtual void RefreshPage() { }
@@ -89,7 +89,8 @@ namespace AvaloniaApp.ViewModel
         /// </remarks>
         public virtual void Dispose()
         {
-            if(IsDisposed) return;
+            if (IsDisposed)
+                return;
             GC.SuppressFinalize(this);
             IsDisposed = true;
         }
