@@ -27,6 +27,8 @@ namespace AvaloniaApp.Tests
 
             serviceDescriptors.AddScoped<NavigationStore>();
 
+            serviceDescriptors.AddLogging(config => { });
+
             _serviceProvider = serviceDescriptors.BuildServiceProvider();
         }
 

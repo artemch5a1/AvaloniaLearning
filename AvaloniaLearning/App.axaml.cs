@@ -3,14 +3,14 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using AvaloniaApp.ServiceAbstractions;
-using AvaloniaApp.View.Base;
-using AvaloniaApp.ViewModel;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using Splat.Microsoft.Extensions.DependencyInjection;
 using AvaloniaApp.Services.DataServices;
 using AvaloniaApp.Services.NavService;
 using AvaloniaApp.Stores.NavStore;
+using AvaloniaApp.View.Base;
+using AvaloniaApp.ViewModel;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Splat.Microsoft.Extensions.DependencyInjection;
 
 namespace AvaloniaApp
 {
@@ -65,6 +65,19 @@ namespace AvaloniaApp
             ConfigureViewModelServices(services);
             ConfigureNavigationServices(services);
             ConfigureOtherSevice(services);
+            ConfigureLoggerService(services);
+        }
+
+        private void ConfigureLoggerService(IServiceCollection services)
+        {
+            services
+                .AddLogging(config =>
+                {
+                    config.AddDebug();
+                    config.AddFile("log.txt");
+                    config.SetMinimumLevel(LogLevel.Information);
+                })
+                .UseMicrosoftDependencyResolver();
         }
 
         private void ConfigureViewModelServices(IServiceCollection services)
