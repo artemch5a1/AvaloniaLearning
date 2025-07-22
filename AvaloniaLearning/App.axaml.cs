@@ -10,9 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MvvmNavigationKit.Abstractions;
 using MvvmNavigationKit.Abstractions.ViewModelBase;
-using MvvmNavigationKit.NavigationServices;
-using MvvmNavigationKit.NavigationStores;
-using MvvmNavigationKit.Options;
+using MVVMNavigationKit.ServiceBuild;
 using Splat.Microsoft.Extensions.DependencyInjection;
 
 namespace AvaloniaApp
@@ -100,11 +98,7 @@ namespace AvaloniaApp
 
         private void ConfigureNavigationServices(IServiceCollection services)
         {
-            services.AddSingleton<INavigationStore, NavigationStore>();
-
-            services.Configure<NavigationOptions>(options => { });
-
-            services.AddSingleton<INavigationService, NavigationService>();
+            NavigationServicesHelper.CreateServiceCollections(services);
         }
 
         private void ConfigureOtherSevice(IServiceCollection services)
