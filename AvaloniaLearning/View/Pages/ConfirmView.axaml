@@ -1,0 +1,43 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="using:AvaloniaApp.ViewModel"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="400"
+             x:Class="AvaloniaApp.View.Pages.ConfirmView"
+			 x:DataType="vm:ConfirmViewModel"
+			 Background="{StaticResource GreySwitchBorderBrush}"
+			 CornerRadius="20">
+	<StackPanel>
+		<Button Classes="CloseButton"
+					Command="{Binding CloseOverlayCommand}"
+					HorizontalAlignment="Right"
+					Foreground="Black"
+				Margin="0 15 15 0"/>
+		<StackPanel HorizontalAlignment="Center"
+				    Margin="0 40 0 0">
+			<TextBlock 
+					 Width="300"
+					 FontFamily="Times"
+					 FontSize="20"
+					 Text="{Binding Title}"
+					 Margin="0 0 0 20"
+					 TextWrapping="Wrap"/>
+			<StackPanel Orientation="Horizontal">
+				<Button Content="Отмена"
+					Classes="Main"
+					HorizontalAlignment="Center"
+					FontWeight="Bold"
+					FontSize="20"
+					Command="{Binding CloseOverlayCommand}"
+						Margin="0 0 20 0"/>
+				<Button Content="Подтвердить"
+					Classes="Main"
+					HorizontalAlignment="Center"
+					FontWeight="Bold"
+					FontSize="20"
+					Command="{Binding ConfirmCommand}"/>
+			</StackPanel>
+		</StackPanel>
+	</StackPanel>
+</UserControl>

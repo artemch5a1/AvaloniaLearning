@@ -94,6 +94,8 @@ namespace AvaloniaApp
             services.AddTransient<EditPageViewModel>();
 
             services.AddTransient<CreateUserViewModel>();
+
+            services.AddTransient<ConfirmViewModel>();
         }
 
         private void ConfigureNavigationServices(IServiceCollection services)
