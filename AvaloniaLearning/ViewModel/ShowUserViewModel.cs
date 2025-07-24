@@ -2,6 +2,7 @@
 using AvaloniaApp.Models;
 using AvaloniaApp.ServiceAbstractions;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using MvvmNavigationKit.Abstractions;
 
 namespace AvaloniaApp.ViewModel
@@ -44,6 +45,12 @@ namespace AvaloniaApp.ViewModel
                 User = user;
             }
             await Task.CompletedTask;
+        }
+
+        [RelayCommand]
+        private void GoBack()
+        {
+            _navigationService.CloseOverlay();
         }
     }
 }

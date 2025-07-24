@@ -1,0 +1,91 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="clr-namespace:AvaloniaApp.ViewModel"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="600"
+             x:Class="AvaloniaApp.View.Pages.ShowUserView"
+			 x:DataType="vm:ShowUserViewModel"
+			 CornerRadius="20">
+	<StackPanel>
+		<Button Classes="CloseButton"
+					HorizontalAlignment="Right"
+					Foreground="Black"
+				Margin="0 15 15 0"/>
+		<StackPanel HorizontalAlignment="Center"
+				    Margin="0 40 0 0">
+			<TextBlock Text="Имя"/>
+			<Border BorderBrush="Aqua"
+					 CornerRadius="10"
+					 BorderThickness="2"
+					Margin="0 0 0 20">
+				<TextBlock
+					 Width="300"
+					 FontFamily="Times"
+					 FontSize="20"
+					 Text="{Binding User.Name}"
+					 Margin="0 0 0 15"
+					 TextWrapping="Wrap"
+					 />
+			</Border>
+			<TextBlock Text="Фамилия"/>
+			<Border BorderBrush="Aqua"
+					 CornerRadius="10"
+					 BorderThickness="2"
+					Margin="0 0 0 20">
+				<TextBlock
+					 Width="300"
+					 FontFamily="Times"
+					 FontSize="20"
+					 Text="{Binding User.Surname}"
+					 Margin="0 0 0 15"
+					 TextWrapping="Wrap"
+					 />
+			</Border>
+			<TextBlock Text="Email"/>
+			<Border BorderBrush="Aqua"
+					 CornerRadius="10"
+					 BorderThickness="2"
+	                 Margin="0 0 0 20">
+				<TextBlock
+					 Width="300"
+					 FontFamily="Times"
+					 FontSize="20"
+					 Text="{Binding User.Email}"
+					 TextWrapping="Wrap"
+					 Margin="0 0 0 15"/>
+			</Border>
+			<TextBlock Text="Дата создания"/>
+			<Border BorderBrush="Aqua"
+					 CornerRadius="10"
+					 BorderThickness="2"
+	                 Margin="0 0 0 20">
+				<TextBlock
+					 Width="300"
+					 FontFamily="Times"
+					 FontSize="20"
+					 Text="{Binding User.DateAdding}"
+					 TextWrapping="Wrap"
+					 Margin="0 0 0 15"/>
+			</Border>
+			<TextBlock Text="Дата последнего изменения"/>
+			<Border BorderBrush="Aqua"
+					 CornerRadius="10"
+					 BorderThickness="2"
+	                 Margin="0 0 0 20">
+				<TextBlock
+					 Width="300"
+					 FontFamily="Times"
+					 FontSize="20"
+					 Text="{Binding User.DateEdit}"
+					 TextWrapping="Wrap"
+					 Margin="0 0 0 15"/>
+			</Border>
+			<TextBlock Text="{Binding Error}"
+					   Foreground="Red"
+					   Margin="0 0 0 10"
+					   FontSize="15"
+					   TextWrapping="Wrap"/>
+		</StackPanel>
+	</StackPanel>
+</UserControl>
