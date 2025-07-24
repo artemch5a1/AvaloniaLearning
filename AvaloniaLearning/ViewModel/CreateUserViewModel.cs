@@ -27,14 +27,15 @@ namespace AvaloniaApp.ViewModel
         [RelayCommand]
         private void CreateUser()
         {
-            if (ValidateUser())
+            (bool success, string? error) validRes = ValidateUser();
+            if (validRes.success)
             {
                 TryCreateUser();
                 NavToBack();
             }
             else
             {
-                Error = "Есть не заполненные поля";
+                Error = validRes.error ?? string.Empty;
             }
         }
 
@@ -44,13 +45,17 @@ namespace AvaloniaApp.ViewModel
             _navigationService.CloseOverlay();
         }
 
-        private bool ValidateUser()
+        private (bool, string?) ValidateUser()
         {
-            if(User.Name == string.Empty || User.Email == string.Empty || User.Surname == string.Empty)
+            if (
+                User.Name == string.Empty
+                || User.Email == string.Empty
+                || User.Surname == string.Empty
+            )
             {
-                return false;
+                return (false, "Есть не заполненные поля");
             }
-            return true;
+            return (true, null);
         }
 
         private void TryCreateUser()
