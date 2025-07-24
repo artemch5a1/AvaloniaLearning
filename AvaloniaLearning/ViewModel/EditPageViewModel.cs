@@ -1,9 +1,10 @@
-﻿using AvaloniaApp.Models;
+﻿using System.Threading.Tasks;
+using AvaloniaApp.Models;
 using AvaloniaApp.ServiceAbstractions;
+using AvaloniaApp.Utils;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MvvmNavigationKit.Abstractions;
-using System.Threading.Tasks;
 
 namespace AvaloniaApp.ViewModel
 {
@@ -22,6 +23,9 @@ namespace AvaloniaApp.ViewModel
 
         [ObservableProperty]
         public string _userEmail = string.Empty;
+
+        [ObservableProperty]
+        private string _error = string.Empty;
 
         public RelayCommand NavToBackCommand { get; }
 
@@ -65,6 +69,14 @@ namespace AvaloniaApp.ViewModel
                 Surname = UserSurname,
                 Email = UserEmail,
             };
+
+            (bool success, string? error) resValid = UserValidator.ValidateUser(user);
+
+            if (!resValid.success)
+            {
+                Error = resValid.error ?? string.Empty;
+                return;
+            }
 
             bool success = _userService.UpdateUser(user);
 

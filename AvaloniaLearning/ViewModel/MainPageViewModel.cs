@@ -27,6 +27,8 @@ namespace AvaloniaApp.ViewModel
 
         private string _errorText = string.Empty;
 
+        private int? _currentIdDelete = null;
+
         public MainPageViewModel(INavigationService navService, IUserService userService)
         {
             _navService = navService;
@@ -79,11 +81,36 @@ namespace AvaloniaApp.ViewModel
             );
         }
 
+        private void DeleteAction()
+        {
+            if (_currentIdDelete != null)
+            {
+                _userService.DeleteUser((int)_currentIdDelete);
+            }
+        }
+
         [RelayCommand]
         private void DeleteUser(int id)
         {
-            _userService.DeleteUser(id);
-            RefreshPage();
+            _currentIdDelete = id;
+            SetOvetlay = true;
+            _navService.NavigateOverlay<ConfirmViewModel>(
+                overlayAction: vm =>
+                {
+                    CurrentOverlayViewModel = vm;
+                    if (vm is ConfirmViewModel viewModel)
+                    {
+                        viewModel.ConfrimAction += DeleteAction;
+                        viewModel.Title = "Удалить пользователя?";
+                    }
+                },
+                onClose: () =>
+                {
+                    RefreshPage();
+                    _currentIdDelete = null;
+                    SetOvetlay = false;
+                }
+            );
         }
     }
 }

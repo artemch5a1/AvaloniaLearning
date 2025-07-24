@@ -1,6 +1,7 @@
 ﻿using System;
 using AvaloniaApp.Models;
 using AvaloniaApp.ServiceAbstractions;
+using AvaloniaApp.Utils;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MvvmNavigationKit.Abstractions;
@@ -27,14 +28,14 @@ namespace AvaloniaApp.ViewModel
         [RelayCommand]
         private void CreateUser()
         {
-            if (ValidateUser())
+            (bool success, string? error) validRes = UserValidator.ValidateUser(User);
+            if (validRes.success)
             {
                 TryCreateUser();
-                NavToBack();
             }
             else
             {
-                Error = "Есть не заполненные поля";
+                Error = validRes.error ?? string.Empty;
             }
         }
 
@@ -44,20 +45,12 @@ namespace AvaloniaApp.ViewModel
             _navigationService.CloseOverlay();
         }
 
-        private bool ValidateUser()
-        {
-            if(User.Name == string.Empty || User.Email == string.Empty || User.Surname == string.Empty)
-            {
-                return false;
-            }
-            return true;
-        }
-
         private void TryCreateUser()
         {
             try
             {
                 _userService.CreateUser(User);
+                NavToBack();
             }
             catch (Exception ex)
             {
