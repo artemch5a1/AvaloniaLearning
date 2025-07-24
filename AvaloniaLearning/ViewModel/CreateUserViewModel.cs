@@ -1,6 +1,7 @@
 ﻿using System;
 using AvaloniaApp.Models;
 using AvaloniaApp.ServiceAbstractions;
+using AvaloniaApp.Utils;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MvvmNavigationKit.Abstractions;
@@ -55,6 +56,10 @@ namespace AvaloniaApp.ViewModel
             {
                 return (false, "Есть не заполненные поля");
             }
+
+            if (!EmailValidator.isEmailValid(User.Email))
+                return (false, "Неверный формат почты");
+
             return (true, null);
         }
 
