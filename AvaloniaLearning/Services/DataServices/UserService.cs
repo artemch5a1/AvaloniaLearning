@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using AvaloniaApp.Models;
 using AvaloniaApp.ServiceAbstractions;
+using AvaloniaApp.Utils;
 
 namespace AvaloniaApp.Services.DataServices
 {
@@ -42,6 +44,9 @@ namespace AvaloniaApp.Services.DataServices
 
         public void CreateUser(User user)
         {
+            if (!UserValidator.ValidateUser(user).Item1)
+                throw new ArgumentException("Неверный формат user");
+
             List<User> users = GetAllUsers();
 
             user.Id = users.Any() ? users.Max(u => u.Id) + 1 : 1;
@@ -54,6 +59,9 @@ namespace AvaloniaApp.Services.DataServices
 
         public bool UpdateUser(User user)
         {
+            if (!UserValidator.ValidateUser(user).Item1)
+                return false;
+
             List<User> users = GetAllUsers();
 
             int index = users.FindIndex(u => u.Id == user.Id);
