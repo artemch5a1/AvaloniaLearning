@@ -81,12 +81,22 @@ namespace AvaloniaApp.ViewModel
             );
         }
 
-        private void DeleteAction()
+        [RelayCommand]
+        private void NavToInfoUser(int id)
         {
-            if (_currentIdDelete != null)
-            {
-                _userService.DeleteUser((int)_currentIdDelete);
-            }
+            SetOvetlay = true;
+            _navService.NavigateOverlay<ShowUserViewModel, int>(
+                id,
+                overlayAction: vm =>
+                {
+                    CurrentOverlayViewModel = vm;
+                },
+                onClose: () =>
+                {
+                    _ = LoadUsers();
+                    SetOvetlay = false;
+                }
+            );
         }
 
         [RelayCommand]
@@ -111,6 +121,14 @@ namespace AvaloniaApp.ViewModel
                     SetOvetlay = false;
                 }
             );
+        }
+
+        private void DeleteAction()
+        {
+            if (_currentIdDelete != null)
+            {
+                _userService.DeleteUser((int)_currentIdDelete);
+            }
         }
     }
 }
