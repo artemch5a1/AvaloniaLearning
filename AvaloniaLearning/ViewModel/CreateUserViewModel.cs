@@ -32,7 +32,6 @@ namespace AvaloniaApp.ViewModel
             if (validRes.success)
             {
                 TryCreateUser();
-                NavToBack();
             }
             else
             {
@@ -51,6 +50,7 @@ namespace AvaloniaApp.ViewModel
             try
             {
                 _userService.CreateUser(User);
+                NavToBack();
             }
             catch (Exception ex)
             {
