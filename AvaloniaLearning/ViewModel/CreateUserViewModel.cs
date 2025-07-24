@@ -28,7 +28,7 @@ namespace AvaloniaApp.ViewModel
         [RelayCommand]
         private void CreateUser()
         {
-            (bool success, string? error) validRes = ValidateUser();
+            (bool success, string? error) validRes = UserValidator.ValidateUser(User);
             if (validRes.success)
             {
                 TryCreateUser();
@@ -44,23 +44,6 @@ namespace AvaloniaApp.ViewModel
         private void NavToBack()
         {
             _navigationService.CloseOverlay();
-        }
-
-        private (bool, string?) ValidateUser()
-        {
-            if (
-                User.Name == string.Empty
-                || User.Email == string.Empty
-                || User.Surname == string.Empty
-            )
-            {
-                return (false, "Есть не заполненные поля");
-            }
-
-            if (!EmailValidator.isEmailValid(User.Email))
-                return (false, "Неверный формат почты");
-
-            return (true, null);
         }
 
         private void TryCreateUser()
