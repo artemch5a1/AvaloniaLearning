@@ -19,14 +19,14 @@
 						Foreground="Black"
 					Margin="0 15 15 0"/>
 			<StackPanel HorizontalAlignment="Center"
-						Margin="0 40 0 0">
+						Margin="20 20 0 0">
 				<TextBlock
 						 Width="300"
 						 FontFamily="Times"
 						 FontSize="20"
 						 FontWeight="Bold"
 						 Text="{Binding Title}"
-						 Margin="40 0 0 0"
+						 Margin="45 0 0 40"
 						 TextWrapping="Wrap"
 						 HorizontalAlignment="Center"/>
 				<StackPanel Orientation="Horizontal"
