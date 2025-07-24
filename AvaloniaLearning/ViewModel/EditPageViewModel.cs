@@ -13,7 +13,7 @@ namespace AvaloniaApp.ViewModel
         private readonly INavigationService _navigationService;
         private readonly IUserService _userService;
 
-        private int _idUser;
+        private int? _idUser;
 
         [ObservableProperty]
         public string _userName = string.Empty;
@@ -49,7 +49,7 @@ namespace AvaloniaApp.ViewModel
 
         private async Task LoadUser()
         {
-            User? user = _userService.GetUserById(_idUser);
+            User? user = _userService.GetUserById(_idUser ?? -1);
             if (user != null)
             {
                 UserName = user.Name;
@@ -62,9 +62,15 @@ namespace AvaloniaApp.ViewModel
         [RelayCommand]
         private void UpdateUser()
         {
+            if (_idUser == null)
+            {
+                Error = "ID не был передан";
+                return;
+            }
+
             User user = new User()
             {
-                Id = _idUser,
+                Id = _idUser ?? 0,
                 Name = UserName,
                 Surname = UserSurname,
                 Email = UserEmail,
