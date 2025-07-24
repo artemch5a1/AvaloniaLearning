@@ -8,6 +8,7 @@ namespace AvaloniaApp.Models
         public string Name { get; set; } = string.Empty;
         public string Surname { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
-        public DateTime DateAdding { get; set; } = DateTime.Now;
+        public DateTime DateAdding { get; set; }
+        public DateTime? DateEdit { get; set; } = null;
     }
 }

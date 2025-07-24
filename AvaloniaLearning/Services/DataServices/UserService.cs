@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -22,7 +23,7 @@ namespace AvaloniaApp.Services.DataServices
             {
                 File.WriteAllText(
                     _filePath,
-                    $"Id{Separator}Name{Separator}Surname{Separator}Email\n",
+                    $"Id{Separator}Name{Separator}Surname{Separator}Email{Separator}DateAdding{Separator}DateEdit\n",
                     Encoding.UTF8
                 );
             }
@@ -51,8 +52,10 @@ namespace AvaloniaApp.Services.DataServices
 
             user.Id = users.Any() ? users.Max(u => u.Id) + 1 : 1;
 
+            user.DateAdding = DateTime.Now;
+
             string line =
-                $"{user.Id}{Separator}{user.Name}{Separator}{user.Surname}{Separator}{user.Email}";
+                $"{user.Id}{Separator}{user.Name}{Separator}{user.Surname}{Separator}{user.Email}{Separator}{user.DateAdding}{Separator}{user.DateEdit}";
 
             File.AppendAllLines(_filePath, new[] { line }, Encoding.UTF8);
         }
@@ -68,6 +71,9 @@ namespace AvaloniaApp.Services.DataServices
 
             if (index == -1)
                 return false;
+
+            user.DateEdit = DateTime.Now;
+            user.DateAdding = users[index].DateAdding;
 
             users[index] = user;
 
@@ -95,22 +101,34 @@ namespace AvaloniaApp.Services.DataServices
         private User ParseLine(string line)
         {
             string[] parts = line.Split(Separator);
+
+            (DateTime, bool) edit;
+            (DateTime, bool) create;
+
+            edit.Item2 = DateTime.TryParse(parts[5], out edit.Item1);
+            create.Item2 = DateTime.TryParse(parts[4], out create.Item1);
+
             return new User
             {
                 Id = int.Parse(parts[0]),
                 Name = parts[1],
                 Surname = parts[2],
                 Email = parts[3],
+                DateAdding = create.Item2 ? create.Item1 : edit.Item1,
+                DateEdit = edit.Item2 ? edit.Item1 : null,
             };
         }
 
         private void WriteAll(List<User> users)
         {
-            var lines = new List<string> { $"Id{Separator}Name{Separator}Surname{Separator}Email" };
+            var lines = new List<string>
+            {
+                $"Id{Separator}Name{Separator}Surname{Separator}Email{Separator}DateAdding{Separator}DateEdit",
+            };
 
             lines.AddRange(
                 users.Select(u =>
-                    $"{u.Id}{Separator}{u.Name}{Separator}{u.Surname}{Separator}{u.Email}"
+                    $"{u.Id}{Separator}{u.Name}{Separator}{u.Surname}{Separator}{u.Email}{Separator}{u.DateAdding}{Separator}{u.DateEdit}"
                 )
             );
 
