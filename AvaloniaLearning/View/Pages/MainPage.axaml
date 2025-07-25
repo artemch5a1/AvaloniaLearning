@@ -13,6 +13,12 @@
 		<DataTemplate DataType="{x:Type vm:CreateUserViewModel}">
 			<view:CreateUserView/>
 		</DataTemplate>
+		<DataTemplate DataType="{x:Type vm:ConfirmViewModel}">
+			<view:ConfirmView/>
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type vm:ShowUserViewModel}">
+			<view:ShowUserView/>
+		</DataTemplate>
 	</UserControl.DataTemplates>
 
 	<Grid>
@@ -68,7 +74,9 @@
 							<DataTemplate>
 								<StackPanel Orientation="Horizontal">
 									<Button Classes="InfoItem"
-											Margin="20 0 10 0"/>
+											Margin="20 0 10 0"
+											Command="{Binding #DataGridUsers.DataContext.NavToInfoUserCommand}"
+											CommandParameter="{Binding Id}"/>
 									<Button Classes="EditButton"
 											Margin="0 0 10 0"
 											Command="{Binding #DataGridUsers.DataContext.NavToEditUserCommand}"
@@ -87,7 +95,7 @@
 		</Grid>
 		<Grid ZIndex="10"
 			  MaxWidth="400"
-			  MaxHeight="400">
+			  MaxHeight="450">
 			<ContentControl Margin="0 15 0 0"
 							Content="{Binding CurrentOverlayViewModel}" />
 		</Grid>

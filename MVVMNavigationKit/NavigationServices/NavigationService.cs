@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using AvaloniaApp.ServiceAbstractions;
-using AvaloniaApp.Stores.NavStore;
-using AvaloniaApp.ViewModel;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using MvvmNavigationKit.Abstractions;
+using MvvmNavigationKit.Abstractions.ViewModelBase;
+using MvvmNavigationKit.Options;
 
-namespace AvaloniaApp.Services.NavService
+namespace MvvmNavigationKit.NavigationServices
 {
     /// <summary>
     /// Сервис навигации между ViewModel в приложении.
@@ -35,11 +33,11 @@ namespace AvaloniaApp.Services.NavService
     /// </remarks>
     public class NavigationService : INavigationService
     {
-        private readonly NavigationStore _navStore;
+        private readonly INavigationStore _navStore;
         private readonly IServiceProvider _serviceProvider;
         private readonly ILogger _logger;
 
-        private Stack<ViewModelBase> _historyNavigation = new();
+        private Stack<ViewModelTemplate> _historyNavigation = new();
         private readonly int _maxSizeHistory;
 
         /// <summary>
@@ -47,7 +45,7 @@ namespace AvaloniaApp.Services.NavService
         /// </summary>
         public bool HistoryIsNotEmpty => _historyNavigation.Count > 0;
 
-        private Action<ViewModelBase?>? OverlayAction { get; set; }
+        private Action<ViewModelTemplate?>? OverlayAction { get; set; }
 
         /// <summary>
         /// Инициализирует новый экземпляр сервиса навигации.
@@ -60,7 +58,7 @@ namespace AvaloniaApp.Services.NavService
         /// Значение по умолчанию — <c>int.MaxValue</c>, что означает отсутствие ограничений.
         /// </param>
         public NavigationService(
-            NavigationStore navStore,
+            INavigationStore navStore,
             IServiceProvider serviceProvider,
             ILogger<NavigationService> logger,
             IOptions<NavigationOptions> options
@@ -80,9 +78,9 @@ namespace AvaloniaApp.Services.NavService
         /// Выбрасывается, если не удалось разрешить TViewModel через DI-контейнер
         /// </exception>
         public void Navigate<TViewModel>()
-            where TViewModel : ViewModelBase
+            where TViewModel : ViewModelTemplate
         {
-            ViewModelBase viewModel = _serviceProvider.GetRequiredService<TViewModel>();
+            ViewModelTemplate viewModel = _serviceProvider.GetRequiredService<TViewModel>();
             PushToHistoryAndSetViewModel(viewModel);
             _logger.LogInformation($"Переход к {viewModel.GetType().Name}");
         }
@@ -100,9 +98,9 @@ namespace AvaloniaApp.Services.NavService
         /// Ожидается, что целевая ViewModel реализует метод Initialize(TParams parameters).
         /// </remarks>
         public void Navigate<TViewModel, TParams>(TParams @params)
-            where TViewModel : ViewModelBase
+            where TViewModel : ViewModelTemplate
         {
-            ViewModelBase viewModel = _serviceProvider.GetRequiredService<TViewModel>();
+            ViewModelTemplate viewModel = _serviceProvider.GetRequiredService<TViewModel>();
             viewModel.Initialize(@params);
             PushToHistoryAndSetViewModel(viewModel);
             _logger.LogInformation(
@@ -119,7 +117,7 @@ namespace AvaloniaApp.Services.NavService
         /// </para>
         /// <para>
         /// Чтобы актуализировать данные при возврате, переопределяейте метод
-        /// <see cref="ViewModelBase.RefreshPage"/> в целевой ViewModel
+        /// <see cref="ViewModelTemplate.RefreshPage"/> в целевой ViewModel
         /// </para>
         /// <para>
         /// Текущая ViewModel не добавляется в историю при возврате назад.
@@ -137,7 +135,7 @@ namespace AvaloniaApp.Services.NavService
                 return;
             }
             _navStore.CurrentViewModel?.Dispose();
-            ViewModelBase viewModel = _historyNavigation.Pop();
+            ViewModelTemplate viewModel = _historyNavigation.Pop();
             viewModel.RefreshPage();
             _navStore.CurrentViewModel = viewModel;
             _logger.LogInformation($"Поэтапный возврат к {viewModel.GetType().Name}");
@@ -152,16 +150,16 @@ namespace AvaloniaApp.Services.NavService
         /// Не сохраняет текущую ViewModel в историю
         /// </para>
         /// <para>
-        /// Вызывает <see cref="ViewModelBase.Dispose"/> у текущей ViewModel
+        /// Вызывает <see cref="ViewModelTemplate.Dispose"/> у текущей ViewModel
         /// </para>
         /// </remarks>
         /// <exception cref="InvalidOperationException">
         /// Выбрасывается, если не удалось разрешить TViewModel через DI-контейнер
         /// </exception>
         public void DestroyAndNavigate<TViewModel>()
-            where TViewModel : ViewModelBase
+            where TViewModel : ViewModelTemplate
         {
-            ViewModelBase viewModel = _serviceProvider.GetRequiredService<TViewModel>();
+            ViewModelTemplate viewModel = _serviceProvider.GetRequiredService<TViewModel>();
             DisposeAndSetViewModel(viewModel);
             _logger.LogInformation($"Переход к {viewModel.GetType().Name} без сохранения истории");
         }
@@ -177,16 +175,16 @@ namespace AvaloniaApp.Services.NavService
         /// Не сохраняет текущую ViewModel в историю
         /// </para>
         /// <para>
-        /// Вызывает <see cref="ViewModelBase.Dispose"/> у текущей ViewModel
+        /// Вызывает <see cref="ViewModelTemplate.Dispose"/> у текущей ViewModel
         /// </para>
         /// </remarks>
         /// <exception cref="InvalidOperationException">
         /// Выбрасывается, если не удалось разрешить TViewModel через DI-контейнер
         /// </exception>
         public void DestroyAndNavigate<TViewModel, TParams>(TParams @params)
-            where TViewModel : ViewModelBase
+            where TViewModel : ViewModelTemplate
         {
-            ViewModelBase viewModel = _serviceProvider.GetRequiredService<TViewModel>();
+            ViewModelTemplate viewModel = _serviceProvider.GetRequiredService<TViewModel>();
             viewModel.Initialize(@params);
             DisposeAndSetViewModel(viewModel);
             _logger.LogInformation(
@@ -202,12 +200,12 @@ namespace AvaloniaApp.Services.NavService
         /// <param name="overlayAction">Действие, которое устанавливает или сбрасывает overlay ViewModel в хосте.</param>
         /// <param name="onClose">Дополнительное действие, выполняемое при закрытии оверлея.</param>
         public void NavigateOverlay<TViewModel>(
-            Action<ViewModelBase?>? overlayAction = null,
+            Action<ViewModelTemplate?>? overlayAction = null,
             Action? onClose = null
         )
-            where TViewModel : ViewModelBase
+            where TViewModel : ViewModelTemplate
         {
-            ViewModelBase? viewModel = _serviceProvider.GetRequiredService<TViewModel>();
+            ViewModelTemplate? viewModel = _serviceProvider.GetRequiredService<TViewModel>();
 
             overlayAction?.Invoke(viewModel);
 
@@ -234,12 +232,12 @@ namespace AvaloniaApp.Services.NavService
         /// <param name="onClose">Дополнительное действие, выполняемое при закрытии оверлея.</param>
         public void NavigateOverlay<TViewModel, TParam>(
             TParam @params,
-            Action<ViewModelBase?>? overlayAction = null,
+            Action<ViewModelTemplate?>? overlayAction = null,
             Action? onClose = null
         )
-            where TViewModel : ViewModelBase
+            where TViewModel : ViewModelTemplate
         {
-            ViewModelBase viewModel = _serviceProvider.GetRequiredService<TViewModel>();
+            ViewModelTemplate viewModel = _serviceProvider.GetRequiredService<TViewModel>();
 
             viewModel.Initialize(@params);
 
@@ -270,7 +268,7 @@ namespace AvaloniaApp.Services.NavService
                 return;
             }
 
-            ViewModelBase viewModel = _historyNavigation.Pop();
+            ViewModelTemplate viewModel = _historyNavigation.Pop();
 
             viewModel.Dispose();
 
@@ -294,7 +292,7 @@ namespace AvaloniaApp.Services.NavService
         /// самая старая запись удаляется.
         /// </para>
         /// </remarks>
-        private void PushToHistoryAndSetViewModel(ViewModelBase viewModel)
+        private void PushToHistoryAndSetViewModel(ViewModelTemplate viewModel)
         {
             if (_navStore.CurrentViewModel != null)
             {
@@ -315,9 +313,9 @@ namespace AvaloniaApp.Services.NavService
         /// </summary>
         /// <remarks>
         /// Вызывается базовый переопределяемый метод у текущей ViewModel
-        /// <see cref="ViewModelBase.Dispose"/>
+        /// <see cref="ViewModelTemplate.Dispose"/>
         /// </remarks>
-        private void DisposeAndSetViewModel(ViewModelBase viewModel)
+        private void DisposeAndSetViewModel(ViewModelTemplate viewModel)
         {
             if (_navStore.CurrentViewModel != null)
             {
@@ -332,7 +330,7 @@ namespace AvaloniaApp.Services.NavService
         private string RemoveLastVM()
         {
             _historyNavigation = new(_historyNavigation);
-            ViewModelBase vm = _historyNavigation.Pop();
+            ViewModelTemplate vm = _historyNavigation.Pop();
             vm.Dispose();
             _historyNavigation = new(_historyNavigation);
             return vm.GetType().Name;

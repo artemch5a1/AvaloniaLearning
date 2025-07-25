@@ -4,12 +4,13 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using AvaloniaApp.ServiceAbstractions;
 using AvaloniaApp.Services.DataServices;
-using AvaloniaApp.Services.NavService;
-using AvaloniaApp.Stores.NavStore;
 using AvaloniaApp.View.Base;
 using AvaloniaApp.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using MvvmNavigationKit.Abstractions;
+using MvvmNavigationKit.Abstractions.ViewModelBase;
+using MVVMNavigationKit.ServiceBuild;
 using Splat.Microsoft.Extensions.DependencyInjection;
 
 namespace AvaloniaApp
@@ -82,6 +83,8 @@ namespace AvaloniaApp
 
         private void ConfigureViewModelServices(IServiceCollection services)
         {
+            services.AddSingleton<ViewModelTemplate, ViewModelBase>();
+
             services.AddSingleton<MainWindowViewModel>();
 
             services.AddTransient<MainPageViewModel>();
@@ -91,15 +94,15 @@ namespace AvaloniaApp
             services.AddTransient<EditPageViewModel>();
 
             services.AddTransient<CreateUserViewModel>();
+
+            services.AddTransient<ConfirmViewModel>();
+
+            services.AddTransient<ShowUserViewModel>();
         }
 
         private void ConfigureNavigationServices(IServiceCollection services)
         {
-            services.AddSingleton<NavigationStore>();
-
-            services.Configure<NavigationOptions>(options => { });
-
-            services.AddSingleton<INavigationService, NavigationService>();
+            NavigationServicesHelper.CreateServiceCollections(services);
         }
 
         private void ConfigureOtherSevice(IServiceCollection services)

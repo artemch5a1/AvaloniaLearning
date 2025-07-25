@@ -1,34 +1,33 @@
-﻿using AvaloniaApp.ViewModel;
-using System;
+﻿using MvvmNavigationKit.Abstractions.ViewModelBase;
 
-namespace AvaloniaApp.ServiceAbstractions
+namespace MvvmNavigationKit.Abstractions
 {
     public interface INavigationService
     {
         void Navigate<TViewModel>()
-            where TViewModel : ViewModelBase;
+            where TViewModel : ViewModelTemplate;
 
         void Navigate<TViewModel, TParams>(TParams @params)
-            where TViewModel : ViewModelBase;
+            where TViewModel : ViewModelTemplate;
 
         public void DestroyAndNavigate<TViewModel>()
-            where TViewModel : ViewModelBase;
+            where TViewModel : ViewModelTemplate;
 
         public void DestroyAndNavigate<TViewModel, TParams>(TParams @params)
-            where TViewModel : ViewModelBase;
+            where TViewModel : ViewModelTemplate;
 
         public void NavigateOverlay<TViewModel>(
-            Action<ViewModelBase?>? overlayAction = null,
+            Action<ViewModelTemplate?>? overlayAction = null,
             Action? onClose = null
         )
-            where TViewModel : ViewModelBase;
+            where TViewModel : ViewModelTemplate;
 
         public void NavigateOverlay<TViewModel, TParam>(
             TParam @params,
-            Action<ViewModelBase?>? overlayAction = null,
+            Action<ViewModelTemplate?>? overlayAction = null,
             Action? onClose = null
         )
-            where TViewModel : ViewModelBase;
+            where TViewModel : ViewModelTemplate;
 
         public void CloseOverlay();
 
