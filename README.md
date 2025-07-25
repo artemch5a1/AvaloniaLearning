@@ -134,6 +134,8 @@ services.Configure<NavigationOptions>(opt => { });
 services.AddSingleton<INavigationService, NavigationService>();
 ```
 
+Далее необходимо настроить MainWindow и стартовую страницу
+
 - Получите из сервис провайдера MainWindowViewModel и установите его в качестве DataContext MainWindow:
 
 ```csharp
@@ -167,7 +169,8 @@ public class StartPageViewModel : ViewModelBase
 </Window.DataTemplates>
 ```
 
-Навигируйтесь на нее в App.axaml.cs
+- Навигируйтесь на нее в App.axaml.cs
+
 ```csharp
 if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
 {
@@ -203,6 +206,19 @@ public partial class MainPageViewModel : ViewModelBase
 
 ```csharp
 services.AddTransient<MainPageViewModel>();
+```
+
+- Установите соотвествие view и viewmodel в MainWindow
+
+```csharp
+<Window.DataTemplates>
+	<DataTemplate DataType="vm:StartPageViewModel">
+		<view:StartPage/>
+	</DataTemplate>
+	<DataTemplate DataType="vm:MainPageViewModel">
+		<view:MainPage/>
+	</DataTemplate>
+</Window.DataTemplates>
 ```
 
 - Навигируйтесь одним из нужных способов
