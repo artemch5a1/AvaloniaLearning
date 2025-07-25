@@ -83,8 +83,6 @@ namespace AvaloniaApp
 
         private void ConfigureViewModelServices(IServiceCollection services)
         {
-            services.AddSingleton<ViewModelTemplate, ViewModelBase>();
-
             services.AddSingleton<MainWindowViewModel>();
 
             services.AddTransient<MainPageViewModel>();
