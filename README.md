@@ -104,6 +104,65 @@ public partial class MainWindowViewModel : ViewModelBase
 
 ```
 
+### Регистрация зависимостей в DI
+
+Чтобы пользоватья сервисом необходимо:
+- Создать DI контейнер
+- Сконфигурировать необходмиые зависимости
+
+Можно воспользоваться готовым методом из пространства имен MVVMNavigationKit.ServiceBuild
+
+```csharp
+private void ConfigureNavigationServices(IServiceCollection services)
+{
+    NavigationServicesHelper.CreateServiceCollections(services);
+}
+```
+
+Или настроить зависимости в ручную для более тонкой настройке
+
+```csharp
+services.AddLogging(config =>
+{
+    config.SetMinimumLevel(LogLevel.Information);
+});
+
+services.AddSingleton<INavigationStore, NavigationStore>();
+
+services.Configure<NavigationOptions>(opt => { });
+
+services.AddSingleton<INavigationService, NavigationService>();
+```
+
+### Регистрация ViewModel и навигация
+
+Прежде чем использовать навигацию для новой связки <View, ViewModel>:
+- Унаследуйте ваш ViewModel от ViewModelBase
+
+```csharp
+public partial class MainPageViewModel : ViewModelBase
+{
+    private readonly INavigationService _navService;
+
+    public MainPageViewModel(INavigationService navService)
+    {
+        _navService = navService;
+    }
+}
+```
+
+- Зарегистрируйте в DI
+
+```csharp
+services.AddTransient<MainPageViewModel>();
+```
+
+- Навигируйтесь одним из нужных способов
+
+```csharp
+public void NavToMain() => _navService.DestroyAndNavigate<MainPageViewModel>();
+```
+
 ---
 
 ## 🔧 Используемые технологии
