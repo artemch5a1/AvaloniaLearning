@@ -29,8 +29,6 @@
 
 ---
 
----
-
 ## Инструкция по использованию
 
 ### Создание базовой ViewModel
@@ -96,6 +94,13 @@ public partial class MainWindowViewModel : ViewModelBase
         base.Dispose();
     }
 }
+
+```
+
+На главном экране привяжите CurrentViewModel в ContentControl
+
+```xaml
+<ContentControl Content="{Binding CurrentViewModel}"/>
 
 ```
 
