@@ -134,6 +134,54 @@ services.Configure<NavigationOptions>(opt => { });
 services.AddSingleton<INavigationService, NavigationService>();
 ```
 
+- Получите из сервис провайдера MainWindowViewModel и установите его в качестве DataContext MainWindow:
+
+```csharp
+desktop.MainWindow = new MainWindow();
+desktop.MainWindow.DataContext =
+    ServiceProvider.GetRequiredService<MainWindowViewModel>();
+```
+
+- Создайте стартовую страницу:
+
+ViewModel
+```csharp
+public class StartPageViewModel : ViewModelBase
+{
+    private readonly INavigationService _navService;
+
+    public StartPageViewModel(INavigationService navService)
+    {
+        _navService = navService;
+    }
+}
+```
+
+- Установите в MainWindow соотвествие <View, ViewModel>
+
+```xaml
+<Window.DataTemplates>
+	<DataTemplate DataType="vm:StartPageViewModel">
+		<view:StartPage/>
+	</DataTemplate>
+</Window.DataTemplates>
+```
+
+Навигируйтесь на нее в App.axaml.cs
+```csharp
+if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+{
+    desktop.MainWindow = new MainWindow();
+    desktop.MainWindow.DataContext =
+        ServiceProvider.GetRequiredService<MainWindowViewModel>();
+}
+
+INavigationService navigationService =
+    ServiceProvider.GetRequiredService<INavigationService>();
+
+navigationService.Navigate<StartPageViewModel>();
+```
+
 ### Регистрация ViewModel и навигация
 
 Прежде чем использовать навигацию для новой связки <View, ViewModel>:
