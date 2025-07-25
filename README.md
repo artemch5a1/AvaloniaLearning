@@ -33,11 +33,12 @@
 
 ## Инструкция по использованию
 
-# Создание базовой ViewModel
+### Создание базовой ViewModel
 
 - Создайте класс и наследуйте его от ViewModelTemplate
-- Реализуйте абстрактные методы:
+- Реализуйте абстрактные методы
 
+Пример:
 ```csharp
   public class ViewModelBase : ViewModelTemplate
 {
