@@ -29,6 +29,35 @@
 
 ---
 
+---
+
+## Инструкция по использованию
+
+# Создание базовой ViewModel
+
+- Создайте класс и наследуйте его от ViewModelTemplate
+- Реализуйте абстрактные методы:
+
+```csharp
+  public class ViewModelBase : ViewModelTemplate
+{
+    protected bool IsDisposed { get; set; } = false;
+
+    public override void Dispose()
+    {
+        if (IsDisposed)
+            return;
+        GC.SuppressFinalize(this);
+        IsDisposed = true;
+    }
+
+    public override void RefreshPage() { }
+
+    protected override void InitializeParams<T>(T @params) { }
+}
+```
+---
+
 ## 🔧 Используемые технологии
 
 - Avalonia UI (https://avaloniaui.net/) — кросс-платформенный UI-фреймворк.
