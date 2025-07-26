@@ -197,10 +197,11 @@ namespace MvvmNavigationKit.NavigationServices
         /// </summary>
         /// <typeparam name="TViewModel">Тип ViewModel, на которую выполняется переход</typeparam>
         public void ResetAndNavigate<TViewModel>()
-            where TViewModel : ViewModelTemplate 
+            where TViewModel : ViewModelTemplate
         {
             DestroyAndNavigate<TViewModel>();
             _historyNavigation.Clear();
+            _logger.LogInformation($"История была очищена");
         }
 
         /// <summary>
@@ -225,6 +226,7 @@ namespace MvvmNavigationKit.NavigationServices
         {
             DestroyAndNavigate<TViewModel, TParams>(@params);
             _historyNavigation.Clear();
+            _logger.LogInformation($"История была очищена");
         }
 
         /// <summary>
