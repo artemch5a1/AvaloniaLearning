@@ -53,7 +53,6 @@ public class ViewModelBase : ViewModelTemplate
 }
 ```
 
----
 
 ### 🗄️ 2. Создание `MainWindowViewModel`
 
@@ -94,8 +93,6 @@ public partial class MainWindowViewModel : ViewModelBase
 <ContentControl Content="{Binding CurrentViewModel}" />
 ```
 
----
-
 ### 🧰 3. Регистрация зависимостей (DI)
 
 #### ✅ Быстрая настройка:
@@ -118,8 +115,6 @@ services.AddSingleton<INavigationStore, NavigationStore>();
 services.Configure<NavigationOptions>(opt => { });
 services.AddSingleton<INavigationService, NavigationService>();
 ```
-
----
 
 ### 🪟 4. Настройка `MainWindow` и стартовой страницы
 
@@ -164,8 +159,6 @@ INavigationService navigationService = ServiceProvider.GetRequiredService<INavig
 navigationService.Navigate<StartPageViewModel>();
 ```
 
----
-
 ### ➕ 5. Добавление новых `ViewModel`
 
 #### 🔹 Пример новой `ViewModel`:
@@ -209,7 +202,6 @@ public void NavToMain() => _navService.DestroyAndNavigate<MainPageViewModel>();
 
 ---
 
----
 
 ## 🔧 Используемые технологии
 
