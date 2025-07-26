@@ -29,23 +29,20 @@
 
 ---
 
-## Инструкция по использованию
+## 🧽 Инструкция по использованию MVVMNavigationKit
 
-### Создание базовой ViewModel
+### 📌 1. Создание базовой `ViewModel`
 
-- Создайте класс и наследуйте его от ViewModelTemplate
-- Реализуйте абстрактные методы
+Создайте базовый класс `ViewModel`, унаследованный от `ViewModelTemplate`, и реализуйте его методы:
 
-Пример:
 ```csharp
-  public class ViewModelBase : ViewModelTemplate
+public class ViewModelBase : ViewModelTemplate
 {
     protected bool IsDisposed { get; set; } = false;
 
     public override void Dispose()
     {
-        if (IsDisposed)
-            return;
+        if (IsDisposed) return;
         GC.SuppressFinalize(this);
         IsDisposed = true;
     }
@@ -56,15 +53,13 @@
 }
 ```
 
-### Создание MainWindowViewModel
+---
 
-Реализуйте ViewModel для главного экрана:
-- Передайте в конструктор INavigationStore
-- Создайте свойство, которое будет брать из INavigationStore текущую ViewModel
-- Подпишитесь на изменение INavigationStore, чтобы реагировать на навигацию
+### 🗄️ 2. Создание `MainWindowViewModel`
+
+`MainWindowViewModel` управляет текущей отображаемой `ViewModel`:
 
 ```csharp
-
 public partial class MainWindowViewModel : ViewModelBase
 {
     public ViewModelTemplate? CurrentViewModel => _navStore.CurrentViewModel;
@@ -80,37 +75,30 @@ public partial class MainWindowViewModel : ViewModelBase
     private void OnViewModelChanged(object? sender, PropertyChangedEventArgs e)
     {
         if (e.PropertyName == nameof(_navStore.CurrentViewModel))
-        {
             OnPropertyChanged(nameof(CurrentViewModel));
-        }
     }
 
     public override void Dispose()
     {
-        if (IsDisposed)
-            return;
+        if (IsDisposed) return;
         _navStore.PropertyChanged -= OnViewModelChanged;
         CurrentViewModel?.Dispose();
         base.Dispose();
     }
 }
-
 ```
 
-На главном экране привяжите CurrentViewModel в ContentControl
+#### 📌 Привязка в XAML
 
-```xaml
-<ContentControl Content="{Binding CurrentViewModel}"/>
-
+```xml
+<ContentControl Content="{Binding CurrentViewModel}" />
 ```
 
-### Регистрация зависимостей в DI
+---
 
-Чтобы пользоватья сервисом необходимо:
-- Создать DI контейнер
-- Сконфигурировать необходмиые зависимости
+### 🧰 3. Регистрация зависимостей (DI)
 
-Можно воспользоваться готовым методом из пространства имен MVVMNavigationKit.ServiceBuild
+#### ✅ Быстрая настройка:
 
 ```csharp
 private void ConfigureNavigationServices(IServiceCollection services)
@@ -119,34 +107,34 @@ private void ConfigureNavigationServices(IServiceCollection services)
 }
 ```
 
-Или настроить зависимости в ручную для более тонкой настройке
+#### ⚙️ Ручная настройка:
 
 ```csharp
-services.AddLogging(config =>
-{
+services.AddLogging(config => {
     config.SetMinimumLevel(LogLevel.Information);
 });
 
 services.AddSingleton<INavigationStore, NavigationStore>();
-
 services.Configure<NavigationOptions>(opt => { });
-
 services.AddSingleton<INavigationService, NavigationService>();
 ```
 
-Далее необходимо настроить MainWindow и стартовую страницу
+---
 
-- Получите из сервис провайдера MainWindowViewModel и установите его в качестве DataContext MainWindow:
+### 🪟 4. Настройка `MainWindow` и стартовой страницы
+
+#### 🧹 Привязка `ViewModel` к `MainWindow`:
 
 ```csharp
-desktop.MainWindow = new MainWindow();
-desktop.MainWindow.DataContext =
-    ServiceProvider.GetRequiredService<MainWindowViewModel>();
+if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+{
+    desktop.MainWindow = new MainWindow();
+    desktop.MainWindow.DataContext = ServiceProvider.GetRequiredService<MainWindowViewModel>();
+}
 ```
 
-- Создайте стартовую страницу:
+#### 🌟 Стартовая `ViewModel`:
 
-ViewModel
 ```csharp
 public class StartPageViewModel : ViewModelBase
 {
@@ -159,39 +147,31 @@ public class StartPageViewModel : ViewModelBase
 }
 ```
 
-- Установите в MainWindow соотвествие <View, ViewModel>
+#### 📦 Регистрация соответствия `View` и `ViewModel` в `MainWindow.xaml`:
 
-```xaml
+```xml
 <Window.DataTemplates>
-	<DataTemplate DataType="vm:StartPageViewModel">
-		<view:StartPage/>
-	</DataTemplate>
+    <DataTemplate DataType="vm:StartPageViewModel">
+        <view:StartPage />
+    </DataTemplate>
 </Window.DataTemplates>
 ```
 
-- Навигируйтесь на нее в App.axaml.cs
+#### 🧽 Навигация на стартовую страницу:
 
 ```csharp
-if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-{
-    desktop.MainWindow = new MainWindow();
-    desktop.MainWindow.DataContext =
-        ServiceProvider.GetRequiredService<MainWindowViewModel>();
-}
-
-INavigationService navigationService =
-    ServiceProvider.GetRequiredService<INavigationService>();
-
+INavigationService navigationService = ServiceProvider.GetRequiredService<INavigationService>();
 navigationService.Navigate<StartPageViewModel>();
 ```
 
-### Регистрация ViewModel и навигация
+---
 
-Прежде чем использовать навигацию для новой связки <View, ViewModel>:
-- Унаследуйте ваш ViewModel от ViewModelBase
+### ➕ 5. Добавление новых `ViewModel`
+
+#### 🔹 Пример новой `ViewModel`:
 
 ```csharp
-public partial class MainPageViewModel : ViewModelBase
+public class MainPageViewModel : ViewModelBase
 {
     private readonly INavigationService _navService;
 
@@ -202,30 +182,32 @@ public partial class MainPageViewModel : ViewModelBase
 }
 ```
 
-- Зарегистрируйте в DI
+#### 🔹 Регистрация в DI:
 
 ```csharp
 services.AddTransient<MainPageViewModel>();
 ```
 
-- Установите соотвествие view и viewmodel в MainWindow
+#### 🔹 Добавление в `DataTemplates`:
 
-```csharp
+```xml
 <Window.DataTemplates>
-	<DataTemplate DataType="vm:StartPageViewModel">
-		<view:StartPage/>
-	</DataTemplate>
-	<DataTemplate DataType="vm:MainPageViewModel">
-		<view:MainPage/>
-	</DataTemplate>
+    <DataTemplate DataType="vm:StartPageViewModel">
+        <view:StartPage />
+    </DataTemplate>
+    <DataTemplate DataType="vm:MainPageViewModel">
+        <view:MainPage />
+    </DataTemplate>
 </Window.DataTemplates>
 ```
 
-- Навигируйтесь одним из нужных способов
+#### 🔹 Переход между страницами:
 
 ```csharp
 public void NavToMain() => _navService.DestroyAndNavigate<MainPageViewModel>();
 ```
+
+---
 
 ---
 
